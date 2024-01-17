@@ -1,0 +1,3 @@
+const FoodImg = () => {
+  return;
+};

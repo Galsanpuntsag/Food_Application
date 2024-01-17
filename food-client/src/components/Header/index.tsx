@@ -13,6 +13,7 @@ import {
   Tooltip,
   MenuItem,
   InputBase,
+  colors,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../public/images";
@@ -71,11 +72,11 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  const handleOpenNavMenu = () => {
+    // setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const handleOpenUserMenu = () => {
+    // setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -86,9 +87,16 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  const containerStyle = {
+    display: "flex",
+    justifyContext: "center",
+    alignItems: "center",
+    gap: "20px",
+  };
+
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl" sx={{ background: "#4caf50" }}>
+    <AppBar position="static" sx={{ background: "#ffffff", boxShadow: "none" }}>
+      <Container maxWidth="xl" sx={{ color: "black" }}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -126,6 +134,7 @@ function Header() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                color: "black",
               }}
             >
               {pages.map((page) => (
@@ -143,19 +152,24 @@ function Header() {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+            }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, color: "black", display: "block" }}
               >
                 {page}
               </Button>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={containerStyle}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -164,11 +178,16 @@ function Header() {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                sx={{
+                  border: 1,
+                  borderColor: "text.primary",
+                  borderRadius: "10px",
+                }}
               />
             </Search>
             <Button variant="text" sx={{ color: "white" }}>
-              <AddShoppingCartIcon />
-              Сагс
+              <AddShoppingCartIcon sx={{ color: "black" }} />
+              <Typography color={"black"}> Сагс</Typography>
             </Button>
             <Tooltip title="Open settings">
               <IconButton
@@ -177,14 +196,19 @@ function Header() {
                   p: 0,
                   color: "white",
                   display: { xs: "none", md: "flex" },
+                  gap: "10px",
                 }}
               >
                 <Avatar
-                  sx={{ width: "30px", height: "30px" }}
+                  sx={{
+                    width: "30px",
+                    height: "30px",
+                    backgroundColor: "black",
+                  }}
                   alt="Remy Sharp"
                   src="/static/images/avatar/2.jpg"
                 />
-                Нэвтрэх
+                <Typography color={"black"}>Нэвтрэх</Typography>
               </IconButton>
             </Tooltip>
             <Menu

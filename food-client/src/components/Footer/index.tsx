@@ -1,12 +1,16 @@
 "use client";
 import React from "react";
-import { AppBar, Container, Typography, Box, Link } from "@mui/material";
-import Logo from "../../../public/images/index";
+import { AppBar, Container, Grid, Typography, Box, Link } from "@mui/material";
+import WhiteIcon from "../../../public/images/WhiteIcon";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import FooterIcon from "../../../public/images/FooterIcon";
 import { bottom } from "@popperjs/core";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+
 const pages = [
   "Нүүр",
   "Холбоо барих",
@@ -15,60 +19,112 @@ const pages = [
   "Хүргэлтийн бүс",
   "Нууцлалын бодлого",
 ];
-const apps = [<FaFacebook />, <FaInstagram />, <FaSquareXTwitter />];
-const preventDefault = (event) => event.preventDefault();
+const apps = [
+  <FaFacebook style={{ width: "30px" }} />,
+  <FaInstagram />,
+  <FaSquareXTwitter />,
+];
+// const preventDefault = () => event.preventDefault();
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 const Footer = () => {
   const [value, setValue] = React.useState(0);
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl" sx={{ background: "#4caf50" }}>
-        <FooterIcon />
-        <Typography
-          variant="h1"
-          component="b"
+    <AppBar
+      position="relative"
+      sx={{
+        background: "#4caf50",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <FooterIcon />
+      <Container
+        sx={{
+          position: "absolute",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Stack
+          spacing={4}
           sx={{
-            text: "center",
+            display: { xs: "flex", md: "flex", xl: "flex" },
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            mt: "50px",
           }}
         >
-          <Logo /> <Typography>Food Delivery</Typography>
-        </Typography>
-        <Box
-          sx={{
-            typography: "body1",
-            "& > :not(style) ~ :not(style)": {
-              ml: 2,
-            },
-            flexGrow: 1,
-            display: { xs: "flex", md: "flex" },
-          }}
-          onClick={preventDefault}
-        >
-          {pages.map((page) => (
-            <Link href="#" color="inherit">
-              {page}{" "}
-            </Link>
-          ))}
-        </Box>
-        <Box
-          sx={{
-            typography: "body1",
-            "& > :not(style) ~ :not(style)": {
-              ml: 2,
-            },
-            flexGrow: 1,
-            display: { xs: "flex", md: "flex" },
-          }}
-          onClick={preventDefault}
-        >
-          {apps.map((app) => (
-            <Link href="#" color="inherit">
-              {app}
-            </Link>
-          ))}
-        </Box>
-        <Typography>@2024 Pinecone Foods Deliver Application LLC</Typography>
-        <Typography>Зохиогчийн эрх хуулиар хамгаалагдсанв</Typography>
+          <Stack
+            spacing={8}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "stretch",
+              gap: "10px",
+              color: "white",
+              borderBottom: 1,
+              borderColor: "black",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+                color: "white",
+              }}
+            >
+              <WhiteIcon /> <Typography>Food Delivery</Typography>
+            </Box>
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              // onClick={preventDefault}
+            >
+              {pages.map((page) => (
+                <Link href="#" color="inherit">
+                  <Grid> {page}</Grid>
+                </Link>
+              ))}
+            </Grid>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "flex", xl: "flex" },
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "20px",
+              }}
+              // onClick={preventDefault}
+            >
+              {apps.map((app) => (
+                <Link href="#" color="inherit">
+                  {app}
+                </Link>
+              ))}
+            </Box>
+          </Stack>
+          <Box sx={{ boxShadow: "none", color: "white" }}>
+            <Typography>
+              @2024 Pinecone Foods Deliver Application LLC
+            </Typography>
+            <Typography>Зохиогчийн эрх хуулиар хамгаалагдсанв</Typography>
+          </Box>
+        </Stack>
       </Container>
     </AppBar>
   );
