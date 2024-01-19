@@ -117,40 +117,20 @@ function Header() {
             <Logo />
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-                color: "black",
-              }}
-            >
-              {pages.map((page) => (
-                <Box sx={{ width: 500 }}>
-                  <BottomNavigation
-                    showLabels
-                    value={value}
-                    onChange={(event, newValue) => {
-                      setValue(newValue);
-                    }}
-                  >
-                    <BottomNavigationAction label={page} />
-                  </BottomNavigation>
-                </Box>
-              ))}
-            </Menu>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "none" } }}>
+            {pages.map((page) => (
+              <Box sx={{ width: 500 }}>
+                <BottomNavigation
+                  showLabels
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                >
+                  <BottomNavigationAction label={page} />
+                </BottomNavigation>
+              </Box>
+            ))}
           </Box>
           <Box
             sx={{
