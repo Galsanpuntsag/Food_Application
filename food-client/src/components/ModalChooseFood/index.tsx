@@ -11,6 +11,7 @@ import {
   CardMedia,
   Typography,
   ButtonGroup,
+  Stack,
 } from "@mui/material";
 
 const style = {
@@ -18,11 +19,12 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: 700,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "1px solid #000",
   boxShadow: 24,
   p: 4,
+  borderRadius: "20px",
 };
 
 export default function ModalChooseFood() {
@@ -53,7 +55,7 @@ export default function ModalChooseFood() {
       >
         <Fade in={open}>
           <Grid container xs={12} spacing={2} sx={style}>
-            <Grid xs={8}>
+            <Grid xs={7}>
               <CardMedia
                 component={"img"}
                 height="300"
@@ -61,63 +63,56 @@ export default function ModalChooseFood() {
                 alt="green iguana"
               />
             </Grid>
-            <Grid xs={4}>
-              <Box
-                display={"flex"}
-                flexDirection={"column"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
+            <Grid
+              xs={5}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                p: "15px",
+                boxShadow: "",
+              }}
+            >
+              <Stack spacing={2} display={"flex"}>
                 <Typography fontSize={"25px"} fontWeight={900}>
                   Main Pizza
                 </Typography>
-                <Typography
-                  display={"block"}
-                  justifyContent={"flex-start"}
-                  color={"green"}
-                >
-                  10800₮
-                </Typography>
-                <Box
-                  display={"flex"}
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                  
-                >
+                <Typography sx={{ color: "green" }}>10800₮</Typography>
+                <Box>
                   <Typography fontSize={"17px"} fontWeight={700}>
                     Орц
                   </Typography>
                   <Typography
                     sx={{
-                      background: "gray",
+                      background: "#e1f5fe",
                       borderRadius: "10px",
                       textAlign: "center",
-                      alignItems={"center"}
                     }}
                   >
                     улуу, төмс, лууван , сонгино, цөцгийн тос, самрын үр
                   </Typography>
                 </Box>
-                <ButtonGroup sx={{ display: "block", direction: "column" }}>
+                <ButtonGroup
+                  orientation="vertical"
+                  aria-label="vertical contained button group"
+                  sx={{ gap: 4 }}
+                >
                   <Typography>Тоо</Typography>
-                  <Box display={"flex"}>
-                    <Button
-                      sx={{
-                        background: "green",
-                        color: "black",
-                      }}
-                      size="small"
-                    >
-                      -
-                    </Button>
+
+                  <ButtonGroup
+                    size="small"
+                    aria-label="small button group"
+                    sx={{ justifyContent: "space-around" }}
+                  >
+                    <Button>-</Button>
                     <Typography>1</Typography>
                     <Button>+</Button>
-                  </Box>
+                  </ButtonGroup>
+
                   <Button sx={{ background: "green" }} variant="contained">
                     Contained
                   </Button>
                 </ButtonGroup>
-              </Box>
+              </Stack>
             </Grid>
           </Grid>
         </Fade>

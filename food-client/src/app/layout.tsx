@@ -1,7 +1,7 @@
-import "./globals.css";
+import "./scss/globals.scss";
 import { ThemeProvider } from "../theme";
-// import Header from "@/components/Header";
-// import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Grid } from "@mui/material";
 import Stack from "@mui/material/Stack";
 
@@ -15,9 +15,9 @@ export default function RootLayout({
       <body>
         <Grid>
           <Stack spacing={10}>
-            {/* <Header /> */}
+            <Header />
             <ThemeProvider>{children}</ThemeProvider>
-            {/* <Footer /> */}
+            <Footer />
           </Stack>
         </Grid>
       </body>

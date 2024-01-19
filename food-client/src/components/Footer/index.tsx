@@ -66,7 +66,7 @@ const Footer = () => {
           }}
         >
           <Stack
-            spacing={8}
+            spacing={2}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -92,14 +92,15 @@ const Footer = () => {
             <Grid
               container
               rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              // onClick={preventDefault}
+              columnSpacing={{ xs: 3, sm: 2, md: 4 }}
             >
-              {pages.map((page) => (
-                <Link href="#" color="inherit">
-                  <Grid> {page}</Grid>
-                </Link>
-              ))}
+              <Grid>
+                {pages.map((page) => (
+                  <Link href="#" color="inherit">
+                    <Grid> {page}</Grid>
+                  </Link>
+                ))}
+              </Grid>
             </Grid>
             <Box
               sx={{

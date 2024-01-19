@@ -1,0 +1,11 @@
+$primary-color: #ee7799;
+$primary-color: #ff1188;
+
+.wrapper {
+  background: yellow;
+  &-top {
+    h1 {
+      color: $primary-color;
+    }
+  }
+}

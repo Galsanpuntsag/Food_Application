@@ -36,7 +36,10 @@ const CtgryFoods = [
 
 export default function CategoryFoodCard() {
   return (
-    <Card
+    <Grid
+      container
+      rowSpacing={3}
+      columnSpacing={{ xs: 1, sm: 2, md: 4 }}
       sx={{
         maxWidth: "100%",
         p: 10,
@@ -45,10 +48,17 @@ export default function CategoryFoodCard() {
         justifyContent: "center",
         alignItems: "center",
         gap: 20,
+        // background: "green",
       }}
     >
       {CtgryFoods.map((food, i) => (
-        <Box width={200} boxShadow={3} borderRadius={"10px"}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={3}
+          sx={{ boxShadow: 3, borderRadius: "10px" }}
+        >
           <Grid
             position={"relative"}
             sx={{
@@ -98,8 +108,8 @@ export default function CategoryFoodCard() {
               {food.sale}
             </Button>
           </CardContent>
-        </Box>
+        </Grid>
       ))}
-    </Card>
+    </Grid>
   );
 }

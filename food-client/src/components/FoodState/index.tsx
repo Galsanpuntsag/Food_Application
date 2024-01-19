@@ -41,18 +41,22 @@ const stateCards = [
 
 export default function FoodState() {
   return (
-    <Box
+    <Grid
+      container
+      rowSpacing={3}
+      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       sx={{
-        width: "100%",
-        gap: 15,
+        maxWidth: "100%",
+        p: 10,
+        boxShadow: "none",
         display: "flex",
-        justifyContent: "center ",
+        justifyContent: "center",
         alignItems: "center",
-        p: "20px",
+        gap: 20,
       }}
     >
       {stateCards.map((stateCard, i) => (
-        <Box sx={{ gap: 30, p: "15px", boxShadow: 3, borderRadius: "10px" }}>
+        <Grid item xs={12} sm={6} md={3} boxShadow={2}>
           <Typography sx={{ color: "green" }}>{stateCard.icon}</Typography>
           <Box>
             <Typography sx={{ fontWeight: 900, fontSize: 18 }}>
@@ -62,8 +66,21 @@ export default function FoodState() {
               {stateCard.introduce}
             </Typography>
           </Box>
-        </Box>
+        </Grid>
       ))}
-    </Box>
+    </Grid>
   );
 }
+
+// <Grid item xs={6}>
+//   <Item>1</Item>
+// </Grid>
+// <Grid item xs={6}>
+//   <Item>2</Item>
+// </Grid>
+// <Grid item xs={6}>
+//   <Item>3</Item>
+// </Grid>
+// <Grid item xs={6}>
+//   <Item>4</Item>
+// </Grid>
