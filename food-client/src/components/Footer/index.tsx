@@ -40,13 +40,15 @@ const Footer = () => {
     <AppBar
       position="relative"
       sx={{
+        width: "100%",
+        height: "35vh",
         background: "#18ba51",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        backgroundImage: `url(${"/images/home.png"})`,
       }}
     >
-      <FooterIcon />
       <Container
         sx={{
           position: "absolute",
@@ -97,7 +99,11 @@ const Footer = () => {
               <Grid>
                 {pages.map((page) => (
                   <Link href="#" color="inherit">
-                    <Grid> {page}</Grid>
+                    <Typography
+                      sx={{ display: "flex", justifyContent: "space-around" }}
+                    >
+                      {pages}
+                    </Typography>
                   </Link>
                 ))}
               </Grid>
