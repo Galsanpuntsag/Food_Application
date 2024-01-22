@@ -13,7 +13,7 @@ import {
   Tooltip,
   MenuItem,
   InputBase,
-  colors,
+  Link,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../public/images";
@@ -64,10 +64,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const pages = ["Нүүр", "Хоолны цэс", "Хүргэлтийн бүс"];
+const pages = [
+  { text: "Нүүр", link: "/" },
+  { text: "Хоолны цэс", link: "menu" },
+  { text: "Хүргэлтийн бүс", link: "area" },
+];
 const settings = ["Бүртгэл", "Захиалга", "Хаяг", "Гарах"];
 
-function Header() {
+export const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
@@ -103,49 +107,30 @@ function Header() {
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
-              mr: 2,
-              ml: 10,
+              mr: 5,
               mt: 1,
-              display: { xs: "flex", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              width: "30px",
             }}
           >
             <Logo />
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "none" } }}>
-            {pages.map((page) => (
-              <Box sx={{ width: 500 }}>
-                <BottomNavigation
-                  showLabels
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                >
-                  <BottomNavigationAction label={page} />
-                </BottomNavigation>
-              </Box>
-            ))}
-          </Box>
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
+              display: {
+                xs: "none",
+                md: "flex",
+                gap: 20,
+                fontSize: 18,
+                fontWeight: 550,
+                color: "black",
+              },
             }}
           >
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "black", display: "block" }}
-              >
-                {page}
-              </Button>
+              <Link href={"/" + page.link} color="black" underline="none">
+                {page.text}
+              </Link>
             ))}
           </Box>
 
@@ -229,5 +214,5 @@ function Header() {
       </Container>
     </AppBar>
   );
-}
+};
 export default Header;

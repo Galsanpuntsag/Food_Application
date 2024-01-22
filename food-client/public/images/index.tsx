@@ -6,7 +6,7 @@ export default function Logo() {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="30"
-        height="20"
+        height="30"
         viewBox="0 0 33 27"
         fill="none"
       >

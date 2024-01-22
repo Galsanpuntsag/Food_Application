@@ -14,7 +14,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Grid>
-          <Stack spacing={10}>
+          <Stack>
             <Header />
             <ThemeProvider>{children}</ThemeProvider>
             <Footer />

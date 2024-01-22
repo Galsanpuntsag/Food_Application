@@ -40,7 +40,7 @@ const Footer = () => {
     <AppBar
       position="relative"
       sx={{
-        background: "#4caf50",
+        background: "#18ba51",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
