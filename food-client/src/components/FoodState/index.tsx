@@ -44,7 +44,7 @@ export default function FoodState() {
     <Grid
       container
       rowSpacing={3}
-      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+      columnSpacing={{ xs: 1, sm: 2, md: 2 }}
       sx={{
         maxWidth: "100%",
         p: 10,
@@ -56,10 +56,10 @@ export default function FoodState() {
       }}
     >
       {stateCards.map((stateCard, i) => (
-        <Grid item xs={12} sm={6} md={3} boxShadow={2}>
+        <Grid item xs={12} sm={6} md={2} boxShadow={2} borderRadius={2} p={2}>
           <Typography sx={{ color: "green" }}>{stateCard.icon}</Typography>
           <Box>
-            <Typography sx={{ fontWeight: 900, fontSize: 18 }}>
+            <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
               {stateCard.topic}
             </Typography>
             <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
