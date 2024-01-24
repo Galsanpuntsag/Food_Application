@@ -102,7 +102,7 @@ const Footer = () => {
                     <Typography
                       sx={{ display: "flex", justifyContent: "space-around" }}
                     >
-                      {pages}
+                      {page}
                     </Typography>
                   </Link>
                 ))}
