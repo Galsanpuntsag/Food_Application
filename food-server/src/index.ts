@@ -1,15 +1,21 @@
 import express, { Application, Request, Response } from "express";
 import color from "colors";
-import mongoose from "mongoose";
-import User from "./modal/user";
 import { connectDB } from "./config/db";
+import dotenv from "dotenv";
 
-const MONGO_URI = process.env.MONGO_URI as string;
+import authRoutes from "./router/userRoutes";
+import sendEmail from "./router/sendEmailRoutes";
+
+dotenv.config();
+console.log(process.env);
 
 const app: Application = express();
+const MONGO_URI = process.env.MONGO_URI as string;
 
 connectDB(MONGO_URI);
 
-app.use("/auth");
+app.use(express.json());
+app.use("/auth", authRoutes);
+app.use("/verify", sendEmail);
 
-app.listen(8008, () => console.log(color.rainbow("Server is Listening")));
+app.listen(8080, () => console.log(color.rainbow("Server is Listening")));
