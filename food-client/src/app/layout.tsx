@@ -13,13 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Grid>
-          <Stack>
-            <Header />
-            <ThemeProvider>{children}</ThemeProvider>
-            <Footer />
-          </Stack>
-        </Grid>
+        <ThemeProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

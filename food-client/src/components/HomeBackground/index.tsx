@@ -1,15 +1,17 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import FooterIcon from "../../../public/images/FooterIcon";
+import { Grid, Container } from "@mui/material";
 
 const HomeBackground = () => {
   return (
     <Grid
       container
-      wrap="wrap"
+      display={"flex"}
+      flexWrap={"nowrap"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      width="100%"
+      height="50vh"
       sx={{
-        width: "100%",
-        height: "50vh",
         background: "#18ba51",
         backgroundImage: `url(${"/images/home.png"})`,
       }}

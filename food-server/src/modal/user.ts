@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new Schema({
@@ -13,6 +13,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
+    void: Number,
     minLenght: 6,
     required: [true, " И-мэйл хаягаа оруулна уу"],
     select: false,
@@ -38,7 +39,7 @@ const userSchema = new Schema({
 
 userSchema.pre("save", async function async() {
   const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  this.password = await bcrypt.hash(this.password as string, salt);
 });
 
 const User = model("User", userSchema);

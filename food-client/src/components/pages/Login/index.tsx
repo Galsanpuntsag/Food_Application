@@ -30,7 +30,7 @@ const LoginPage = () => {
           <Input label="Нууц үг" showPassword />
           <Link
             href={"/updatepass"}
-            color="black"
+            color="red"
             underline="none"
             variant="button"
             align="right"

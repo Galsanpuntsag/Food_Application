@@ -4,7 +4,7 @@ import { Button, Input } from "@/components";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import FilterDramaIcon from "@mui/icons-material/FilterDrama";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   return (
     <Container>
       <Box
@@ -51,4 +51,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

@@ -41,11 +41,12 @@ const Footer = () => {
       position="relative"
       sx={{
         width: "100%",
-        height: "35vh",
+        height: "45vh",
         background: "#18ba51",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flexWrap: "nowrap",
         backgroundImage: `url(${"/images/home.png"})`,
       }}
     >
@@ -58,17 +59,15 @@ const Footer = () => {
         }}
       >
         <Stack
-          spacing={4}
           sx={{
             display: { xs: "flex", md: "flex", xl: "flex" },
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
-            mt: "50px",
           }}
         >
           <Stack
-            spacing={2}
+            spacing={6}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -91,12 +90,12 @@ const Footer = () => {
             >
               <WhiteIcon /> <Typography>Food Delivery</Typography>
             </Box>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 3, sm: 2, md: 4 }}
-            >
-              <Grid>
+            <Grid container>
+              <Grid
+                item
+                gap={10}
+                sx={{ display: { xs: 12, sm: 6, md: "flex" } }}
+              >
                 {pages.map((page) => (
                   <Link href="#" color="inherit">
                     <Typography
@@ -125,12 +124,12 @@ const Footer = () => {
               ))}
             </Box>
           </Stack>
-          <Box sx={{ boxShadow: "none", color: "white" }}>
+          <Stack mt={8} sx={{ boxShadow: "none", color: "white" }}>
             <Typography>
               @2024 Pinecone Foods Deliver Application LLC
             </Typography>
             <Typography>Зохиогчийн эрх хуулиар хамгаалагдсанв</Typography>
-          </Box>
+          </Stack>
         </Stack>
       </Container>
     </AppBar>
