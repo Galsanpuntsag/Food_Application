@@ -11,20 +11,20 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = async (email: string, subject: string) => {
+export const sendEmail = async (email: string, otp: string) => {
   const info = await transporter.sendMail({
     from: process.env.EMAIL_USER, // sender address
     to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
-    html: generateTemplate(email), // html body
+    html: generateTemplate(otp), // html body
   });
 };
 
-const generateTemplate = (name: string) => {
+const generateTemplate = (otp: string) => {
   return `
           <div>
-          <h1>Hello ${name}</h1>
+          <h1>Hello ${otp}</h1>
           <h1>Welcome to our platform</h1> 
           </div>
           `;

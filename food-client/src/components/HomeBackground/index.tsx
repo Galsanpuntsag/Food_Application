@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Container } from "@mui/material";
+import FooterIcon from "../../../public/images/FooterIcon";
 
 const HomeBackground = () => {
   return (

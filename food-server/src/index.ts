@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import color from "colors";
 import { connectDB } from "./config/db";
 import dotenv from "dotenv";
+import cors from "cors";
 
 import authRoutes from "./router/userRoutes";
 import sendEmail from "./router/sendEmailRoutes";
@@ -15,6 +16,7 @@ const port = process.env.PORT;
 
 connectDB(MONGO_URI);
 
+app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/verify", sendEmail);

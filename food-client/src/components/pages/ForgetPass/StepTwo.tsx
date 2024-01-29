@@ -1,9 +1,29 @@
 "use client";
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { Button, Input } from "@/components";
 import { Box, Container, Stack, Typography, Link } from "@mui/material";
+import axios from "axios";
+import { toast } from "react-toastify";
+interface IStepProps {
+  email: string;
+  otp: string;
+  handleNext: () => void;
+  handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-const NewPassword = () => {
+const StepTwo = ({ email, otp, handleNext, handleChangeInput }: IStepProps) => {
+  const handleSendOtp = async () => {
+    try {
+      const data = await axios.post("http://localhost:8080/verify/otp", {
+        email,
+        otp,
+      });
+      console.log("TWOSTEPEMAIL", email);
+      handleNext();
+    } catch (error) {
+      toast.error("OTP failed to");
+    }
+  };
   return (
     <Container>
       <Box
@@ -27,7 +47,7 @@ const NewPassword = () => {
         </Typography>
         <Stack width="100%" sx={{ mb: "2rem" }}>
           <Typography>
-            Таны example@pinecone.mn хаяг руу сэргээх код илгээх болно.
+            Таны {email} хаяг руу сэргээх код илгээх болно.
           </Typography>
           <Typography> Нууц үг сэргээх код</Typography>
           <Input label="кодыг оруулна уу" showPassword />
@@ -41,4 +61,4 @@ const NewPassword = () => {
   );
 };
 
-export default NewPassword;
+export default StepTwo;

@@ -17,7 +17,7 @@ interface State extends SnackbarOrigin {
   open: boolean;
 }
 
-const GetNewPass = () => {
+const StepThree = () => {
   const [state, setState] = React.useState<State>({
     open: false,
     vertical: "top",
@@ -87,4 +87,4 @@ const GetNewPass = () => {
   );
 };
 
-export default GetNewPass;
+export default StepThree;
