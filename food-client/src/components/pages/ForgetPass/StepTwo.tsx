@@ -13,15 +13,18 @@ interface IStepProps {
 
 const StepTwo = ({ email, otp, handleNext, handleChangeInput }: IStepProps) => {
   const SendToOtp = async () => {
+    console.log("WOrking");
     try {
       const data = await axios.post("http://localhost:8080/verify/otp", {
         email,
         otp,
       });
       console.log("SENFOTPEMAil", email, otp);
+      console.log("DFDSATAAT", data);
       handleNext();
     } catch (error) {
-      toast.error("OTP failed to");
+      console.log("ERRSENDTOotp", error);
+      toast("OTP failed to");
     }
   };
   return (

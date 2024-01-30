@@ -58,8 +58,10 @@ const ForgetPass = () => {
       )}
       {activeStep === 3 && (
         <StepThree
-          handleNext={handleNext}
+          email={user.email}
+          password={user.password}
           handleChangeInput={handleChangeInput}
+          handleNext={handleNext}
         />
       )}
     </Box>

@@ -1,24 +1,44 @@
+"use client";
 import React, { ChangeEvent } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { Button, Input } from "@/components";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
+
 import Swal from "sweetalert2";
 
 interface IStepProps {
-  pasword: string;
+  email: string;
+  password: string;
   handleNext: () => void;
   handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const StepThree = ({ handleChangeInput }: IStepProps) => {
+const StepThree = ({ email, password, handleChangeInput }: IStepProps) => {
   const router = useRouter();
   const savePassword = async () => {
-    await Swal.fire({
-      title: "Таны нууц үг амжилттай солигдлоо",
-      text: "та шинэ нууц үгээ ашиглан нэвтэрнэ үү",
-      icon: "success",
-    });
-    router.replace("/login");
+    console.log("WORKING");
+  };
+  const changePassword = async () => {
+    try {
+      const data = await axios.put(
+        "http://localhost:8080/verify/changepassword",
+        {
+          email,
+          password,
+        }
+      );
+      console.log("CHANGESEND", data);
+      await Swal.fire({
+        title: "Таны нууц үг амжилттай солигдлоо",
+        text: "та шинэ нууц үгээ ашиглана нэвтэрнэ үү",
+        icon: "success",
+      });
+
+      router.replace("/login");
+    } catch (error) {
+      console.log("ERRCahnge", error);
+    }
   };
 
   return (
@@ -44,13 +64,19 @@ const StepThree = ({ handleChangeInput }: IStepProps) => {
         </Typography>
 
         <Stack width="100%" sx={{ mb: "2rem" }}>
-          <Input label="Нууц үг" onChange={handleChangeInput} showPassword />
           <Input
-            label="Нууц үг давтах"
+            label="Нууц үг"
+            name="password"
             onChange={handleChangeInput}
             showPassword
           />
-          <Button label={"Сэргээх"} onClick={savePassword} />
+          {/* <Input
+            label="Нууц үг давтах"
+            name="repassword"
+            onChange={handleChangeInput}
+            showPassword
+          /> */}
+          <Button label={"Сэргээх"} onClick={changePassword} />
         </Stack>
       </Box>
     </Container>

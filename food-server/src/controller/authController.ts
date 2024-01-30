@@ -32,7 +32,7 @@ export const signin = async (req: Request, res: Response) => {
         .json({ message: `${email}-тэй хэрэглэгч олдсонгүй.` });
     }
 
-    const isValid = await bcrypt.compare(password, user.password);
+    const isValid = await bcrypt.compare(password, user.password as string);
 
     if (!isValid) {
       return res

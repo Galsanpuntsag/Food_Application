@@ -42,6 +42,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
 };
 
 export const verifyOtp = async (req: Request, res: Response) => {
+  console.log("Working");
   try {
     const { email, otp } = req.body;
     console.log("EM", email);
@@ -56,9 +57,31 @@ export const verifyOtp = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "your code is incorrect" });
     }
     console.log("valid", validOtp);
-    res.status(200).json({ message: "your code validated" });
+    res.status(200).json({ message: "your code validated", email, otp });
   } catch (error) {
     console.log("ERROE", error);
     res.status(400).json({ message: "Server is internal error", error });
+  }
+};
+
+export const changePass = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    console.log("CHANGE_REQ", email, password);
+    const findUser = await User.findOne({ email }).select("+password");
+    console.log("FINDUSERaTchange", findUser);
+
+    if (!findUser) {
+      return res.status(400).json({ message: "Хэрэглэгч олдсонгүй" });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(findUser.password as string, salt);
+
+    const update = await User.updateOne({ password: hashedPass });
+    findUser.save();
+    console.log("sss", update);
+    res.status(200).json({ message: "successfully changed password", update });
+  } catch (error) {
+    console.log("ERRCHANGE", error);
   }
 };
