@@ -12,13 +12,13 @@ interface IStepProps {
 }
 
 const StepTwo = ({ email, otp, handleNext, handleChangeInput }: IStepProps) => {
-  const handleSendOtp = async () => {
+  const SendToOtp = async () => {
     try {
       const data = await axios.post("http://localhost:8080/verify/otp", {
         email,
         otp,
       });
-      console.log("TWOSTEPEMAIL", email);
+      console.log("SENFOTPEMAil", email, otp);
       handleNext();
     } catch (error) {
       toast.error("OTP failed to");
@@ -50,11 +50,16 @@ const StepTwo = ({ email, otp, handleNext, handleChangeInput }: IStepProps) => {
             Таны {email} хаяг руу сэргээх код илгээх болно.
           </Typography>
           <Typography> Нууц үг сэргээх код</Typography>
-          <Input label="кодыг оруулна уу" showPassword />
+          <Input
+            label="кодыг оруулна уу"
+            name="otp"
+            onChange={handleChangeInput}
+            showPassword
+          />
         </Stack>
 
         <Stack flex="row" width="100%" justifyContent="flex-end">
-          <Button label="Үргэлжлүүлэх" btnType="outlined" />
+          <Button label="Үргэлжлүүлэх" btnType="outlined" onClick={SendToOtp} />
         </Stack>
       </Box>
     </Container>

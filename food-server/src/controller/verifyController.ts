@@ -3,7 +3,7 @@ import { sendEmail } from "../utils/sendEmail";
 import User from "../modal/user";
 import bcrypt from "bcrypt";
 
-export const sendemail = async (req: Request, res: Response) => {
+export const verifyEmail = async (req: Request, res: Response) => {
   console.log("SEND_EMAIL");
   try {
     const { email } = req.body;
@@ -27,7 +27,9 @@ export const sendemail = async (req: Request, res: Response) => {
     console.log("BCRYPTSALT", findUser.otp);
 
     await findUser.save();
+    console.log("FFFFFF", findUser);
     await sendEmail(email, otp);
+    console.log("SSSEND");
 
     res.status(201).json({ message: "Email successful send" });
   } catch (error) {
@@ -36,5 +38,27 @@ export const sendemail = async (req: Request, res: Response) => {
       message: "Email failed to send ",
       error,
     });
+  }
+};
+
+export const verifyOtp = async (req: Request, res: Response) => {
+  try {
+    const { email, otp } = req.body;
+    console.log("EM", email);
+    console.log("OTP", otp);
+    const findUser = await User.findOne({ email });
+    console.log("FInd", findUser);
+    if (!findUser) {
+      res.status(400).json({ message: "User not found" });
+    }
+    const validOtp = await bcrypt.compare(otp, findUser?.otp as string);
+    if (!validOtp) {
+      return res.status(400).json({ message: "your code is incorrect" });
+    }
+    console.log("valid", validOtp);
+    res.status(200).json({ message: "your code validated" });
+  } catch (error) {
+    console.log("ERROE", error);
+    res.status(400).json({ message: "Server is internal error", error });
   }
 };

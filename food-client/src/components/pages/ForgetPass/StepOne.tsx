@@ -12,16 +12,7 @@ interface IStepProps {
 
 const StepOne = ({ email, handleNext, handleChangeInput }: IStepProps) => {
   console.log("EMAILLSADF", email);
-  //   const handleNext = async() => {
-  //    try{ const data = axios.post("http://localhost:8080/verify/sendemail", {
-  //     email: user.email,
-  //   });
-  //   setSelected(handleNext)
-  // }
-  //    catch(){
-
-  //    }
-  //   }
+ 
   return (
     <Container>
       <Box

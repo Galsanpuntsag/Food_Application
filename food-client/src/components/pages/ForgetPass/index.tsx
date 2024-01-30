@@ -17,17 +17,21 @@ const ForgetPass = () => {
     otp: "",
   });
 
-  const handleNext = async () => {
+  const sendToEmail = async () => {
     try {
-      const data = await axios.post("http://localhost:8080/verify/sendemail", {
+      const data = await axios.post("http://localhost:8080/verify/email", {
         email: user.email,
       });
-      console.log("email", data);
-      setActiveStep((prev) => prev + 1);
+      handleNext();
     } catch (error) {
       console.log("ERRRRRR", error);
       toast.error("Email илгэээхэд алдаа гарлаа.");
     }
+  };
+
+  const handleNext = async () => {
+    setActiveStep((prev) => prev + 1);
+    console.log("step", activeStep);
   };
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +44,7 @@ const ForgetPass = () => {
       {activeStep === 1 && (
         <StepOne
           email={user.email}
-          handleNext={handleNext}
+          handleNext={sendToEmail}
           handleChangeInput={handleChangeInput}
         />
       )}
@@ -52,7 +56,12 @@ const ForgetPass = () => {
           handleChangeInput={handleChangeInput}
         />
       )}
-      {activeStep === 3 && <StepThree />}
+      {activeStep === 3 && (
+        <StepThree
+          handleNext={handleNext}
+          handleChangeInput={handleChangeInput}
+        />
+      )}
     </Box>
   );
 };

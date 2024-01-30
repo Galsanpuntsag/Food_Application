@@ -4,8 +4,8 @@ import { connectDB } from "./config/db";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import authRoutes from "./router/userRoutes";
-import sendEmail from "./router/sendEmailRoutes";
+import authRoute from "./routes/userRoute";
+import verifyRoute from "./routes/verifyRoute";
 
 dotenv.config();
 console.log(process.env);
@@ -18,8 +18,8 @@ connectDB(MONGO_URI);
 
 app.use(cors());
 app.use(express.json());
-app.use("/auth", authRoutes);
-app.use("/verify", sendEmail);
+app.use("/auth", authRoute);
+app.use("/verify", verifyRoute);
 
 app.listen(port, () =>
   console.log(color.rainbow(`Server is Listening ${port}`))

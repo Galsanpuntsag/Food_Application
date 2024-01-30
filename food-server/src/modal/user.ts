@@ -41,11 +41,6 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.pre("save", async function async() {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password as string, salt);
-});
-
 const User = model("User", userSchema);
 
 export default User;

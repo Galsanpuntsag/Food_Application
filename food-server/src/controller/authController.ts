@@ -7,10 +7,11 @@ export const signup = async (req: Request, res: Response) => {
   try {
     const newUser = req.body;
     console.log("USERNEW", newUser);
-    const user = await User.create(newUser);
-    res
-      .status(201)
-      .json({ message: "Шинэ хэрэглэгч амжилттай бүртгэгдлэлээ", user });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(newUser.password, salt);
+    await User.create({ ...newUser, password: hashedPass });
+    console.log("CONTROLLER_user");
+    res.status(201).json({ message: "Шинэ хэрэглэгч амжилттай бүртгэгдлэлээ" });
   } catch (error) {
     res
       .status(400)
@@ -31,7 +32,7 @@ export const signin = async (req: Request, res: Response) => {
         .json({ message: `${email}-тэй хэрэглэгч олдсонгүй.` });
     }
 
-    const isValid = await bcrypt.compare(password, user.password as string);
+    const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
       return res
@@ -54,4 +55,3 @@ export const signin = async (req: Request, res: Response) => {
       .json({ message: "Шинэ хэрэглэгч бүртгэхэд алдаа гарлаа", error });
   }
 };
-//USer modal
