@@ -3,7 +3,7 @@ const FooterIcon = () => {
     <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="100vh"
+        width="100%"
         height="100vh"
         viewBox="0 0 1440 545"
         fill="none"

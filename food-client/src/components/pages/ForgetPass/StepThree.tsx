@@ -70,12 +70,12 @@ const StepThree = ({ email, password, handleChangeInput }: IStepProps) => {
             onChange={handleChangeInput}
             showPassword
           />
-          {/* <Input
+          <Input
             label="Нууц үг давтах"
             name="repassword"
             onChange={handleChangeInput}
             showPassword
-          /> */}
+          />
           <Button label={"Сэргээх"} onClick={changePassword} />
         </Stack>
       </Box>

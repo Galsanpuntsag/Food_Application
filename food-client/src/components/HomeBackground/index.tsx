@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Container } from "@mui/material";
+import { Grid, Container, Typography } from "@mui/material";
 import FooterIcon from "../../../public/images/FooterIcon";
 
 const HomeBackground = () => {
@@ -14,9 +14,28 @@ const HomeBackground = () => {
       height="50vh"
       sx={{
         background: "#18ba51",
-        backgroundImage: `url(${"/images/home.png"})`,
+        position: "relative",
       }}
-    ></Grid>
+    >
+      <FooterIcon />
+      <Grid sx={{ position: "absolute", display: "flex" }}>
+        <Grid xs={6}>
+          <Grid xs={6}>
+            <Typography>Pinecone Food Delivery</Typography>
+          </Grid>
+          <Grid xs={6}>
+            {" "}
+            <Typography>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi
+              impedit nemo alias deserunt beatae repudiandae velit, provident
+              laborum, aliquid autem inventore necessitatibus. Voluptatum iusto
+              voluptate pariatur dolore exercitationem fugiat natus.
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid xs={6}></Grid>
+      </Grid>
+    </Grid>
   );
 };
 

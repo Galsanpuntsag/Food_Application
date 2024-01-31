@@ -41,15 +41,15 @@ const Footer = () => {
       position="relative"
       sx={{
         width: "100%",
-        height: "45vh",
+        height: "40vh",
         background: "#18ba51",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexWrap: "nowrap",
-        backgroundImage: `url(${"/images/home.png"})`,
       }}
     >
+      <FooterIcon />
       <Container
         sx={{
           position: "absolute",

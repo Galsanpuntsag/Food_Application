@@ -100,7 +100,10 @@ export const Header = () => {
 
   return (
     <AppBar position="static" sx={{ background: "#ffffff", boxShadow: "none" }}>
-      <Container maxWidth="xl" sx={{ color: "black" }}>
+      <Container
+        maxWidth="xl"
+        sx={{ display: { xl: { maxWidth: "xl" } }, color: "black" }}
+      >
         <Toolbar disableGutters>
           <Typography
             variant="h6"

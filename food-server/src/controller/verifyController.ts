@@ -14,7 +14,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
       .padStart(6, "0");
 
     const findUser = await User.findOne({ email });
-    console.log("FINDuser_Email", findUser);
+    console.log("FINDuser_Email", findUser?.email);
 
     if (!findUser) {
       return res.status(400).json({ message: "user not find" });

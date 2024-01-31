@@ -23,6 +23,7 @@ const ForgetPass = () => {
         email: user.email,
       });
       handleNext();
+      console.log("datadat", data);
     } catch (error) {
       console.log("ERRRRRR", error);
       toast.error("Email илгэээхэд алдаа гарлаа.");

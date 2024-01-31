@@ -9,12 +9,15 @@ import {
   InputAdornment,
   IconButton,
   FormControl,
+  FormHelperText,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface IInputProps {
-  label: string;
   name?: string;
+  label: string;
+  value?: string;
+  errorText?: string | undefined;
   showPassword?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -24,6 +27,8 @@ export const Input = ({
   showPassword = false,
   onChange,
   name,
+  value,
+  errorText,
 }: IInputProps) => {
   const [isShowPassword, setIsShowPassword] = useState(showPassword);
   return (
@@ -33,6 +38,7 @@ export const Input = ({
         <OutlinedInput
           sx={{ background: "#ECEDf0" }}
           name={name}
+          value={value}
           onChange={onChange}
           placeholder={label}
           type={isShowPassword ? "password" : "text"}
@@ -50,6 +56,9 @@ export const Input = ({
             )
           }
         />
+        <FormHelperText error={errorText ? true : false}>
+          {errorText}
+        </FormHelperText>
       </FormControl>
     </>
   );
