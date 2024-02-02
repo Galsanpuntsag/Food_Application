@@ -27,8 +27,8 @@ const LoginPage = () => {
   //formik
   const formik = useFormik({
     onSubmit: ({ email, password }) => {
-      console.log("Email", email);
-      console.log("Pass", password);
+      console.log("EmailLLLLLL", password);
+      console.log("EmailLLLLLLemail", email);
     },
     initialValues: {
       email: user.email,

@@ -14,11 +14,11 @@ const HomeBackground = () => {
       height="50vh"
       sx={{
         background: "#18ba51",
-        position: "relative",
+        // position: "relative",
       }}
     >
-      <FooterIcon />
-      <Grid sx={{ position: "absolute", display: "flex" }}>
+      {/* <FooterIcon /> */}
+      <Grid>
         <Grid xs={6}>
           <Grid xs={6}>
             <Typography>Pinecone Food Delivery</Typography>

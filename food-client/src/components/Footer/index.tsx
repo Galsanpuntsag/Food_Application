@@ -5,7 +5,7 @@ import WhiteIcon from "../../../public/images/WhiteIcon";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import FooterIcon from "../../../public/images/FooterIcon";
+import FooterImg from "../../../public/images/FooterIcon";
 import { bottom } from "@popperjs/core";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -41,7 +41,7 @@ const Footer = () => {
       position="relative"
       sx={{
         width: "100%",
-        height: "40vh",
+        height: "60vh",
         background: "#18ba51",
         display: "flex",
         justifyContent: "center",
@@ -49,7 +49,6 @@ const Footer = () => {
         flexWrap: "nowrap",
       }}
     >
-      <FooterIcon />
       <Container
         sx={{
           position: "absolute",

@@ -14,13 +14,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>
-          <UserProvider>
-            <Header />
-            {children}
-            <Footer />
-          </UserProvider>
-        </ThemeProvider>
+        <Grid>
+          <ThemeProvider>
+            <UserProvider>
+              <Header />
+              {children}
+              <Footer />
+            </UserProvider>
+          </ThemeProvider>
+        </Grid>
       </body>
     </html>
   );

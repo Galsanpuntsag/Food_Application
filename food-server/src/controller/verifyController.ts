@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import { sendEmail } from "../utils/sendEmail";
 import User from "../modal/user";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import fs from "jsonwebtoken";
 
-export const verifyEmail = async (req: Request, res: Response) => {
+export const sendEmailToUser = async (req: Request, res: Response) => {
   console.log("SEND_EMAIL");
   try {
     const { email } = req.body;
@@ -83,5 +85,32 @@ export const changePass = async (req: Request, res: Response) => {
     res.status(200).json({ message: "successfully changed password", update });
   } catch (error) {
     console.log("ERRCHANGE", error);
+  }
+};
+
+export const verifyUserEmail = async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization;
+    console.log("AtverEm", token);
+
+    let valid = jwt.verify(token as string, "12345678" as string) as {
+      email: string;
+    };
+    console.log("VALLIDSUCCESS");
+
+    const findUser = await User.findOne({ email: valid.email });
+    console.log("FindUSerEmail", findUser);
+
+    if (!findUser) {
+      return res
+        .status(500)
+        .json({ message: "Хэрэглэгчийн и-мэйл хаяг олдсонгүй" });
+    } else {
+      findUser.isVerified = true;
+      res.status(200).send(`<h1 style="color:green">Valid Link</h1>`);
+    }
+  } catch (error) {
+    console.log("ATverifyEmailERROR__", error);
+    res.status(500).json({ message: "Server is internal error", error });
   }
 };

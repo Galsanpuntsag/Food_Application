@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { Button as MuiButton, Stack } from "@mui/material";
 
 interface IButtonProps {
-  label?: ReactNode;
+  label: string;
   disabled?: boolean;
   btnType?: "contained" | "outlined" | "text";
   onClick?: () => void;
@@ -19,6 +19,7 @@ export const Button = ({
   return (
     <Stack direction="row">
       <MuiButton
+        name="name"
         onClick={onClick}
         color="primary"
         variant={btnType}
