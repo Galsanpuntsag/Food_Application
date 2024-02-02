@@ -6,6 +6,8 @@ import cors from "cors";
 
 import authRoute from "./routes/userRoute";
 import verifyRoute from "./routes/verifyRoute";
+import errorHandler from "./middleware/errorHandler";
+import categoryRoute from "./routes/categoryRoute";
 
 dotenv.config();
 console.log(process.env);
@@ -20,6 +22,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoute);
 app.use("/verify", verifyRoute);
+app.use("/categories", categoryRoute);
+
+app.use(errorHandler);
 
 app.listen(port, () =>
   console.log(color.rainbow(`Server is Listening ${port}`))

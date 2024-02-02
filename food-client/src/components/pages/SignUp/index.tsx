@@ -6,9 +6,11 @@ import FilterDramaIcon from "@mui/icons-material/FilterDrama";
 import { UserContext } from "@/context/userProvider";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import axios from "axios";
 
-const SignUpPage = () => {
-  const { login, user } = useContext(UserContext);
+const SignUpPage = async () => {
+  const { login, user, signup } = useContext(UserContext);
+
   const validationSchema = yup.object({
     name: yup
       .string()
@@ -33,14 +35,10 @@ const SignUpPage = () => {
         "Таний пасвортууд хоорондоо тохирохгүй байнй.",
       ]),
   });
+
   //formik
   const formik = useFormik({
-    onSubmit: ({ email, password, name }) => {
-      // login(email, password);
-      console.log("NAme", name);
-      console.log("NAme", email);
-      console.log("NAme", password);
-    },
+    onSubmit: ({ email, password, name }) => {},
 
     initialValues: {
       name: user.name,

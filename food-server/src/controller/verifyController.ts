@@ -3,7 +3,6 @@ import { sendEmail } from "../utils/sendEmail";
 import User from "../modal/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import fs from "jsonwebtoken";
 
 export const sendEmailToUser = async (req: Request, res: Response) => {
   console.log("SEND_EMAIL");
@@ -26,11 +25,10 @@ export const sendEmailToUser = async (req: Request, res: Response) => {
     const salt = await bcrypt.genSalt(10);
 
     findUser.otp = await bcrypt.hash(otp, salt);
-    console.log("BCRYPTSALT", findUser.otp);
 
     await findUser.save();
     console.log("FFFFFF", findUser);
-    await sendEmail(email, otp);
+    await sendEmail({ email, otp });
     console.log("SSSEND");
 
     res.status(201).json({ message: "Email successful send" });
@@ -88,29 +86,28 @@ export const changePass = async (req: Request, res: Response) => {
   }
 };
 
-export const verifyUserEmail = async (req: Request, res: Response) => {
+export const verifyEmailUser = async (req: Request, res: Response) => {
   try {
-    const token = req.headers.authorization;
-    console.log("AtverEm", token);
+    const { token } = req.query;
 
-    let valid = jwt.verify(token as string, "12345678" as string) as {
-      email: string;
-    };
-    console.log("VALLIDSUCCESS");
+    const { email } = jwt.verify(
+      token as string,
+      process.env.JWT_PRIVATE_KEY as string
+    ) as { email: string };
 
-    const findUser = await User.findOne({ email: valid.email });
-    console.log("FindUSerEmail", findUser);
+    const findUser = await User.findOne({ email: email });
 
     if (!findUser) {
-      return res
-        .status(500)
-        .json({ message: "Хэрэглэгчийн и-мэйл хаяг олдсонгүй" });
+      res.status(500).send("Not verified");
     } else {
       findUser.isVerified = true;
-      res.status(200).send(`<h1 style="color:green">Valid Link</h1>`);
     }
+
+    await findUser?.save();
+
+    res.status(200).send(`<h1 style="color: green">Valid Link </h1>`);
   } catch (error) {
-    console.log("ATverifyEmailERROR__", error);
-    res.status(500).json({ message: "Server is internal error", error });
+    console.log(error);
+    res.status(500).send({ message: "Server is internal error", error });
   }
 };

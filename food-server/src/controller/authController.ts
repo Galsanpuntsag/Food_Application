@@ -1,16 +1,27 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../modal/user";
 import bcrypt from "bcrypt";
+import { sendEmail } from "../utils/sendEmail";
+import MyError from "../utils/myError";
 
 export const signup = async (req: Request, res: Response) => {
+  console.log("Signup");
   try {
     const newUser = req.body;
     console.log("USERNEW", newUser);
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(newUser.password, salt);
-    await User.create({ ...newUser, password: hashedPass });
+    const user = await User.create({ ...newUser, password: hashedPass });
     console.log("CONTROLLER_user");
+    const verifyToken = jwt.sign(
+      { email: user.email },
+      process.env.JWT_PRIVATE_KEY as string,
+      {
+        expiresIn: "5m",
+      }
+    );
+    sendEmail({ email: user.email, token: verifyToken });
     res.status(201).json({ message: "Шинэ хэрэглэгч амжилттай бүртгэгдлэлээ" });
   } catch (error) {
     res
@@ -19,7 +30,11 @@ export const signup = async (req: Request, res: Response) => {
   }
 };
 
-export const signin = async (req: Request, res: Response) => {
+export const signin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
     console.log("EMAIL", email);
@@ -27,17 +42,13 @@ export const signin = async (req: Request, res: Response) => {
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: `${email}-тэй хэрэглэгч олдсонгүй.` });
+      throw new Error(`${email}-тэй хэрэглэгч олдсонгүй.`);
     }
 
     const isValid = await bcrypt.compare(password, user.password as string);
 
     if (!isValid) {
-      return res
-        .status(400)
-        .json({ message: `И-мэйл эсвэл нууц үг буруу байна.` });
+      throw new MyError(`И-мэйл эсвэл нууц үг буруу байна.`, 400);
     }
     const token = jwt.sign(
       {
@@ -49,9 +60,6 @@ export const signin = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "Хэрэглэгч амжилттай нэвтэрлээ", token });
   } catch (error) {
-    console.log("ERR", error);
-    res
-      .status(400)
-      .json({ message: "Шинэ хэрэглэгч бүртгэхэд алдаа гарлаа", error });
+    next(error);
   }
 };
