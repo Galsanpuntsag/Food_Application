@@ -9,7 +9,7 @@ const categorySchema = new Schema({
   },
   description: {
     type: String,
-    require: [true, "ds"],
+    require: [true, "disudhaujajsadf"],
   },
   image: {
     type: String,

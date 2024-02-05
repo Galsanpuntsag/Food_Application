@@ -28,6 +28,7 @@ export const createUser = async (
     sendEmail({ email: user.email as string, token: verifyToken });
     res.status(201).json({ message: "Шинэ хэрэглэгч амжилттай бүртгэгдлэлээ" });
   } catch (error) {
+    console.log("ERORO", error);
     next(error);
   }
 };

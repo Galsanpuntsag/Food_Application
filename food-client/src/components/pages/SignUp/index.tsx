@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useContext } from "react";
 import { Button, Input } from "@/components";
 import { Box, Container, Stack, Typography } from "@mui/material";
@@ -8,8 +9,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 
-const SignUpPage = async () => {
-  const { login, user, signup } = useContext(UserContext);
+const SignUpPage = () => {
+  const { user, signup } = useContext(UserContext);
 
   const validationSchema = yup.object({
     name: yup
@@ -38,14 +39,28 @@ const SignUpPage = async () => {
 
   //formik
   const formik = useFormik({
-    onSubmit: ({ email, password, name }) => {},
+    onSubmit: ({
+      name,
+      email,
+      password,
+      address,
+      rePassword,
+    }: {
+      name: string;
+      email: string;
+      password: string;
+      address: string;
+      rePassword?: string;
+    }) => {
+      signup(name, email, password, address);
+    },
 
     initialValues: {
       name: user.name,
       email: user.email,
-      address: user.address,
-      password: user.password,
-      rePassword: user.rePassword,
+      address: user.address as string,
+      password: user.password as string,
+      rePassword: user.rePassword as string,
     },
     validateOnChange: false,
     validateOnBlur: false,
