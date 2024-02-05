@@ -5,7 +5,11 @@ import bcrypt from "bcrypt";
 import { sendEmail } from "../utils/sendEmail";
 import MyError from "../utils/myError";
 
-export const signup = async (req: Request, res: Response) => {
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.log("Signup");
   try {
     const newUser = req.body;
@@ -21,12 +25,88 @@ export const signup = async (req: Request, res: Response) => {
         expiresIn: "5m",
       }
     );
-    sendEmail({ email: user.email, token: verifyToken });
+    sendEmail({ email: user.email as string, token: verifyToken });
     res.status(201).json({ message: "Шинэ хэрэглэгч амжилттай бүртгэгдлэлээ" });
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Шинэ хэрэглэгч бүртгэхэд алдаа гарлаа", error });
+    next(error);
+  }
+};
+
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+    console.log("_ID___", userId);
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new MyError(`${userId}-тай хэрэглэгч олдсонгүй`, 400);
+    }
+    res.status(200).json({ message: `${userId}-тай хэрэглэгч олдлоо`, user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const users = await User.find();
+    if (!users) {
+      throw new MyError(`Бүртгүүлсэн хэрэглэгч байхгүй байна.`, 400);
+    }
+    res.status(200).json({ message: "Бүх хэрэглэгчийн мэдээлэл.", users });
+  } catch (error) {
+    next(error);
+  }
+};
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+    const { updateUser } = req.body;
+    const user = await User.findByIdAndUpdate(userId);
+    if (!user) {
+      throw new MyError(`${userId}-тай хэрэглэгч олдсонгүй.`, 400);
+    }
+    res.status(200).json({
+      message: "Хэрэглэгчийн мэдээлэл амжилттай шинэчлэгдсэн.",
+      userId,
+      updateUser,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+    const { deletedUser } = req.body;
+
+    const user = await User.findByIdAndDelete(userId);
+
+    if (!user) {
+      throw new MyError(`${userId}-тай хэрэглэгч олдсонгүй`, 400);
+    }
+    res.status(200).json({
+      message: "Хэрэглэгчийн мэдээлэл амжилттай устгагдсан.",
+      userId,
+      deleteUser,
+    });
+  } catch (error) {
+    next(error);
   }
 };
 

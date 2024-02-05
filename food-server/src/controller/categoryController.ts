@@ -40,11 +40,8 @@ export const getAllCategory = async (
   next: NextFunction
 ) => {
   try {
-    const { categoryId } = req.params;
     const categories = await Category.find();
-    res
-      .status(200)
-      .json({ message: `${categoryId}-тай категори олдлоо`, categories });
+    res.status(200).json({ message: `Бүх категори олдлоо`, categories });
   } catch (error) {
     next(error);
   }

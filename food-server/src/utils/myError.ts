@@ -1,3 +1,4 @@
+//
 class MyError extends Error {
   statusCode: number;
 
