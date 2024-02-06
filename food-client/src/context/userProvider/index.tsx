@@ -46,22 +46,22 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     address: "",
     avatarUrl: "",
     password: "",
-    rePassword: "",
   });
 
-  const login = async () => {
+  const login = async (email: string, password: string) => {
     console.log("loginWorking");
     console.log("UUU", user);
     try {
       const data: IUser = await axios.post(
         "http://localhost:8080/auth/signin",
         {
-          email: user.email,
-          password: user.password,
+          email,
+          password,
         }
       );
       console.log("loginSetUSerworking");
       setUser(data);
+      console.log("DATALogin", data);
       console.log("loginSetUSerworking");
       await Swal.fire({
         title: "Таны нууц үг амжилттай солигдлоо",
@@ -85,7 +85,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
           email: user.email,
           password: user.password,
           address: user.address,
-          rePassword: user.rePassword,
         }
       );
       setUser(data);
