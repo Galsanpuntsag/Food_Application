@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Category from "../modal/category";
 import MyError from "../utils/myError";
+import cloudinary from "../utils/cloudinary";
 
 export const createCategory = async (
   req: Request,
@@ -8,9 +9,16 @@ export const createCategory = async (
   next: NextFunction
 ) => {
   try {
-    const newCategory = req.body;
+    console.log("Body", req.body);
+    console.log("File", req.file);
+    const newCategory = { ...req.body };
+    console.log("NEWCATE", newCategory);
+    if (req.file) {
+      const { secure_url } = await cloudinary.uploader.upload(req.file.path);
+      newCategory.image = secure_url;
+    }
     await Category.create(newCategory);
-    res.status(201).json({ message: "Category succesfully created." }); //created status code 201
+    res.status(201).json({ message: "Category succesful created." }); //created status code 201
   } catch (error) {
     next(error);
   }

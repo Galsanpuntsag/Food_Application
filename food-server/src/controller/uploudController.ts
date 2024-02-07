@@ -7,11 +7,12 @@ export const uploadFile = async (
   next: NextFunction
 ) => {
   try {
-    console.log("FILE", req.file);
+    console.log("FILEЖЖ", req.file);
     //multer front endess ywuulsan fileiig barij awaad bidnii zaaj ugsun fileruu hiigeed bidnii req file ruu medeeluudiig ywuuldag dotor hiij ugdug
 
     const result = await cloudinary.uploader.upload(req.file?.path!);
     res.send("ok===>" + result.secure_url);
+    console.log("RESULT", result);
   } catch (error) {
     next(error);
   }

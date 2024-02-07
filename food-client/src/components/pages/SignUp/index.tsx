@@ -10,7 +10,7 @@ import * as yup from "yup";
 import axios from "axios";
 
 const SignUpPage = () => {
-  const { user, signup } = useContext(UserContext);
+  const { userForm, signup } = useContext(UserContext);
 
   const validationSchema = yup.object({
     name: yup
@@ -44,23 +44,21 @@ const SignUpPage = () => {
       email,
       password,
       address,
-      rePassword,
     }: {
       name: string;
       email: string;
       password: string;
       address: string;
-      rePassword?: string;
     }) => {
       signup(name, email, password, address);
     },
 
     initialValues: {
-      name: user.name,
-      email: user.email,
-      address: user.address as string,
-      password: user.password as string,
-      rePassword: user.rePassword as string,
+      name: "",
+      email: "",
+      address: "",
+      password: "",
+      rePassword: "",
     },
     validateOnChange: false,
     validateOnBlur: false,
