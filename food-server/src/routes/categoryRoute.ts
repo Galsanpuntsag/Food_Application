@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { auth } from "../middleware/auth";
 import {
   createCategory,
   getCategory,
@@ -12,11 +13,11 @@ const router = Router();
 
 router
   .route("/")
-  .get(getAllCategory)
+  .get(auth, getAllCategory)
   .post(upload.single("image"), createCategory);
 router
   .route("/:categoryId")
-  .delete(deleteCategory)
+  .delete(auth, deleteCategory)
   .put(updateCategory)
   .get(getCategory);
 
