@@ -19,7 +19,7 @@ const ForgetPass = () => {
 
   const sendToEmail = async () => {
     try {
-      const data = await axios.post("http://localhost:8080/verify/email", {
+      const data = await axios.post("http://localhost:8080/verify/sendemail", {
         email: user.email,
       });
       handleNext();

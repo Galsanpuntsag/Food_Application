@@ -14,9 +14,9 @@ export const createUser = async (
   try {
     const newUser = req.body;
     console.log("USERNEW", newUser);
-    const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(newUser.password, salt);
-    const user = await User.create({ ...newUser, password: hashedPass });
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPass = await bcrypt.hash(newUser.password, salt);
+    const user = await User.create(newUser);
     console.log("CONTROLLER_user");
     const verifyToken = jwt.sign(
       { email: user.email },
@@ -120,13 +120,14 @@ export const signin = async (
     const { email, password } = req.body;
     console.log("EMAIL", email);
     console.log("PASS", password);
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select("+password").lean();
+    console.log("USER PASS", user?.password);
 
     if (!user) {
       throw new Error(`${email}-тэй хэрэглэгч олдсонгүй.`);
     }
 
-    const isValid = await bcrypt.compare(password, user.password as string);
+    const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
       throw new MyError(`И-мэйл эсвэл нууц үг буруу байна.`, 400);
@@ -139,7 +140,14 @@ export const signin = async (
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    res.status(201).json({ message: "Хэрэглэгч амжилттай нэвтэрлээ", token });
+    res.status(200).json({
+      message: "Хэрэглэгч амжилттай нэвтэрлээ",
+      token,
+      user: {
+        name: user.name,
+        avatarUrl: user.avatarUrl,
+      },
+    });
   } catch (error) {
     next(error);
   }

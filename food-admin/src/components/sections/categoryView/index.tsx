@@ -3,7 +3,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import axios, { AxiosError } from "axios";
 import { Stack, Button, Container, Grid, Typography } from "@mui/material";
-import CategoryModal from "@/components/categoryModal";
+import CategoryModal from "@/components/Modal/category";
 import Iconify from "@/components/iconify";
 import Swal from "sweetalert2";
 
@@ -61,22 +61,6 @@ export default function CategoryView() {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
   };
-  const getCategory = async () => {
-    try {
-      const {
-        data: { categories },
-      } = (await axios.get("http://localhost:8080/categories")) as {
-        data: { categories: [] };
-      };
-      console.log("CAtegoryGEtAll", categories);
-      setCategoris(categories);
-    } catch (error: any) {
-      alert("Add Error" + error.message);
-    }
-  };
-  useEffect(() => {
-    getCategory();
-  }, []);
 
   const createCategory = async () => {
     console.log("createCategoryWorking");
@@ -108,36 +92,37 @@ export default function CategoryView() {
         justifyContent="space-between"
         mb={5}
       >
-        <Typography variant="h4">Ангилалын жагсаалт</Typography>
-
-        <Button
-          variant="contained"
-          color="inherit"
-          startIcon={<Iconify icon="eva:plus-fill" />}
-          onClick={handleOpen}
-        >
-          Шинэ ангилал
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Хоолны жагсаалт
+        </Typography>
+        <Button variant="contained" color="inherit" onClick={handleOpen}>
+          Хоол нэмэх
         </Button>
       </Stack>
 
       <Stack
-        mb={5}
         direction="row"
         alignItems="center"
-        justifyContent="space-between"
+        flexWrap="wrap-reverse"
+        justifyContent="flex-end"
+        sx={{ mb: 2 }}
       >
-        <CategorySearch categories={categories} />
-        <CategorySort
-          options={[
-            { value: "latest", label: "Cүүлийнх" },
-            { value: "popular", label: "Түгээмэл" },
-            { value: "oldest", label: "Өмнөх" },
-          ]}
-        />
+        <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+          {/* <ProductFilters
+            openFilter={openFilter}
+            onOpenFilter={handleOpenFilter}
+            onCloseFilter={handleCloseFilter}
+          /> */}
+
+          {/* <FoodSort /> */}
+        </Stack>
       </Stack>
-      <Grid container spacing={2}>
-        {categories?.map((category: any) => (
-          <CategoryCard key={category._id} category={category} />
+
+      <Grid container spacing={3}>
+        {categories.map((category: any) => (
+          <Grid xs={12} sm={6} md={3}>
+            <CategoryCard key={category._id} category={category} />
+          </Grid>
         ))}
       </Grid>
       <CategoryModal

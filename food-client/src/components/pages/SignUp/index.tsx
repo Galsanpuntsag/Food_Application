@@ -44,13 +44,15 @@ const SignUpPage = () => {
       email,
       password,
       address,
+      rePassword,
     }: {
       name: string;
       email: string;
       password: string;
       address: string;
+      rePassword: string;
     }) => {
-      signup(name, email, password, address);
+      signup(name, email, address, password);
     },
 
     initialValues: {

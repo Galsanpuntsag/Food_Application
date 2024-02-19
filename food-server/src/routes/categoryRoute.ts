@@ -13,7 +13,7 @@ const router = Router();
 
 router
   .route("/")
-  .get(auth, getAllCategory)
+  .get(getAllCategory)
   .post(upload.single("image"), createCategory);
 router
   .route("/:categoryId")

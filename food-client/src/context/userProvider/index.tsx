@@ -47,15 +47,15 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     console.log("loginWorking");
     console.log("UUU", userForm);
     try {
-      const data: IUser = await axios.post(
-        "http://localhost:8080/auth/signin",
-        {
-          email,
-          password,
-        }
-      );
-      console.log("loginSetUSerworking");
-      setUserForm(data);
+      const { data } = await axios.post("http://localhost:8080/auth/signin", {
+        email,
+        password,
+      });
+      console.log("loginSetUSerworking", data);
+      setUserForm(data.user);
+      setUserForm(data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       console.log("DATALogin", data);
       console.log("loginSetUSerworking");
       await Swal.fire({

@@ -84,7 +84,7 @@ const LoginPage = () => {
             showPassword
           />
           <Link
-            href={"/updatepass"}
+            href={"/forgetpass"}
             color="red"
             underline="none"
             variant="button"
