@@ -61,6 +61,22 @@ export default function CategoryView() {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
   };
+  // const getCategory = async () => {
+  //   try {
+  //     const {
+  //       data: { categories },
+  //     } = (await axios.get("http://localhost:8080/categories")) as {
+  //       data: { categories: [] };
+  //     };
+  //     console.log("CAtegoryGEtAll", categories);
+  //     setCategoris(categories);
+  //   } catch (error: any) {
+  //     alert("Add Error" + error.message);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getCategory();
+  // }, []);
 
   const createCategory = async () => {
     console.log("createCategoryWorking");
