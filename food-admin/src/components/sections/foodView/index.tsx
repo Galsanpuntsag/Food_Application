@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useContext } from "react";
 import { Stack, Button } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -16,53 +16,22 @@ import { faker } from "@faker-js/faker";
 import axios from "axios";
 // ----------------------------------------------------------------------
 
-const FOOD_NAME = [
-  "Nike Air Force 1 NDESTRUKT",
-  "Nike Space Hippie 04",
-  "Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear",
-  "Nike Blazer Low 77 Vintage",
-  "Nike ZoomX SuperRep Surge",
-  "Zoom Freak 2",
-  "Nike Air Max Zephyr",
-  "Jordan Delta",
-];
-const FOOD_COLOR = [
-  "#00AB55",
-  "#000000",
-  "#FFFFFF",
-  "#FFC0CB",
-  "#FF4842",
-  "#1890FF",
-  "#94D82D",
-  "#FFC107",
-];
+import { CategoryContext } from "@/context/categoryProvider";
 
-// ----------------------------------------------------------------------
-
-export const products = [...Array(FOOD_NAME.length)].map((_, index) => {
-  const setIndex = index + 1;
-
-  return {
-    id: faker.string.uuid(),
-    cover: `/assets/images/products/product_${setIndex}.jpg`,
-    name: FOOD_NAME[index],
-    price: faker.number.int({ min: 4, max: 99 }),
-    priceSale: setIndex % 3 ? null : faker.number.int({ min: 19, max: 29 }),
-    colors:
-      (setIndex === 1 && FOOD_COLOR.slice(0, 2)) ||
-      (setIndex === 2 && FOOD_COLOR.slice(1, 3)) ||
-      (setIndex === 3 && FOOD_COLOR.slice(2, 4)) ||
-      (setIndex === 4 && FOOD_COLOR.slice(3, 6)) ||
-      (setIndex === 23 && FOOD_COLOR.slice(4, 6)) ||
-      (setIndex === 24 && FOOD_COLOR.slice(5, 6)) ||
-      FOOD_COLOR,
-    status: sample(["sale", "new", "", ""]),
-  };
-});
-
-// ----------------------------------------------------------------------
+// const FOOD_COLOR = [
+//   "#00AB55",
+//   "#000000",
+//   "#FFFFFF",
+//   "#FFC0CB",
+//   "#FF4842",
+//   "#1890FF",
+//   "#94D82D",
+//   "#FFC107",
+// ];
 
 export default function FoodView() {
+  const { categories } = useContext(CategoryContext);
+
   const [foods, setFoods] = useState([]);
   const [newFood, setNewFood] = useState({
     name: "",

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, useContext } from "react";
 import axios, { AxiosError } from "axios";
 import { Stack, Button, Container, Grid, Typography } from "@mui/material";
 import CategoryModal from "@/components/Modal/category";
@@ -11,10 +11,9 @@ import CategoryCard from "./category-card";
 import CategorySort from "./category-sort";
 import CategorySearch from "./category-search";
 
-// ----------------------------------------------------------------------
-import { faker } from "@faker-js/faker";
+import { CategoryContext } from "@/context/categoryProvider";
 
-// ----------------------------------------------------------------------
+import { faker } from "@faker-js/faker";
 
 const CATEGORY_TITLES = [
   "Whiteboard Templates",
@@ -38,7 +37,8 @@ export const categories = [...Array(CATEGORY_TITLES.length)].map(
 // ----------------------------------------------------------------------
 
 export default function CategoryView() {
-  const [categories, setCategoris] = useState([]);
+  const { categories, getCategory } = useContext(CategoryContext);
+  console.log("first", categories);
   const [refresh, setRefresh] = useState(false);
   const [newCategory, setNewCategory] = useState({
     name: "",
@@ -61,22 +61,6 @@ export default function CategoryView() {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
   };
-  // const getCategory = async () => {
-  //   try {
-  //     const {
-  //       data: { categories },
-  //     } = (await axios.get("http://localhost:8080/categories")) as {
-  //       data: { categories: [] };
-  //     };
-  //     console.log("CAtegoryGEtAll", categories);
-  //     setCategoris(categories);
-  //   } catch (error: any) {
-  //     alert("Add Error" + error.message);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getCategory();
-  // }, []);
 
   const createCategory = async () => {
     console.log("createCategoryWorking");
@@ -91,6 +75,7 @@ export default function CategoryView() {
       } = (await axios.post("http://localhost:8080/categories", formData)) as {
         data: { category: object };
       };
+      console.log("FDS", category);
       // setNewCategory(category)
       alert("Successful category  added");
       setRefresh(true);
@@ -135,7 +120,7 @@ export default function CategoryView() {
       </Stack>
 
       <Grid container spacing={3}>
-        {categories.map((category: any) => (
+        {categories?.map((category: any) => (
           <Grid xs={12} sm={6} md={3}>
             <CategoryCard key={category._id} category={category} />
           </Grid>

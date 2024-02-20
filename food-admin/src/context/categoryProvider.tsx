@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useEffect,
   useState,
@@ -14,20 +16,19 @@ interface ICategory {
 
 interface ICategoryContext {
   categories: ICategory[];
+  getCategory: () => void;
 }
 
-export const CategoryContext = createContext<ICategoryContext>({
-  categories: [],
-});
+export const CategoryContext = createContext<ICategoryContext>(
+  {} as ICategoryContext
+);
 
 export const CategoryProvider = ({ children }: PropsWithChildren) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [newCategory, setNewCategory] = useState({
-    name: "",
-    description: "",
-  });
+  const [refresh, setRefresh] = useState(false);
 
   const getCategory = async () => {
+    console.log("WorkingGEtcateguory");
     try {
       const {
         data: { categories },
@@ -45,7 +46,7 @@ export const CategoryProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   return (
-    <CategoryContext.Provider value={{ categories }}>
+    <CategoryContext.Provider value={{ categories, getCategory }}>
       {children}
     </CategoryContext.Provider>
   );

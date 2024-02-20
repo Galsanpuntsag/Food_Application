@@ -1,7 +1,10 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
+
+import { CategoryContext } from "@/context/categoryProvider";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 interface Film {
   title: string;
@@ -17,6 +20,9 @@ function sleep(duration: number): Promise<void> {
 }
 
 export default function CategoryOption() {
+  const { categories } = useContext(CategoryContext);
+  const filterName = categories.filter((v) => v.name);
+
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
@@ -32,7 +38,7 @@ export default function CategoryOption() {
       await sleep(1e3); // For demo purposes.
 
       if (active) {
-        setOptions([...topFilms]);
+        setOptions([]);
       }
     })();
 
@@ -48,39 +54,20 @@ export default function CategoryOption() {
   }, [open]);
 
   return (
-    <Autocomplete
-      id="asynchronous-demo"
-      fullWidth
-      sx={{ background: "#ECEDf0", borderRadius: 1 }}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      isOptionEqualToValue={(option, value) => option.title === value.title}
-      getOptionLabel={(option) => option.title}
-      options={options}
-      loading={loading}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Category"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-      )}
-    />
+    <FormControl fullWidth>
+      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={}
+        label="Category"
+        onChange={handleChange}
+      >
+        {categories.map((category) => (
+          <MenuItem value={category._id}>{category.name}</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
 
