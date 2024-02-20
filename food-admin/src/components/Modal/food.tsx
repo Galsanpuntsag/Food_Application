@@ -7,12 +7,15 @@ import {
   Grid,
   Stack,
   styled,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import Image from "next/image";
 import { Remove, Add, Close } from "@mui/icons-material";
 import { Button, Input } from "../core";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import CategoryOption from "./categoryOption";
 
 const style = {
   position: "absolute" as "absolute",
@@ -42,10 +45,11 @@ const VisuallyHiddenInput = styled("input")({
 export default function FoodModal({
   handleClose,
   open,
-  newFood,
   handleChange,
   handleFileChange,
   createFood,
+  selectedCategory,
+  categories,
 }: any) {
   return (
     <div>
@@ -88,7 +92,21 @@ export default function FoodModal({
             desc="Write food Description"
             onChange={handleChange}
           />
-          <CategoryOption />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedCategory}
+              label="Category"
+              name="category"
+              onChange={handleChange}
+            >
+              {categories.map((e: any) => (
+                <MenuItem value={e._id}>{e.name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <MuiButton
             component="label"
             variant="contained"
@@ -97,7 +115,11 @@ export default function FoodModal({
             sx={{ my: "1rem", backgroundColor: "#18ba51" }}
           >
             Upload file
-            <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+            <VisuallyHiddenInput
+              type="file"
+              name="image"
+              onChange={handleFileChange}
+            />
           </MuiButton>
 
           <Button label="нэмэх" onClick={createFood}></Button>

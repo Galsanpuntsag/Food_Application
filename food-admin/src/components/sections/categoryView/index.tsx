@@ -60,6 +60,7 @@ export default function CategoryView() {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
+    console.log("das");
   };
 
   const createCategory = async () => {

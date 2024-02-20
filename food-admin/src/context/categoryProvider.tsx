@@ -9,6 +9,7 @@ import React, {
 import axios from "axios";
 
 interface ICategory {
+  _id: string;
   name: string;
   description: string;
   image: string;

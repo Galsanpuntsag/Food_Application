@@ -31,6 +31,7 @@ import { CategoryContext } from "@/context/categoryProvider";
 
 export default function FoodView() {
   const { categories } = useContext(CategoryContext);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [foods, setFoods] = useState([]);
   const [newFood, setNewFood] = useState({
@@ -51,14 +52,20 @@ export default function FoodView() {
   const handleOpen = () => {
     setOpen(true);
   };
+  const [options, setOptions] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewFood({ ...newFood, [name]: value });
+    setOptions(name);
+    console.log("newFood", newFood);
+    console.log("newName", name);
+    console.log("newValue", value);
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
+    console.log("File");
   };
 
   const getFood = async () => {
@@ -82,19 +89,24 @@ export default function FoodView() {
   const createFood = async () => {
     try {
       const formData = new FormData();
+      console.log("CreateWorking");
       formData.set("image", file!);
       formData.set("name", newFood.name);
       formData.set("price", newFood.price);
       formData.set("discountPrice", newFood.discountPrice);
       formData.set("description", newFood.description);
       formData.set("category", newFood.category);
-      console.log("FSWorking");
+      console.log("FSWorking", newFood);
+
       const {
-        data: { food },
+        data: { foods },
       } = await axios.post("http://localhost:8080/foods", formData);
+      console.log("FOoods", foods);
       alert("Successful food added");
       setRefresh(true);
-    } catch (error) {}
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -141,10 +153,11 @@ export default function FoodView() {
       <FoodModal
         open={open}
         handleClose={handleClose}
-        newFood={newFood}
         createFood={createFood}
         handleChange={handleChange}
         handleFileChange={handleFileChange}
+        selectedCategory={setOptions}
+        categories={categories}
       />
       {/* <ProductCartWidget /> */}
     </Container>
