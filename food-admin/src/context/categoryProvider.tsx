@@ -1,38 +1,52 @@
-import React, { useEffect, useState, PropsWithChildren } from "react";
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  PropsWithChildren,
+} from "react";
 import axios from "axios";
-import { createContext } from "vm";
 
-interface IGetCategory {
+interface ICategory {
   name: string;
   description: string;
+  image: string;
 }
 
-interface ICategoryContext {}
+interface ICategoryContext {
+  categories: ICategory[];
+}
 
-export const CategoryContext = createContext({});
-
-export const UserProvider = ({ children }: PropsWithChildren) => {
-  const [categories, setCategoris] = useState([]);
-};
-
-const [newCategory, setNewCategory] = useState({
-  name: "",
-  description: "",
+export const CategoryContext = createContext<ICategoryContext>({
+  categories: [],
 });
 
-const getCategory = async () => {
-  try {
-    const {
-      data: { categories },
-    } = (await axios.get("http://localhost:8080/categories")) as {
-      data: { categories: [] };
-    };
-    console.log("CAtegoryGEtAll", categories);
-    setCategoris(categories);
-  } catch (error: any) {
-    alert("Add Error" + error.message);
-  }
+export const CategoryProvider = ({ children }: PropsWithChildren) => {
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [newCategory, setNewCategory] = useState({
+    name: "",
+    description: "",
+  });
+
+  const getCategory = async () => {
+    try {
+      const {
+        data: { categories },
+      } = (await axios.get("http://localhost:8080/categories")) as {
+        data: { categories: ICategory[] };
+      };
+      console.log("CAtegoryGEtAll", categories);
+      setCategories(categories);
+    } catch (error: any) {
+      alert("Add Error" + error.message);
+    }
+  };
+  useEffect(() => {
+    getCategory();
+  }, []);
+
+  return (
+    <CategoryContext.Provider value={{ categories }}>
+      {children}
+    </CategoryContext.Provider>
+  );
 };
-useEffect(() => {
-  getCategory();
-}, []);
