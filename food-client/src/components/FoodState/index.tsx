@@ -43,7 +43,7 @@ export default function FoodState() {
   return (
     <Grid
       container
-      rowSpacing={3}
+      rowSpacing={1}
       columnSpacing={{ xs: 1, sm: 2, md: 2 }}
       sx={{
         maxWidth: "100%",
@@ -52,7 +52,7 @@ export default function FoodState() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        gap: 20,
+        gap: 10,
       }}
     >
       {stateCards.map((stateCard, i) => (

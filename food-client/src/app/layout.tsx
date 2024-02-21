@@ -1,6 +1,8 @@
 import "./scss/globals.scss";
 import { ThemeProvider } from "../theme";
 import { UserProvider } from "@/context/userProvider";
+import { CategoryProvider } from "@/context/categoryProvider";
+import { FoodProvider } from "@/context/foodProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Grid } from "@mui/material";
@@ -17,9 +19,13 @@ export default function RootLayout({
         <Grid>
           <ThemeProvider>
             <UserProvider>
-              <Header />
-              {children}
-              <Footer />
+              <CategoryProvider>
+                <FoodProvider>
+                  <Header />
+                  {children}
+                  <Footer />
+                </FoodProvider>
+              </CategoryProvider>
             </UserProvider>
           </ThemeProvider>
         </Grid>
