@@ -8,7 +8,7 @@ import { Button, Container, Grid, Stack } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { FoodContext } from "@/context/foodProvider";
 import { CategoryContext } from "@/context/categoryProvider";
-import FoodCard from "./FoodCard";
+// import FoodCard from "./FoodCard";
 
 export default function CategoryFoodCard() {
   const { foods } = useContext(FoodContext);
@@ -19,19 +19,25 @@ export default function CategoryFoodCard() {
       {categories?.map((category) => (
         <Grid container direction={"column"}>
           <Grid
+            container
             item
             xs={6}
-            sx={{ display: "flex", justifyContent: "space-around" }}
+            sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Grid sx={{ display: "flex", gap: 3 }}>
-              {" "}
-              <Box>
-                {" "}
+            <Grid
+              sx={{
+                display: "flex",
+                direction: "row",
+                justifyContent: "center",
+                gap: 3,
+              }}
+            >
+              <Grid item xs={6}>
                 <img width={35} height={35} src="/images/Star.png" />
-              </Box>
-              <Typography variant="h6" sx={{ fontWeight: 900 }}>
+              </Grid>
+              <Grid item xs={6} sx={{ fontWeight: 900 }}>
                 {category.name}
-              </Typography>
+              </Grid>
             </Grid>
 
             <Typography color={"#18ba51"} sx={{ mt: 2 }}>
@@ -55,10 +61,9 @@ export default function CategoryFoodCard() {
             {foods
               ?.filter((el) => el.category.name === category.name)
               .map((food) => (
-                // <Grid xs={12} sm={6} md={3}>
-
-                <FoodCard food={food} />
-                // </Grid>
+                <Grid xs={12} sm={6} md={3}>
+                  {/* // <FoodCard food={food} /> */}
+                </Grid>
               ))}
           </Grid>
         </Grid>

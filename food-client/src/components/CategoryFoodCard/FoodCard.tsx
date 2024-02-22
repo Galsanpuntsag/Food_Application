@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   CardMedia,
   Grid,
@@ -16,9 +16,11 @@ interface IFood {
   price: string;
   image: string;
   disCountprice: string;
+
   category: { name: String };
 }
 const FoodCard = ({ food }: { food: IFood }) => {
+  console.log("FOODIRLSLALA", food);
   return (
     <Card sx={{ mb: 3 }}>
       <Grid

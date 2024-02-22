@@ -21,6 +21,8 @@ interface IFood {
 interface IFoodContext {
   foods: IFood[];
   getFood: () => void;
+  filteredFoods: any;
+  setFilteredFoods: any;
 }
 
 export const FoodContext = createContext<IFoodContext>({} as IFoodContext);
@@ -45,8 +47,12 @@ export const FoodProvider = ({ children }: PropsWithChildren) => {
     getFood();
   }, []);
 
+  const [filteredFoods, setFilteredFoods] = useState([]);
+
   return (
-    <FoodContext.Provider value={{ foods, getFood }}>
+    <FoodContext.Provider
+      value={{ foods, getFood, filteredFoods, setFilteredFoods }}
+    >
       {children}
     </FoodContext.Provider>
   );

@@ -27,7 +27,7 @@ export const Button = ({
           p: 2,
           fontSize: "1rem",
           fontWeight: 600,
-          width: 1000,
+          width: "100%",
           color:
             btnType === "outlined" || btnType === "text" ? "#18ba51" : "white",
           border: btnType === "outlined" ? 1 : 0,
