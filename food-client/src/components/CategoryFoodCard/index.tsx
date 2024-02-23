@@ -8,7 +8,7 @@ import { Button, Container, Grid, Stack } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import { FoodContext } from "@/context/foodProvider";
 import { CategoryContext } from "@/context/categoryProvider";
-// import FoodCard from "./FoodCard";
+import FoodCard from "./FoodCard";
 
 export default function CategoryFoodCard() {
   const { foods } = useContext(FoodContext);
@@ -62,7 +62,7 @@ export default function CategoryFoodCard() {
               ?.filter((el) => el.category.name === category.name)
               .map((food) => (
                 <Grid xs={12} sm={6} md={3}>
-                  {/* // <FoodCard food={food} /> */}
+                  <FoodCard food={food} />
                 </Grid>
               ))}
           </Grid>

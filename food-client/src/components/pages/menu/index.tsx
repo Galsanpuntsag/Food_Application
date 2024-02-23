@@ -47,7 +47,13 @@ const Menu = () => {
   console.log("Cate", categories);
   return (
     <>
-      <Stack spacing={2} direction="row" width={"100%"}>
+      <Stack
+        spacing={2}
+        direction="row"
+        justifyContent={"center"}
+        width={"100%"}
+        my={5}
+      >
         {categories.map((cate) => {
           {
             console.log("CATEGORIESMAPP", categories);
@@ -55,6 +61,7 @@ const Menu = () => {
           return (
             <MuiButton
               variant="outlined"
+              sx={{ borderColor: "#18ba51", color: "#18ba51" }}
               onClick={() => {
                 getFilteredFoods(cate.name);
               }}

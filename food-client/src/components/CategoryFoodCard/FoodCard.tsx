@@ -15,8 +15,7 @@ interface IFood {
   description: string;
   price: string;
   image: string;
-  disCountprice: string;
-
+  discountPrice: string;
   category: { name: String };
 }
 const FoodCard = ({ food }: { food: IFood }) => {
@@ -47,9 +46,7 @@ const FoodCard = ({ food }: { food: IFood }) => {
               borderRadius: "20px",
             }}
             variant="contained"
-          >
-            {food.disCountprice}
-          </Button>
+          ></Button>
         </CardMedia>
       </Grid>
       <CardContent>
@@ -63,13 +60,13 @@ const FoodCard = ({ food }: { food: IFood }) => {
           {food?.name}
         </Typography>
         <Button size="large" sx={{ color: "#4caf50" }}>
-          {food.price}
+          {food.price}₮
         </Button>
         <Button
           size="large"
           sx={{ color: "black", textDecoration: "line-through" }}
         >
-          {food.description}
+          {food.discountPrice}₮
         </Button>
       </CardContent>
     </Card>

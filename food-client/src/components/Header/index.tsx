@@ -65,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const pages = [
-  { text: "Нүүр", link: "/" },
+  { text: "Нүүр", link: "home" },
   { text: "Хоолны цэс", link: "menu" },
   { text: "Хүргэлтийн бүс", link: "area" },
 ];
