@@ -15,34 +15,23 @@ export default function CategoryFoodCard() {
   const { categories } = useContext(CategoryContext);
 
   return (
-    <>
+    <Container maxWidth={"xl"}>
       {categories?.map((category) => (
         <Grid container direction={"column"}>
-          <Grid
-            container
-            item
-            xs={6}
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <Grid
-              sx={{
-                display: "flex",
-                direction: "row",
-                justifyContent: "center",
-                gap: 3,
-              }}
-            >
-              <Grid item xs={6}>
-                <img width={35} height={35} src="/images/Star.png" />
-              </Grid>
-              <Grid item xs={6} sx={{ fontWeight: 900 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={11} display={"flex"} direction={"row"}>
+              <img width={35} height={35} src="/images/Star.png" />
+
+              <Typography variant="h6" ml={3} sx={{ fontWeight: 900 }}>
                 {category.name}
-              </Grid>
+              </Typography>
             </Grid>
 
-            <Typography color={"#18ba51"} sx={{ mt: 2 }}>
-              Бүгдийг харах
-            </Typography>
+            <Grid item xs={1}>
+              <Typography color={"#18ba51"} sx={{ mt: 2 }}>
+                Бүгдийг харах
+              </Typography>
+            </Grid>
           </Grid>
           <Grid
             item
@@ -68,6 +57,6 @@ export default function CategoryFoodCard() {
           </Grid>
         </Grid>
       ))}
-    </>
+    </Container>
   );
 }

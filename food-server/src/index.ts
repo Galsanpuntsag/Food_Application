@@ -10,6 +10,7 @@ import errorHandler from "./middleware/errorHandler";
 import categoryRoute from "./routes/categoryRoute";
 import foodRoute from "./routes/foodRoute";
 import uploadRoute from "./routes/uploadRoute";
+import basketRoute from "./routes/basket";
 
 dotenv.config();
 console.log(process.env);
@@ -27,6 +28,7 @@ app.use("/verify", verifyRoute);
 app.use("/categories", categoryRoute);
 app.use("/foods", foodRoute);
 app.use("/upload", uploadRoute);
+app.use("/basket", basketRoute);
 app.use(errorHandler);
 
 app.listen(port, () =>

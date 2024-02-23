@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Box,
@@ -23,6 +23,8 @@ import { Rowing } from "@mui/icons-material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+
+import MyDrawer from "../DrawerFoodBasking";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -91,6 +93,15 @@ export const Header = () => {
     setAnchorElUser(null);
   };
 
+  const [drawer, setDrawer] = useState(false);
+
+  const handleOpenDrawer = () => {
+    return setDrawer(true);
+  };
+  const handleCloseDrawer = () => {
+    return setDrawer(false);
+  };
+
   const containerStyle = {
     display: "flex",
     justifyContext: "center",
@@ -153,10 +164,15 @@ export const Header = () => {
                 }}
               />
             </Search>
-            <Button variant="text" sx={{ color: "white" }}>
+            <Button
+              variant="text"
+              sx={{ color: "white" }}
+              onClick={handleOpenDrawer}
+            >
               <AddShoppingCartIcon sx={{ color: "black" }} />
               <Typography color={"black"}> Сагс</Typography>
             </Button>
+
             <Tooltip title="Open settings">
               <IconButton
                 onClick={handleOpenUserMenu}
@@ -215,6 +231,7 @@ export const Header = () => {
           </Box>
         </Toolbar>
       </Container>
+      <MyDrawer open={drawer} closeDrawer={handleCloseDrawer} />
     </AppBar>
   );
 };

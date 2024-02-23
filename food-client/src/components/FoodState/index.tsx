@@ -41,34 +41,23 @@ const stateCards = [
 
 export default function FoodState() {
   return (
-    <Grid
-      container
-      rowSpacing={1}
-      columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-      sx={{
-        maxWidth: "100%",
-        p: 10,
-        boxShadow: "none",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 10,
-      }}
-    >
-      {stateCards.map((stateCard, i) => (
-        <Grid item xs={12} sm={6} md={2} boxShadow={2} borderRadius={2} p={2}>
-          <Typography sx={{ color: "green" }}>{stateCard.icon}</Typography>
-          <Box>
-            <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
-              {stateCard.topic}
-            </Typography>
-            <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
-              {stateCard.introduce}
-            </Typography>
-          </Box>
-        </Grid>
-      ))}
-    </Grid>
+    <Container maxWidth="xl" sx={{ marginY: 10 }}>
+      <Grid container spacing={2}>
+        {stateCards.map((stateCard, i) => (
+          <Grid item xs={12} sm={6} md={3} boxShadow={2} borderRadius={2} p={2}>
+            <Typography sx={{ color: "green" }}>{stateCard.icon}</Typography>
+            <Box>
+              <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
+                {stateCard.topic}
+              </Typography>
+              <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
+                {stateCard.introduce}
+              </Typography>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }
 

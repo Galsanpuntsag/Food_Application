@@ -20,7 +20,7 @@ export const Home = () => {
       <FoodState />
       <CategoryFoodCard />
       <ModalChooseFood />
-      <DrawerFoodBasking />
+
       {/*  <div className="wrapper">HELLO SASS</div> */}
     </Grid>
   );

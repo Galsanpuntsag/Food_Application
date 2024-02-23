@@ -11,6 +11,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import Image from "next/image";
 import { Remove, Add, Close } from "@mui/icons-material";
@@ -107,6 +109,7 @@ export default function FoodModal({
               ))}
             </Select>
           </FormControl>
+          <FormControlLabel control={<Checkbox />} label="Sale" />
           <MuiButton
             component="label"
             variant="contained"

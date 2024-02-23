@@ -47,11 +47,11 @@ const Menu = () => {
   console.log("Cate", categories);
   return (
     <>
-      <Stack
-        spacing={2}
+      <Grid
+        container
+        display={"flex"}
         direction="row"
         justifyContent={"center"}
-        width={"100%"}
         my={5}
       >
         {categories.map((cate) => {
@@ -59,24 +59,37 @@ const Menu = () => {
             console.log("CATEGORIESMAPP", categories);
           }
           return (
-            <MuiButton
-              variant="outlined"
-              sx={{ borderColor: "#18ba51", color: "#18ba51" }}
-              onClick={() => {
-                getFilteredFoods(cate.name);
-              }}
+            <Grid
+              item
+              display={"flex"}
+              justifyContent={"center"}
+              xs={12}
+              sm={6}
+              md={2}
             >
-              {" "}
-              {cate.name}
-            </MuiButton>
+              <MuiButton
+                variant="outlined"
+                sx={{ borderColor: "#18ba51", color: "#18ba51" }}
+                onClick={() => {
+                  getFilteredFoods(cate.name);
+                }}
+              >
+                {" "}
+                {cate.name}
+              </MuiButton>
+            </Grid>
           );
         })}
-      </Stack>
-      <Stack>
+      </Grid>
+      <Grid container spacing={2}>
         {filteredFoods.map((filteredFood: any) => {
-          return <FoodCard food={filteredFood} />;
+          return (
+            <Grid xs={12} sm={6} md={3}>
+              <FoodCard food={filteredFood} />
+            </Grid>
+          );
         })}
-      </Stack>
+      </Grid>
     </>
   );
 };

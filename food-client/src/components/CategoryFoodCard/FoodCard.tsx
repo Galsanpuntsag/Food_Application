@@ -20,6 +20,7 @@ interface IFood {
 }
 const FoodCard = ({ food }: { food: IFood }) => {
   console.log("FOODIRLSLALA", food);
+
   return (
     <Card sx={{ mb: 3 }}>
       <Grid
