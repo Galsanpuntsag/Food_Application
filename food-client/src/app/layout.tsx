@@ -22,16 +22,16 @@ export default function RootLayout({
         <Grid>
           <ThemeProvider>
             <UserProvider>
-              <BasketProvider>
-                <CategoryProvider>
-                  <FoodProvider>
+              <CategoryProvider>
+                <FoodProvider>
+                  <BasketProvider>
                     <Header />
                     {children}
                     <Footer />
                     <ToastContainer />
-                  </FoodProvider>
-                </CategoryProvider>
-              </BasketProvider>
+                  </BasketProvider>
+                </FoodProvider>
+              </CategoryProvider>
             </UserProvider>
           </ThemeProvider>
         </Grid>

@@ -144,6 +144,7 @@ export const signin = async (
       process.env.JWT_PRIVATE_KEY as string,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
+    console.log("TOKENLOGIN", token);
     const { password, ...otherPrams } = user;
     res.status(200).send({
       message: "Хэрэглэгч амжилттай нэвтэрлээ",

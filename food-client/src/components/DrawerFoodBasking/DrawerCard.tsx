@@ -42,13 +42,13 @@ export const DrawerCard = ({ basket }: any) => {
   return (
     <>
       <Box sx={style} m={5}>
-        <Grid container display={"flex"} flexDirection={"row"} gap={10}>
-          <Grid item xs={5}>
-            {/* <img src={}></img> */}
+        <Grid container display={"flex"} flexDirection={"row"}>
+          <Grid item xs={6}>
+            <img src={basket.food.image}></img>
           </Grid>
           <Grid
             item
-            xs={5}
+            xs={6}
             display={"flex"}
             flexDirection={"column"}
             alignItems={"flex-start"}
@@ -64,7 +64,7 @@ export const DrawerCard = ({ basket }: any) => {
                 {basket.food.price}
               </Typography>
 
-              <Typography color={"gray"}>hhg</Typography>
+              <Typography color={"gray"}>{basket.price}</Typography>
 
               <div>
                 <MuiButton onClick={min}>

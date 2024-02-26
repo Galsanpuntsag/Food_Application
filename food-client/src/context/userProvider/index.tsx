@@ -30,8 +30,8 @@ export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
-  const [user, setUser] = useState();
-  const [token, setToken] = useState();
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState<string | null>(null);
   const [userForm, setUserForm] = useState<IUser>({
     name: "",
     email: "",
@@ -50,7 +50,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         userPassword: password,
       });
       console.log("loginSetUSerworking", token, user);
-      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
       console.log("loginSetUSerworking");
@@ -94,9 +94,14 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-    if (!user) setUser(JSON.parse(localStorage.getItem("user") as string));
-    setToken(JSON.parse(localStorage.getItem("token") as string));
-  });
+    const loggedUser = JSON.parse(localStorage.getItem("user") as string);
+    const loggedToken = localStorage.getItem("token");
+    if (!loggedUser || !loggedToken) {
+      alert("newterne uu");
+    }
+    setUser(loggedUser);
+    setToken(loggedToken!);
+  }, []);
 
   return (
     <>

@@ -11,7 +11,7 @@ export const CreateFoodBasketed = async (
 ) => {
   try {
     const newFoodBasketed = { ...req.body };
-
+    console.log("NEW BASKET", newFoodBasketed);
     if (req.file) {
       const { secure_url } = await cloudinary.uploader.upload(req.file.path);
       newFoodBasketed.image = secure_url;
@@ -30,11 +30,15 @@ export const getBasketFood = async (
   next: NextFunction
 ) => {
   try {
+    console.log("Ireq", req.user);
     const basket = await Basket.findOne({
       user: req.user._id,
     }).populate("foods.food");
+    console.log("BASK", basket);
     res.status(200).json({ message: "successful getbasket", basket });
-  } catch (error) {}
+  } catch (error: any) {
+    next("ERRR" + error.message);
+  }
 };
 
 export const updateBasket = async (
