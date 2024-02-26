@@ -188,13 +188,13 @@ export const Header = () => {
                     height: "30px",
                     backgroundColor: "black",
                   }}
-                  alt={user.name}
+                  alt={user?.name}
                   src="/static/images/avatar/2.jpg"
                 />
               </IconButton>
             </Tooltip>
             {user ? (
-              <Typography color={"black"}>{user.name}</Typography>
+              <Typography color={"black"}>{user?.name}</Typography>
             ) : (
               <Typography color={"black"}>Нэвтрэх</Typography>
             )}

@@ -1,5 +1,5 @@
 "use client";
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,8 @@ export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
+  const [user, setUser] = useState();
+  const [token, setToken] = useState();
   const [userForm, setUserForm] = useState<IUser>({
     name: "",
     email: "",
@@ -64,9 +66,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const user = JSON.parse(localStorage.getItem("user") as string);
-  const token = JSON.parse(localStorage.getItem("token") as string);
-
   const signup = async (
     name: string,
     email: string,
@@ -93,6 +92,11 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       toast.error("failed to signup", { autoClose: 3000 });
     }
   };
+
+  useEffect(() => {
+    if (!user) setUser(JSON.parse(localStorage.getItem("user") as string));
+    setToken(JSON.parse(localStorage.getItem("token") as string));
+  });
 
   return (
     <>

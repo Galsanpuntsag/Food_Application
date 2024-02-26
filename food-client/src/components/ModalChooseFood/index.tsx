@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import {
   Grid,
@@ -16,6 +16,7 @@ import {
 
 import MyDrawer from "../DrawerFoodBasking";
 import { Add, Remove } from "@mui/icons-material";
+import { BasketContext } from "@/context/BasketProvider";
 
 const style = {
   position: "absolute",
@@ -29,19 +30,16 @@ const style = {
   p: 4,
   borderRadius: "20px",
 };
-// interface IModalProps {
-//   open: boolean;
-//   handleCloseModal: any;
-//   food: {
-//     name: string;
-//     image: string;
-//     description: string;
-//     price: string;
-//   };
-// }
 
 export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
+  const { addBasket, loading } = useContext(BasketContext);
   const [count, setCount] = React.useState(0);
+
+  const sendFoodBasket = () => {
+    addBasket(food, count);
+    console.log("SGSG");
+    handleCloseModal();
+  };
 
   const min = () => {
     if (count === 0) {
@@ -153,7 +151,7 @@ export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
                 <Button
                   sx={{ background: "green" }}
                   variant="contained"
-                  onClick={() => {}}
+                  onClick={sendFoodBasket}
                 >
                   Contained
                 </Button>
