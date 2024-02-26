@@ -1,7 +1,9 @@
+"use client";
 import { Box, Button, Divider, Drawer, Typography } from "@mui/material";
 import { FaChevronLeft } from "react-icons/fa";
+import { BasketContext } from "@/context/BasketProvider";
 
-import React from "react";
+import React, { useContext } from "react";
 import { DrawerCard } from "./DrawerCard";
 
 interface IDrawerProps {
@@ -10,6 +12,8 @@ interface IDrawerProps {
 }
 
 const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
+  const { baskets } = useContext(BasketContext);
+
   return (
     <>
       <React.Fragment>
@@ -26,7 +30,9 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
               <Typography></Typography>
             </Box>
             <Divider />
-            <DrawerCard />
+            {baskets.map((basket: any) => {
+              return <DrawerCard basket={basket} />;
+            })}
           </Box>
         </Drawer>
       </React.Fragment>

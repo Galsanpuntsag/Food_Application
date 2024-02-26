@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import Basket from "../modal/basket";
 import User from "../modal/user";
+import { IReq } from "../utils/interface";
+import cloudinary from "../utils/cloudinary";
 
 export const CreateFoodBasketed = async (
   req: Request,
@@ -9,15 +11,44 @@ export const CreateFoodBasketed = async (
 ) => {
   try {
     const newFoodBasketed = { ...req.body };
-    // {
-    //     user: "fsalfjdlsdfhjlskdjf",
-    //     foods: [{food: "fsjdjfsdflslfjf",count :3}]
-    // }
+
+    if (req.file) {
+      const { secure_url } = await cloudinary.uploader.upload(req.file.path);
+      newFoodBasketed.image = secure_url;
+    }
+
     await Basket.create(newFoodBasketed);
     res.status(200).json({ message: "successful Food basketed" });
   } catch (error) {
     next(error);
   }
+};
+
+export const getBasketFood = async (
+  req: IReq,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const basket = await Basket.findOne({
+      user: req.user._id,
+    }).populate("foods.food");
+    res.status(200).json({ message: "successful getbasket", basket });
+  } catch (error) {}
+};
+
+export const updateBasket = async (
+  req: IReq,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { foodId, count } = req.body;
+    const basket = await Basket.findOne({ user: req.user._id });
+    basket?.foods.push({ food: foodId, count: count });
+    await basket?.save();
+    res.status(200).json({ message: "successful updated basket" });
+  } catch (error) {}
 };
 
 export const getAllFoodBasketed = async (

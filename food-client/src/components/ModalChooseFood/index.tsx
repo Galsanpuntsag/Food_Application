@@ -14,6 +14,9 @@ import {
   Stack,
 } from "@mui/material";
 
+import MyDrawer from "../DrawerFoodBasking";
+import { Add, Remove } from "@mui/icons-material";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,25 +29,39 @@ const style = {
   p: 4,
   borderRadius: "20px",
 };
+// interface IModalProps {
+//   open: boolean;
+//   handleCloseModal: any;
+//   food: {
+//     name: string;
+//     image: string;
+//     description: string;
+//     price: string;
+//   };
+// }
 
-export default function ModalChooseFood() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
+  const [count, setCount] = React.useState(0);
+
+  const min = () => {
+    if (count === 0) {
+      setCount(0);
+    } else {
+      setCount(count - 1);
+    }
+  };
+
+  const add = () => {
+    setCount(count + 1);
+  };
 
   return (
     <div>
-      <Button
-        sx={{ boxShadow: 3, border: 1, color: "black" }}
-        onClick={handleOpen}
-      >
-        Open modal
-      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseModal}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
@@ -59,8 +76,8 @@ export default function ModalChooseFood() {
               <CardMedia
                 component={"img"}
                 height="300"
-                image="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D"
                 alt="green iguana"
+                image={food?.image}
               />
             </Grid>
             <Grid
@@ -74,9 +91,9 @@ export default function ModalChooseFood() {
             >
               <Stack spacing={2} display={"flex"}>
                 <Typography fontSize={"25px"} fontWeight={900}>
-                  Main Pizza
+                  {food?.name}
                 </Typography>
-                <Typography sx={{ color: "green" }}>10800₮</Typography>
+                <Typography sx={{ color: "green" }}>{food?.price}₮</Typography>
                 <Box>
                   <Typography fontSize={"17px"} fontWeight={700}>
                     Орц
@@ -88,30 +105,58 @@ export default function ModalChooseFood() {
                       textAlign: "center",
                     }}
                   >
-                    улуу, төмс, лууван , сонгино, цөцгийн тос, самрын үр
+                    {food?.description}
                   </Typography>
                 </Box>
-                <ButtonGroup
-                  orientation="vertical"
-                  aria-label="vertical contained button group"
-                  sx={{ gap: 4 }}
-                >
-                  <Typography>Тоо</Typography>
 
-                  <ButtonGroup
-                    size="small"
-                    aria-label="small button group"
-                    sx={{ justifyContent: "space-around" }}
-                  >
-                    <Button>-</Button>
-                    <Typography>1</Typography>
-                    <Button>+</Button>
-                  </ButtonGroup>
+                <Typography variant="h6" fontWeight={900}>
+                  Тоо
+                </Typography>
 
-                  <Button sx={{ background: "green" }} variant="contained">
-                    Contained
+                <div>
+                  <Button onClick={min}>
+                    <Remove
+                      sx={{
+                        bgcolor: "#18BA51",
+                        color: "white",
+                        width: "70%",
+                        height: "30px",
+                        borderRadius: 2,
+                      }}
+                    />
                   </Button>
-                </ButtonGroup>
+                  <input
+                    type="text"
+                    value={count}
+                    style={{
+                      width: "60px",
+                      border: "none",
+                      textAlign: "center",
+                      paddingTop: 4,
+                      paddingBottom: 4,
+                      fontWeight: 600,
+                      fontSize: 16,
+                    }}
+                  />
+                  <Button onClick={add}>
+                    <Add
+                      sx={{
+                        bgcolor: "#18BA51",
+                        color: "white",
+                        width: "70%",
+                        height: "30px",
+                        borderRadius: 2,
+                      }}
+                    />
+                  </Button>
+                </div>
+                <Button
+                  sx={{ background: "green" }}
+                  variant="contained"
+                  onClick={() => {}}
+                >
+                  Contained
+                </Button>
               </Stack>
             </Grid>
           </Grid>

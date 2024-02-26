@@ -3,10 +3,13 @@ import { ThemeProvider } from "../theme";
 import { UserProvider } from "@/context/userProvider";
 import { CategoryProvider } from "@/context/categoryProvider";
 import { FoodProvider } from "@/context/foodProvider";
+import BasketProvider from "@/context/BasketProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Grid } from "@mui/material";
-import Stack from "@mui/material/Stack";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({
   children,
@@ -19,13 +22,16 @@ export default function RootLayout({
         <Grid>
           <ThemeProvider>
             <UserProvider>
-              <CategoryProvider>
-                <FoodProvider>
-                  <Header />
-                  {children}
-                  <Footer />
-                </FoodProvider>
-              </CategoryProvider>
+              <BasketProvider>
+                <CategoryProvider>
+                  <FoodProvider>
+                    <Header />
+                    {children}
+                    <Footer />
+                    <ToastContainer />
+                  </FoodProvider>
+                </CategoryProvider>
+              </BasketProvider>
             </UserProvider>
           </ThemeProvider>
         </Grid>

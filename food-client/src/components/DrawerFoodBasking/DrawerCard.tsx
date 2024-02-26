@@ -1,4 +1,5 @@
-import * as React from "react";
+"use client";
+import React, { useContext } from "react";
 import {
   Box,
   Button as MuiButton,
@@ -23,22 +24,28 @@ const backgroundImageStyle = {
   height: "150px",
 };
 
-export const DrawerCard = () => {
-  const [count, setCount] = React.useState(1);
+export const DrawerCard = ({ basket }: any) => {
+  const [count, setCount] = React.useState(0);
 
-  const handleCount = (operation: string) => {
-    if (operation === "add") {
-      setCount(count + 1);
-    } else if (operation === "min") {
+  const min = () => {
+    if (count === 0) {
+      setCount(0);
+    } else {
       setCount(count - 1);
     }
+  };
+
+  const add = () => {
+    setCount(count + 1);
   };
 
   return (
     <>
       <Box sx={style} m={5}>
         <Grid container display={"flex"} flexDirection={"row"} gap={10}>
-          <Grid item xs={5} style={backgroundImageStyle}></Grid>
+          <Grid item xs={5}>
+            {/* <img src={}></img> */}
+          </Grid>
           <Grid
             item
             xs={5}
@@ -54,15 +61,13 @@ export const DrawerCard = () => {
             <Grid display={"flex"} flexDirection={"column"}>
               <Typography fontWeight={600}>Bowl</Typography>
               <Typography sx={{ color: "#18BA51" }} fontWeight={600}>
-                18,800
+                {basket.food.price}
               </Typography>
 
-              <Typography color={"gray"}>
-                Өндөг, шош, улаан лооль, өргөст хэмт, байцаа, салмон.
-              </Typography>
+              <Typography color={"gray"}>hhg</Typography>
 
               <div>
-                <MuiButton onClick={() => handleCount("min")}>
+                <MuiButton onClick={min}>
                   <Remove
                     sx={{
                       bgcolor: "#18BA51",
@@ -86,7 +91,7 @@ export const DrawerCard = () => {
                     fontSize: 16,
                   }}
                 />
-                <MuiButton onClick={() => handleCount("add")}>
+                <MuiButton onClick={add}>
                   <Add
                     sx={{
                       bgcolor: "#18BA51",

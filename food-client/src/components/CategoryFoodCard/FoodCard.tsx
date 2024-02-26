@@ -9,20 +9,17 @@ import {
   Card,
   Container,
 } from "@mui/material";
+import ModalChooseFood from "../ModalChooseFood";
+import { BasketContext } from "@/context/BasketProvider";
+import { IoBasketSharp } from "react-icons/io5";
 
-interface IFood {
-  name: string;
-  description: string;
-  price: string;
-  image: string;
-  discountPrice: string;
-  category: { name: String };
-}
-const FoodCard = ({ food }: { food: IFood }) => {
-  console.log("FOODIRLSLALA", food);
+const FoodCard = ({ food }: any) => {
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   return (
-    <Card sx={{ mb: 3 }}>
+    <Card onClick={handleOpenModal} sx={{ mb: 3 }}>
       <Grid
         position={"relative"}
         sx={{
@@ -70,6 +67,11 @@ const FoodCard = ({ food }: { food: IFood }) => {
           {food.discountPrice}₮
         </Button>
       </CardContent>
+      <ModalChooseFood
+        food={food}
+        open={openModal}
+        handleCloseModal={handleCloseModal}
+      />
     </Card>
   );
 };

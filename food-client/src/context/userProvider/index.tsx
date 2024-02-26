@@ -22,17 +22,11 @@ interface IUserContext {
     password: string,
     address: string
   ) => void;
+  user: any;
+  token: any;
 }
 
-export const UserContext = createContext<IUserContext>({
-  userForm: {
-    name: "",
-    email: "",
-    address: "",
-  },
-  login: function (): void {},
-  signup: function (): void {},
-});
+export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
@@ -47,16 +41,16 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     console.log("loginWorking");
     console.log("UUU", userForm);
     try {
-      const { data } = await axios.post("http://localhost:8080/auth/signin", {
-        email,
-        password,
+      const {
+        data: { token, user },
+      } = await axios.post("http://localhost:8080/auth/signin", {
+        userEmail: email,
+        userPassword: password,
       });
-      console.log("loginSetUSerworking", data);
-      setUserForm(data.user);
-      setUserForm(data.token);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      console.log("DATALogin", data);
+      console.log("loginSetUSerworking", token, user);
+      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("user", JSON.stringify(user));
+
       console.log("loginSetUSerworking");
       await Swal.fire({
         title: "Таны нууц үг амжилттай солигдлоо",
@@ -69,6 +63,10 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       toast.error("failed to enter", { autoClose: 3000 });
     }
   };
+
+  const user = JSON.parse(localStorage.getItem("user") as string);
+  const token = JSON.parse(localStorage.getItem("token") as string);
+
   const signup = async (
     name: string,
     email: string,
@@ -84,9 +82,10 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       );
       setUserForm(data);
       await Swal.fire({
-        title: "Таны нууц үг амжилттай солигдлоо",
-        text: "та шинэ нууц үгээ ашиглана нэвтэрнэ үү",
+        title: "Та амжилттай бүргүүлсэн",
+        text: "Таны имэйл хаягруу баталгаажуулах линк илгээлээ ",
         icon: "success",
+        timer: 5000,
       });
       router.push("/login");
     } catch (error) {
@@ -97,7 +96,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <>
-      <UserContext.Provider value={{ userForm, login, signup }}>
+      <UserContext.Provider value={{ userForm, login, signup, user, token }}>
         {children}
       </UserContext.Provider>
     </>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   AppBar,
   Box,
@@ -23,6 +23,7 @@ import { Rowing } from "@mui/icons-material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { UserContext } from "@/context/userProvider";
 
 import MyDrawer from "../DrawerFoodBasking";
 
@@ -77,6 +78,8 @@ export const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
+  const { user } = useContext(UserContext);
+  console.log("USER", user);
 
   const handleOpenNavMenu = () => {
     // setAnchorElNav(event.currentTarget);
@@ -84,15 +87,12 @@ export const Header = () => {
   const handleOpenUserMenu = () => {
     // setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   const [drawer, setDrawer] = useState(false);
 
   const handleOpenDrawer = () => {
@@ -172,7 +172,6 @@ export const Header = () => {
               <AddShoppingCartIcon sx={{ color: "black" }} />
               <Typography color={"black"}> Сагс</Typography>
             </Button>
-
             <Tooltip title="Open settings">
               <IconButton
                 onClick={handleOpenUserMenu}
@@ -189,12 +188,17 @@ export const Header = () => {
                     height: "30px",
                     backgroundColor: "black",
                   }}
-                  alt="Remy Sharp"
+                  alt={user.name}
                   src="/static/images/avatar/2.jpg"
                 />
-                <Typography color={"black"}>Нэвтрэх</Typography>
               </IconButton>
             </Tooltip>
+            {user ? (
+              <Typography color={"black"}>{user.name}</Typography>
+            ) : (
+              <Typography color={"black"}>Нэвтрэх</Typography>
+            )}
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
