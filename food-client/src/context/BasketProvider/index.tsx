@@ -10,6 +10,7 @@ import React, {
 
 import { UserContext } from "../userProvider";
 import { FaBullseye } from "react-icons/fa";
+import { userAgent } from "next/server";
 
 interface IBasket {
   food: {
@@ -34,24 +35,27 @@ export const BasketContext = createContext<IBasketContext>(
 
 const BasketProvider = ({ children }: PropsWithChildren) => {
   const { user, token } = useContext(UserContext);
+  console.log("USePROOruser", user);
 
   const [baskets, setBaskets] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(true);
+  const [refresh, setRefresh] = useState(false);
 
   const addBasket = async (food: any, count: number) => {
     try {
       setLoading(true);
-      if (user) {
-        const {
-          data: { basket },
-        } = await axios.put("http://localhost:8080/basket", {
-          foodId: food._id,
-          count: count,
-        });
-        console.log("AdddBasket", basket);
-        setLoading(false);
-      }
+      console.log("Addbasket");
+      const {
+        data: { basket },
+      } = await axios.post(
+        "http://localhost:8080/basket",
+        {
+          foods: { food: food._id, quantity: count },
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("AdddBasket", basket);
+      setLoading(false);
     } catch (error: any) {
       alert("AddBasketErr" + error.message);
     }
@@ -69,7 +73,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       } = await axios.get("http://localhost:8080/basket", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("BASSKETTTTTTT", basket);
+      console.log("getgetBASSKETTTTTTT", basket);
       setBaskets(basket.foods);
     } catch (error: any) {
       console.log("AddBasket Error" + error.message);
@@ -79,8 +83,9 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (token) {
       getBasket();
+      console.log("UseEFfect");
     }
-  }, [token, refresh]);
+  }, [token, !refresh]);
 
   return (
     <BasketContext.Provider value={{ baskets, addBasket, loading }}>

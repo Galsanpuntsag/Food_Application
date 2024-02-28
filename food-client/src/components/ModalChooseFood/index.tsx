@@ -38,7 +38,6 @@ export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
   const sendFoodBasket = () => {
     addBasket(food, count);
     console.log("SGSG");
-    handleCloseModal();
   };
 
   const min = () => {
@@ -60,7 +59,6 @@ export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
         aria-describedby="transition-modal-description"
         open={open}
         onClose={handleCloseModal}
-        closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
           backdrop: {

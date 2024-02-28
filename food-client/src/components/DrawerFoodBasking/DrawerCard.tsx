@@ -25,11 +25,11 @@ const backgroundImageStyle = {
 };
 
 export const DrawerCard = ({ basket }: any) => {
-  const [count, setCount] = React.useState(0);
+  console.log("BASKETatDarwer", basket);
+  const [count, setCount] = React.useState(basket.quantity);
 
   const min = () => {
     if (count === 0) {
-      setCount(0);
     } else {
       setCount(count - 1);
     }
@@ -41,30 +41,38 @@ export const DrawerCard = ({ basket }: any) => {
 
   return (
     <>
-      <Box sx={style} m={5}>
-        <Grid container display={"flex"} flexDirection={"row"}>
+      <Box sx={style}>
+        <Grid container m={5} direction={"row"}>
           <Grid item xs={6}>
-            <img src={basket.food.image}></img>
+            <img width={"90%"} src={basket.food.image} />
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={5}
             display={"flex"}
-            flexDirection={"column"}
+            flexDirection={"row"}
             alignItems={"flex-start"}
           >
-            <Grid item xs={1} position={"relative"}>
-              <MuiButton sx={{ ml: 50, position: "absolute" }}>
-                <Close />
-              </MuiButton>
-            </Grid>
-            <Grid display={"flex"} flexDirection={"column"}>
-              <Typography fontWeight={600}>Bowl</Typography>
-              <Typography sx={{ color: "#18BA51" }} fontWeight={600}>
-                {basket.food.price}
+            <Grid display={"flex"} gap={1} flexDirection={"column"}>
+              <Typography variant="h6" fontWeight={800}>
+                {basket.food.name}
+              </Typography>
+              <Typography
+                fontSize={25}
+                fontWeight={600}
+                sx={{ color: "#18BA51" }}
+              >
+                {basket.food.price}₮
               </Typography>
 
-              <Typography color={"gray"}>{basket.price}</Typography>
+              <Typography
+                color={"gray"}
+                maxHeight={40}
+                fontSize={18}
+                fontWeight={600}
+              >
+                {basket.food.description}
+              </Typography>
 
               <div>
                 <MuiButton onClick={min}>
@@ -103,6 +111,11 @@ export const DrawerCard = ({ basket }: any) => {
                   />
                 </MuiButton>
               </div>
+            </Grid>
+            <Grid item xs={1}>
+              <MuiButton>
+                <Close />
+              </MuiButton>
             </Grid>
           </Grid>
         </Grid>

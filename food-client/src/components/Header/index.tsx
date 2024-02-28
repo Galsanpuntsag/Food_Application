@@ -14,6 +14,7 @@ import {
   MenuItem,
   InputBase,
   Link,
+  Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../public/images";
@@ -24,8 +25,10 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { UserContext } from "@/context/userProvider";
+import { BasketContext } from "@/context/BasketProvider";
 
 import MyDrawer from "../DrawerFoodBasking";
+import { count } from "console";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -79,6 +82,14 @@ export const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
   const { user } = useContext(UserContext);
+  const { baskets } = useContext(BasketContext);
+  const [foodBasketCount, setFoodCount] = useState();
+  console.log("basketsHeader", baskets);
+  const foodCount = () => {
+    return baskets.map((basket) => basket.quantity);
+  };
+  console.log("foodCount");
+
   console.log("USER", user);
 
   const handleOpenNavMenu = () => {
@@ -169,7 +180,17 @@ export const Header = () => {
               sx={{ color: "white" }}
               onClick={handleOpenDrawer}
             >
-              <AddShoppingCartIcon sx={{ color: "black" }} />
+              <Badge
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                badgeContent={foodCount()}
+                color="error"
+              >
+                <AddShoppingCartIcon sx={{ color: "black" }} />
+              </Badge>
+
               <Typography color={"black"}> Сагс</Typography>
             </Button>
             <Tooltip title="Open settings">
