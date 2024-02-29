@@ -27,8 +27,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { UserContext } from "@/context/userProvider";
 import { BasketContext } from "@/context/BasketProvider";
 
-import MyDrawer from "../DrawerFoodBasking";
-import { count } from "console";
+import Drawer from "@/components/Drawer/index";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -82,12 +81,12 @@ export const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
   const { user } = useContext(UserContext);
-  const { baskets } = useContext(BasketContext);
+  const { basket } = useContext(BasketContext);
   const [foodBasketCount, setFoodCount] = useState();
-  console.log("basketsHeader", baskets);
-  const foodCount = () => {
-    return baskets.map((basket) => basket.quantity);
-  };
+  console.log("basketsHeader", basket);
+  // const foodCount = () => {
+  //   return basket.map((bask) => bask.count);
+  // };
   console.log("foodCount");
 
   console.log("USER", user);
@@ -185,7 +184,7 @@ export const Header = () => {
                   vertical: "top",
                   horizontal: "left",
                 }}
-                badgeContent={foodCount()}
+                // badgeContent={() => {}}
                 color="error"
               >
                 <AddShoppingCartIcon sx={{ color: "black" }} />
@@ -256,7 +255,7 @@ export const Header = () => {
           </Box>
         </Toolbar>
       </Container>
-      <MyDrawer open={drawer} closeDrawer={handleCloseDrawer} />
+      <Drawer open={drawer} closeDrawer={handleCloseDrawer} />
     </AppBar>
   );
 };

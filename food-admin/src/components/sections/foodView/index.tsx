@@ -84,7 +84,7 @@ export default function FoodView() {
 
   useEffect(() => {
     getFood();
-  }, []);
+  }, [!refresh]);
 
   const createFood = async () => {
     try {
@@ -102,8 +102,8 @@ export default function FoodView() {
         data: { foods },
       } = await axios.post("http://localhost:8080/foods", formData);
       console.log("FOoods", foods);
-      alert("Successful food added");
-      setRefresh(true);
+      handleClose();
+      getFood();
     } catch (error) {
       alert(error);
     }
@@ -146,7 +146,7 @@ export default function FoodView() {
       <Grid container spacing={3}>
         {foods.map((food: any) => (
           <Grid xs={12} sm={6} md={3}>
-            <FoodCard key={food._id} food={food} />
+            <FoodCard getFood={getFood} key={food._id} food={food} />
           </Grid>
         ))}
       </Grid>

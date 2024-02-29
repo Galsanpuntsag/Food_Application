@@ -17,7 +17,7 @@ router
   .post(upload.single("image"), createCategory);
 router
   .route("/:categoryId")
-  .delete(auth, deleteCategory)
+  .delete(deleteCategory)
   .put(updateCategory)
   .get(getCategory);
 

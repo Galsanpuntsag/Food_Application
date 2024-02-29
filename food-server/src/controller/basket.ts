@@ -16,14 +16,17 @@ export const AddBasket = async (
     const findBasket = await Basket.findOne({ user: req.user._id });
     console.log("REQUSER", req.user);
     if (!findBasket) {
-      const basket = await Basket.create({
-        user: req.user._id,
-        foods: { ...req.body.foods },
-        totalPrice: req.body.totalPrice,
+      const basket = await (
+        await Basket.create({
+          user: req.user._id,
+          foods: { ...req.body.foods },
+          totalPrice: req.body.totalPrice,
+        })
+      ).populate("foods.food");
+      res.status(200).json({
+        message: "successful food added at basket first time",
+        basket,
       });
-      res
-        .status(200)
-        .json({ message: "successful food added at basket first time" });
     } else {
       console.log("findBAsket", findBasket);
       const findIndex = findBasket.foods.findIndex(
@@ -38,14 +41,26 @@ export const AddBasket = async (
           (findBasket.totalPrice = Number(req.body.totalPrice));
       } else {
         findBasket.foods.push(req.body.foods);
+        findBasket.totalPrice = Number(req.body.totalPrice);
       }
 
       console.log("ChangeFood", findBasket.foods);
 
-      await findBasket.save();
-      res
-        .status(200)
-        .json({ message: "successful food added at basket second time" });
+      // await findBasket.save();
+      const savedBasket = await (
+        await findBasket.save()
+      ).populate("foods.food");
+      console.log("SAVEDBASKET__", savedBasket);
+
+      // const savedBasket = await (
+      //   await findBasket.save()
+      // ).populate("foods.food");
+
+      console.log("ChangedFoods", savedBasket);
+      res.status(200).json({
+        message: "successful food added at basket second time",
+        basket: { foods: savedBasket.foods, totalPrice: findBasket.totalPrice },
+      });
     }
   } catch (error: any) {
     next(error);

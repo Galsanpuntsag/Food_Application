@@ -78,6 +78,7 @@ export default function CategoryModal({
           <MuiButton
             component="label"
             variant="contained"
+            sx={{ mb: 2, backgroundColor: "#18ba51" }}
             startIcon={<CloudUploadIcon />}
           >
             Upload file

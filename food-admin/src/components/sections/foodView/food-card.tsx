@@ -21,11 +21,14 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import axios from "axios";
+import { useState } from "react";
 
 // ----------------------------------------------------------------------
 
-export default function FoodCard({ food }: any) {
+export default function FoodCard({ food, getFood }: any) {
   const {
+    _id,
     name,
     price,
     discountPrice,
@@ -34,21 +37,6 @@ export default function FoodCard({ food }: any) {
     category,
     createdAt,
   } = food;
-  // const renderStatus = (
-  //   <Label
-  //     variant="filled"
-  //     color={(product.status === "sale" && "error") || "info"}
-  //     sx={{
-  //       zIndex: 9,
-  //       top: 16,
-  //       right: 16,
-  //       position: "absolute",
-  //       textTransform: "uppercase",
-  //     }}
-  //   >
-  //     {product.status}
-  //   </Label>
-  // );
 
   const renderImg = (
     <Box
@@ -81,6 +69,23 @@ export default function FoodCard({ food }: any) {
       {fCurrency(food.price)}
     </Typography>
   );
+  //deleteFood
+  const [refresh, setRefresh] = useState(false);
+
+  const deleteFood = async () => {
+    try {
+      const {
+        data: { food },
+      } = await axios.delete("http://localhost:8080/foods/" + _id);
+      console.log("DELETEDFood successful");
+      !refresh;
+      getFood();
+
+      console.log("REFEREF");
+    } catch (error: any) {
+      alert("DaleteError" + error.message);
+    }
+  };
 
   return (
     <Card
@@ -98,11 +103,17 @@ export default function FoodCard({ food }: any) {
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Grid display={"flex"} justifyContent={"space-between"}>
-          <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
+          <Link
+            color="inherit"
+            sx={{ fontSize: 20 }}
+            underline="hover"
+            variant="subtitle2"
+            noWrap
+          >
             {name}
           </Link>
           <Select sx={{ width: 40, height: 20 }}>
-            <MenuItem>
+            <MenuItem onClick={deleteFood}>
               <DeleteIcon color={"error"} />
             </MenuItem>
             <MenuItem value={30}>

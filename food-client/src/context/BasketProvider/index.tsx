@@ -13,18 +13,20 @@ import { FaBullseye } from "react-icons/fa";
 import { userAgent } from "next/server";
 
 interface IBasket {
-  food: {
-    name: string;
-    _id: string;
-    description: string;
-    price: number;
-  };
-  count: number;
+  basket: [
+    foods: {
+      _id: string;
+      name: string;
+      description: string;
+      price: string;
+      discountPrice: string;
+    }
+  ];
 }
 
 interface IBasketContext {
   loading: boolean;
-  baskets: IBasket[];
+  basket: any;
   addBasket: (food: any, count: number) => Promise<void>;
   // deleteBasket: (food: any) => Promise<void>;
 }
@@ -35,9 +37,9 @@ export const BasketContext = createContext<IBasketContext>(
 
 const BasketProvider = ({ children }: PropsWithChildren) => {
   const { user, token } = useContext(UserContext);
-  console.log("USePROOruser", user);
+  console.log("USePROOruserDWAWER", user, token);
 
-  const [baskets, setBaskets] = useState([]);
+  const [basket, setBaskets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -51,10 +53,13 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
         "http://localhost:8080/basket",
         {
           foods: { food: food._id, quantity: count },
+          totalPrice: food.price,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("AdddBasket", basket);
+      setBaskets({ ...basket });
+      console.log("AdddBasketBASKETBYRSLaa", basket);
       setLoading(false);
     } catch (error: any) {
       alert("AddBasketErr" + error.message);
@@ -63,32 +68,32 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
 
   console.log("TOOKENUSERATTT__Basket", token);
 
-  const getBasket = async () => {
-    console.log("GetBasketGEt");
+  // const getBasket = async () => {
+  //   console.log("GetBasketGEt");
 
-    try {
-      // console.log("TOOKENUSERATTT__Basket", token);
-      const {
-        data: { basket },
-      } = await axios.get("http://localhost:8080/basket", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log("getgetBASSKETTTTTTT", basket);
-      setBaskets(basket.foods);
-    } catch (error: any) {
-      console.log("AddBasket Error" + error.message);
-    }
-  };
+  //   try {
+  //     // console.log("TOOKENUSERATTT__Basket", token);
+  //     const {
+  //       data: { basket },
+  //     } = await axios.get("http://localhost:8080/basket", {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     console.log("getgetBASSKETTTTTTT", basket);
+  //     setBaskets(basket.foods);
+  //   } catch (error: any) {
+  //     console.log("AddBasket Error" + error.message);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (token) {
-      getBasket();
-      console.log("UseEFfect");
-    }
-  }, [token, !refresh]);
+  // useEffect(() => {
+  //   if (token) {
+  //     getBasket();
+  //     console.log("UseEFfect");
+  //   }
+  // }, [token, !refresh]);
 
   return (
-    <BasketContext.Provider value={{ baskets, addBasket, loading }}>
+    <BasketContext.Provider value={{ basket, addBasket, loading }}>
       {children}
     </BasketContext.Provider>
   );

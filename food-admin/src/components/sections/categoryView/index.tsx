@@ -77,9 +77,8 @@ export default function CategoryView() {
         data: { category: object };
       };
       console.log("FDS", category);
-      // setNewCategory(category)
-      alert("Successful category  added");
-      setRefresh(true);
+      handleClose();
+      getCategory();
       console.log("Successful added category");
     } catch (error: any) {
       alert("CreateCategory" + error.message);
@@ -95,35 +94,21 @@ export default function CategoryView() {
         mb={5}
       >
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Хоолны жагсаалт
+          Ангилал жагсаалт
         </Typography>
         <Button variant="contained" color="inherit" onClick={handleOpen}>
-          Хоол нэмэх
+          Ангилал нэмэх
         </Button>
-      </Stack>
-
-      <Stack
-        direction="row"
-        alignItems="center"
-        flexWrap="wrap-reverse"
-        justifyContent="flex-end"
-        sx={{ mb: 2 }}
-      >
-        <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-          {/* <ProductFilters
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-          /> */}
-
-          {/* <FoodSort /> */}
-        </Stack>
       </Stack>
 
       <Grid container spacing={3}>
         {categories?.map((category: any) => (
-          <Grid xs={12} sm={6} md={3}>
-            <CategoryCard key={category._id} category={category} />
+          <Grid item xs={12} sm={6} md={3}>
+            <CategoryCard
+              key={category._id}
+              category={category}
+              getCategory={getCategory}
+            />
           </Grid>
         ))}
       </Grid>
