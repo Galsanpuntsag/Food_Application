@@ -41,10 +41,31 @@ const stateCards = [
 
 export default function FoodState() {
   return (
-    <Container maxWidth="xl" sx={{ marginY: 10 }}>
-      <Grid container spacing={2}>
+    <Container
+      maxWidth="xl"
+      sx={{
+        marginY: 10,
+        display: "flex",
+        justifyContent: "space-around",
+      }}
+    >
+      <Grid
+        container
+        justifyContent={"space-center"}
+        width={"100%"}
+        rowSpacing={2}
+      >
         {stateCards.map((stateCard, i) => (
-          <Grid item xs={12} sm={6} md={3} boxShadow={2} borderRadius={2} p={2}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            spacing={10}
+            boxShadow={2}
+            borderRadius={2}
+            p={2}
+          >
             <Typography sx={{ color: "green" }}>{stateCard.icon}</Typography>
             <Box>
               <Typography sx={{ fontWeight: 900, fontSize: 15 }}>

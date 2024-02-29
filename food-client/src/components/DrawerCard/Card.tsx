@@ -18,23 +18,27 @@ import { Button } from "..";
 export const Card = ({ selectedFood }: any) => {
   console.log("selectedFood", selectedFood);
   const [count, setCount] = React.useState(selectedFood.quantity);
-  const backgroundImageStyle = {
-    backgroundImage: `${selectedFood.food.image}`,
-  };
-  const min = () => {
-    if (count === 0) {
-    } else {
-      setCount(count - 1);
-    }
-  };
 
-  const add = () => {
-    setCount(count + 1);
+  const handleCount = (operation: string, foodId: string) => {
+    if (operation === "PLUS") {
+      count < 20 && setCount(count + 1);
+    } else {
+      count !== 1 && setCount(count - 1);
+    }
+
+    updateCount({
+      foodId: selectedFood._id,
+      count: operation === "PLUS" ? count + 1 : count - 1,
+      totalPrice:
+        operation === "PLUS"
+          ? (count + 1) * selectedFood.price
+          : (count - 1) * selectedFood.price,
+    });
   };
 
   return (
     <>
-      <Grid container justifyContent={"space-evenly"} direction={"row"} my={3} >
+      <Grid container justifyContent={"space-evenly"} direction={"row"} my={3}>
         <Grid item xs={5}>
           <CardMedia
             sx={{ height: 150 }}
@@ -42,16 +46,10 @@ export const Card = ({ selectedFood }: any) => {
             title="green iguana"
           />
         </Grid>
-        <Grid
-          item
-          xs={6}
-          display={"flex"}
-          flexDirection={"row"}
-          alignItems={"self-start"}
-        >
+        <Grid item xs={6} display={"flex"} flexDirection={"row"}>
           <Grid display={"flex"} flexDirection={"column"}>
             <Typography ml={5} fontSize={20} fontWeight={800}>
-              {selectedFood.food.name}
+              {updateCount}
             </Typography>
             <Typography
               fontSize={25}
@@ -73,7 +71,7 @@ export const Card = ({ selectedFood }: any) => {
             </Typography>
 
             <div>
-              <MuiButton onClick={min}>
+              <MuiButton onClick={() => handleCount("MINUS", selectedFood._id)}>
                 <Remove
                   sx={{
                     bgcolor: "#18BA51",
@@ -97,7 +95,7 @@ export const Card = ({ selectedFood }: any) => {
                   fontSize: 16,
                 }}
               />
-              <MuiButton onClick={add}>
+              <MuiButton onClick={() => handleCount("PLUS", selectedFood._id)}>
                 <Add
                   sx={{
                     bgcolor: "#18BA51",

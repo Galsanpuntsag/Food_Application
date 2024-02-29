@@ -20,14 +20,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../public/images";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
-import { Rowing } from "@mui/icons-material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import { UserContext } from "@/context/userProvider";
-import { BasketContext } from "@/context/BasketProvider";
 
-import Drawer from "@/components/Drawer/index";
+import { UserContext } from "@/context/userProvider";
+
+import HeaderAtDrawer from "../HeaderAtDrawer";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -81,15 +77,6 @@ export const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
   const { user } = useContext(UserContext);
-  const { basket } = useContext(BasketContext);
-  const [foodBasketCount, setFoodCount] = useState();
-  console.log("basketsHeader", basket);
-  // const foodCount = () => {
-  //   return basket.map((bask) => bask.count);
-  // };
-  console.log("foodCount");
-
-  console.log("USER", user);
 
   const handleOpenNavMenu = () => {
     // setAnchorElNav(event.currentTarget);
@@ -102,14 +89,6 @@ export const Header = () => {
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-  const [drawer, setDrawer] = useState(false);
-
-  const handleOpenDrawer = () => {
-    return setDrawer(true);
-  };
-  const handleCloseDrawer = () => {
-    return setDrawer(false);
   };
 
   const containerStyle = {
@@ -174,24 +153,7 @@ export const Header = () => {
                 }}
               />
             </Search>
-            <Button
-              variant="text"
-              sx={{ color: "white" }}
-              onClick={handleOpenDrawer}
-            >
-              <Badge
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                // badgeContent={() => {}}
-                color="error"
-              >
-                <AddShoppingCartIcon sx={{ color: "black" }} />
-              </Badge>
-
-              <Typography color={"black"}> Сагс</Typography>
-            </Button>
+            <HeaderAtDrawer />
             <Tooltip title="Open settings">
               <IconButton
                 onClick={handleOpenUserMenu}
@@ -255,7 +217,6 @@ export const Header = () => {
           </Box>
         </Toolbar>
       </Container>
-      <Drawer open={drawer} closeDrawer={handleCloseDrawer} />
     </AppBar>
   );
 };

@@ -6,12 +6,8 @@ import { relative } from "path";
 
 export const DrawerCard = ({ basket }: any) => {
   return (
-    <Grid
-      container
-      sx={{ position: "relative" }}
-      justifyContent={"space-between"}
-    >
-      <Grid container>
+    <Grid container justifyContent={"space-between"}>
+      <Grid container justifyContent={"center"}>
         {basket?.foods?.map((food: any) => (
           <Card key={food._id} selectedFood={food} />
         ))}
@@ -42,7 +38,7 @@ export const DrawerCard = ({ basket }: any) => {
             {/* {basket?.totalPrice.toLocaleString()}₮ */}
           </Typography>
         </Grid>
-        <Grid item sx={{ backgroundColor: "#18ba51" }} xs={6}>
+        <Grid item sx={{ backgroundColor: "#18ba51", color: "#18ba51" }} xs={6}>
           <Button label={"Захиалах"} onClick={() => {}} />
         </Grid>
       </Grid>
