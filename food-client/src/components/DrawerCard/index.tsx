@@ -5,28 +5,20 @@ import { Button } from "..";
 
 export const DrawerCard = ({ basket }: any) => {
   return (
-    <Grid
-      container
-      direction={"column"}
-      height={"100%"}
-      width={"100%"}
-      justifyContent={"space-between"}
-    >
-      <Grid item>
-        <Box alignSelf={"center"} width={"100%"} overflow={"auto"}>
-          {basket?.foods?.map((food: any) => (
-            <Card key={food._id} selectedFood={food} />
-          ))}
-        </Box>
-        <Divider />
+    <Grid container>
+      <Grid item sx={{ height: "fit-content" }}>
+        {basket?.foods?.map((food: any) => (
+          <Card key={food._id} selectedFood={food} />
+        ))}
       </Grid>
+      <Divider />
       <Grid
         width={"100%"}
         container
         bottom={0}
         boxShadow={3}
         bgcolor={"white"}
-        py={10}
+        py={5}
         px={5}
       >
         <Grid
@@ -49,3 +41,9 @@ export const DrawerCard = ({ basket }: any) => {
     </Grid>
   );
 };
+
+{
+  /* <Grid position="relative" width={"50%"} height={"20%"}>
+          <Image fill objectFit="cover" alt="" src={selectedFood.food.image} />
+        </Grid> */
+}

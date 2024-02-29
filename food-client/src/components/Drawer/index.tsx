@@ -1,5 +1,13 @@
 "use client";
-import { Box, Button, Divider, Drawer, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { FaChevronLeft } from "react-icons/fa";
 import { BasketContext } from "@/context/BasketProvider";
 import Lottie from "lottie-react";
@@ -22,7 +30,7 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
     <>
       <React.Fragment>
         <Drawer open={open} onClose={closeDrawer} anchor="right">
-          <Box width={584} p={5} justifyContent={"space-between"}>
+          <Box width={584} p={5}>
             <Box
               pb={5}
               display={"flex"}
@@ -33,13 +41,9 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
               <Typography fontWeight={600}>Таны сагс</Typography>
               <Typography></Typography>
             </Box>
-
+            <Divider />
             {!basket && (
-              <Stack
-                height={"90%"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
+              <Stack justifyContent={"center"} alignItems={"center"}>
                 <Box
                   width={200}
                   height={200}

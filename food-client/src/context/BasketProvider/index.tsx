@@ -66,6 +66,8 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  useEffect(() => {}, []);
+
   console.log("TOOKENUSERATTT__Basket", token);
 
   // const getBasket = async () => {
