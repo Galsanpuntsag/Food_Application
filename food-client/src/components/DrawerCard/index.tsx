@@ -2,11 +2,16 @@ import * as React from "react";
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { Card } from "@/components/DrawerCard/Card";
 import { Button } from "..";
+import { relative } from "path";
 
 export const DrawerCard = ({ basket }: any) => {
   return (
-    <Grid container>
-      <Grid item sx={{ height: "fit-content" }}>
+    <Grid
+      container
+      sx={{ position: "relative" }}
+      justifyContent={"space-between"}
+    >
+      <Grid container>
         {basket?.foods?.map((food: any) => (
           <Card key={food._id} selectedFood={food} />
         ))}
@@ -15,11 +20,14 @@ export const DrawerCard = ({ basket }: any) => {
       <Grid
         width={"100%"}
         container
+        position={"absolute"}
         bottom={0}
+        left={0}
         boxShadow={3}
         bgcolor={"white"}
         py={5}
         px={5}
+        mt={5}
       >
         <Grid
           item
@@ -41,9 +49,3 @@ export const DrawerCard = ({ basket }: any) => {
     </Grid>
   );
 };
-
-{
-  /* <Grid position="relative" width={"50%"} height={"20%"}>
-          <Image fill objectFit="cover" alt="" src={selectedFood.food.image} />
-        </Grid> */
-}

@@ -8,14 +8,19 @@ import {
   Grid,
   Divider,
   Stack,
+  CardMedia,
 } from "@mui/material";
 import Image from "next/image";
 import { Remove, Add, Close } from "@mui/icons-material";
+import { relative } from "path";
+import { Button } from "..";
 
 export const Card = ({ selectedFood }: any) => {
   console.log("selectedFood", selectedFood);
   const [count, setCount] = React.useState(selectedFood.quantity);
-
+  const backgroundImageStyle = {
+    backgroundImage: `${selectedFood.food.image}`,
+  };
   const min = () => {
     if (count === 0) {
     } else {
@@ -29,21 +34,28 @@ export const Card = ({ selectedFood }: any) => {
 
   return (
     <>
-      <Stack width={"100%"} height={"100%"} direction={"row"}>
-        <Image fill objectFit="cover" alt="" src={selectedFood.food.image} />
+      <Grid container justifyContent={"space-evenly"} direction={"row"} my={3} >
+        <Grid item xs={5}>
+          <CardMedia
+            sx={{ height: 150 }}
+            image={selectedFood.food.image}
+            title="green iguana"
+          />
+        </Grid>
         <Grid
           item
-          xs={5}
+          xs={6}
           display={"flex"}
           flexDirection={"row"}
-          alignItems={"flex-start"}
+          alignItems={"self-start"}
         >
-          <Grid display={"flex"} gap={1} flexDirection={"column"}>
-            <Typography variant="h6" fontWeight={800}>
+          <Grid display={"flex"} flexDirection={"column"}>
+            <Typography ml={5} fontSize={20} fontWeight={800}>
               {selectedFood.food.name}
             </Typography>
             <Typography
               fontSize={25}
+              ml={5}
               fontWeight={600}
               sx={{ color: "#18BA51" }}
             >
@@ -52,8 +64,9 @@ export const Card = ({ selectedFood }: any) => {
 
             <Typography
               color={"gray"}
+              ml={5}
               maxHeight={40}
-              fontSize={18}
+              fontSize={12}
               fontWeight={600}
             >
               {selectedFood.food.description}
@@ -103,7 +116,7 @@ export const Card = ({ selectedFood }: any) => {
             </MuiButton>
           </Grid>
         </Grid>
-      </Stack>
+      </Grid>
     </>
   );
 };
