@@ -42,7 +42,7 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
               <Typography></Typography>
             </Box>
             <Divider />
-            {!basket && (
+            {!basket.length ? (
               <Stack justifyContent={"center"} alignItems={"center"}>
                 <Box
                   width={200}
@@ -55,9 +55,9 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
                   Хоосон байна
                 </Typography>
               </Stack>
+            ) : (
+              <DrawerCard basket={basket} />
             )}
-
-            {basket && <DrawerCard basket={basket} />}
           </Box>
         </Drawer>
       </React.Fragment>

@@ -51,6 +51,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       });
       console.log("loginSetUSerworking", token, user);
       localStorage.setItem("token", token);
+      console.log("TOKENATUSERprovider", token);
       localStorage.setItem("user", JSON.stringify(user));
 
       console.log("loginSetUSerworking");

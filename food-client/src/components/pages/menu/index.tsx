@@ -1,20 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { Input } from "@/components";
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-  Link,
-  Grid,
-  Button as MuiButton,
-} from "@mui/material";
+import { Grid, Button as MuiButton } from "@mui/material";
 import { UserContext } from "@/context/userProvider";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import { CategoryContext } from "@/context/categoryProvider";
 import { FoodContext } from "@/context/foodProvider";
 import FoodCard from "@/components/CategoryFoodCard/FoodCard";

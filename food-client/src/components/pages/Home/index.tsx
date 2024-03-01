@@ -4,7 +4,6 @@ import { Grid, Button, Typography, Container } from "@mui/material";
 import CategoryFoodCard from "@/components/CategoryFoodCard";
 import FoodState from "@/components/FoodState";
 import ModalChooseFood from "@/components/ModalChooseFood";
-import DrawerFoodBasking from "@/components/DrawerCard";
 import HomeBackground from "@/components/HomeBackground";
 
 export const Home = () => {

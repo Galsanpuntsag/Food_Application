@@ -11,6 +11,7 @@ import categoryRoute from "./routes/categoryRoute";
 import foodRoute from "./routes/foodRoute";
 import uploadRoute from "./routes/uploadRoute";
 import basketRoute from "./routes/basket";
+import order from "./routes/order";
 
 dotenv.config();
 console.log(process.env);
@@ -29,6 +30,7 @@ app.use("/categories", categoryRoute);
 app.use("/foods", foodRoute);
 app.use("/upload", uploadRoute);
 app.use("/basket", basketRoute);
+app.use("/order", order);
 app.use(errorHandler);
 
 app.listen(port, () =>

@@ -14,7 +14,6 @@ import {
   MenuItem,
   InputBase,
   Link,
-  Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../public/images";

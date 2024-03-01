@@ -26,14 +26,14 @@ export const Card = ({ selectedFood }: any) => {
       count !== 1 && setCount(count - 1);
     }
 
-    updateCount({
-      foodId: selectedFood._id,
-      count: operation === "PLUS" ? count + 1 : count - 1,
-      totalPrice:
-        operation === "PLUS"
-          ? (count + 1) * selectedFood.price
-          : (count - 1) * selectedFood.price,
-    });
+    // updateCount({
+    //   foodId: selectedFood._id,
+    //   count: operation === "PLUS" ? count + 1 : count - 1,
+    //   totalPrice:
+    //     operation === "PLUS"
+    //       ? (count + 1) * selectedFood.price
+    //       : (count - 1) * selectedFood.price,
+    // });
   };
 
   return (
@@ -49,7 +49,7 @@ export const Card = ({ selectedFood }: any) => {
         <Grid item xs={6} display={"flex"} flexDirection={"row"}>
           <Grid display={"flex"} flexDirection={"column"}>
             <Typography ml={5} fontSize={20} fontWeight={800}>
-              {updateCount}
+              {selectedFood.food.name}
             </Typography>
             <Typography
               fontSize={25}
@@ -109,7 +109,7 @@ export const Card = ({ selectedFood }: any) => {
             </div>
           </Grid>
           <Grid item xs={1}>
-            <MuiButton>
+            <MuiButton onClick={() => {}}>
               <Close />
             </MuiButton>
           </Grid>

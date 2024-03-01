@@ -3,6 +3,7 @@ import Basket from "../modal/basket";
 import User from "../modal/user";
 import { IReq } from "../utils/interface";
 import cloudinary from "../utils/cloudinary";
+import MyError from "../utils/myError";
 
 export const AddBasket = async (
   req: IReq,
@@ -79,8 +80,15 @@ export const getBasketFood = async (
     const basket = await Basket.findOne({
       user: req.user._id,
     }).populate("foods.food");
-    console.log("BASK", basket);
-    res.status(200).json({ message: "successful getbasket", basket });
+    console.log("basket", basket);
+    if (!basket) {
+      throw new MyError("Сагсны мэдээлэл олдсонгүй", 400);
+    }
+
+    res.status(200).json({
+      message: "Хоолны мэдээлэл",
+      basket: { foods: basket.foods, totalPrice: basket.totalPrice },
+    });
   } catch (error: any) {
     next("ERRR" + error.message);
   }
@@ -94,10 +102,26 @@ export const updateBasket = async (
   try {
     const { foodId, count } = req.body;
     const basket = await Basket.findOne({ user: req.user._id });
-    basket?.foods.push({ food: foodId, count: count });
-    await basket?.save();
-    res.status(200).json({ message: "successful updated basket" });
-  } catch (error) {}
+    if (!basket) {
+      throw new MyError(`User doesn't have a basket`, 400);
+    } else {
+      const findIndex = basket.foods.findIndex(
+        (el) => el?.food?.toString() === foodId
+      );
+      if (findIndex === -1) {
+        basket.foods.push({ food: foodId, count: count });
+      } else {
+        basket.foods[findIndex].quantity = count;
+      }
+      await Basket.updateOne(
+        { user: req.user._id },
+        { $set: { foods: basket.foods } }
+      );
+    }
+    res.status(200).json({ message: "Successfully updated basket", basket });
+  } catch (error) {
+    next(error);
+  }
 };
 
 // sdfghjkl____

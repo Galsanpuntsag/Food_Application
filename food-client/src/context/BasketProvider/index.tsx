@@ -11,6 +11,7 @@ import React, {
 import { UserContext } from "../userProvider";
 import { FaBullseye } from "react-icons/fa";
 import { userAgent } from "next/server";
+import { toast } from "react-toastify";
 
 interface IBasket {
   basket: [
@@ -58,15 +59,34 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("AdddBasket", basket);
-      setBaskets({ ...basket });
+
       console.log("AdddBasketBASKETBYRSLaa", basket);
+      getFoodBasket();
       setLoading(false);
     } catch (error: any) {
       alert("AddBasketErr" + error.message);
     }
   };
 
-  useEffect(() => {}, []);
+  const getFoodBasket = async () => {
+    console.log("GETBASKEt");
+    try {
+      const { data } = await axios.get("http://localhost:8080/basket", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("TOKENN", token);
+      console.log("RES", data.basket.foods);
+      setBaskets(data.basket.foods);
+      // toast.success(data.message);
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
+  };
+  useEffect(() => {
+    if (token) {
+      getFoodBasket();
+    }
+  }, [!refresh, token]);
 
   console.log("TOOKENUSERATTT__Basket", token);
 

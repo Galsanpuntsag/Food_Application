@@ -1,14 +1,17 @@
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { Card } from "@/components/DrawerCard/Card";
 import { Button } from "..";
 import { relative } from "path";
+import Order from "../pages/Order";
 
 export const DrawerCard = ({ basket }: any) => {
+  const router = useRouter();
   return (
     <Grid container justifyContent={"space-between"}>
       <Grid container justifyContent={"center"}>
-        {basket?.foods?.map((food: any) => (
+        {basket?.map((food: any) => (
           <Card key={food._id} selectedFood={food} />
         ))}
       </Grid>
@@ -39,7 +42,12 @@ export const DrawerCard = ({ basket }: any) => {
           </Typography>
         </Grid>
         <Grid item sx={{ backgroundColor: "#18ba51", color: "#18ba51" }} xs={6}>
-          <Button label={"Захиалах"} onClick={() => {}} />
+          <Button
+            label={"Захиалах"}
+            onClick={() => {
+              router.replace("/order");
+            }}
+          />
         </Grid>
       </Grid>
     </Grid>
