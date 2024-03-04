@@ -1,22 +1,13 @@
-import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
-import React from "react";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+"use client";
+import { Container, Grid } from "@mui/material";
+import React, { useContext } from "react";
 import Address from "@/components/Order/Address";
 import { Food } from "@/components/Order/Food";
+import { BasketContext } from "@/context/BasketProvider";
 
 const Order = () => {
+  const { foodsInBask } = useContext(BasketContext);
+
   return (
     <Container>
       <Grid
@@ -29,7 +20,7 @@ const Order = () => {
           <Address />
         </Grid>
         <Grid item xs={6}>
-          <Food />
+          <Food foods={foodsInBask} />
         </Grid>
       </Grid>
     </Container>

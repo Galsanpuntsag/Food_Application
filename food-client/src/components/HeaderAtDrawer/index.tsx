@@ -6,7 +6,7 @@ import { BasketContext } from "@/context/BasketProvider";
 import Drawer from "@/components/Drawer/index";
 
 const HeaderAtDrawer = () => {
-  const { basket } = useContext(BasketContext);
+  const { foodsInBask } = useContext(BasketContext);
   const [openDrawer, setOpenDrawer] = useState(false);
   // console.log("aaaaa", basket.foods.food);
 
@@ -25,7 +25,7 @@ const HeaderAtDrawer = () => {
             vertical: "top",
             horizontal: "left",
           }}
-          badgeContent={basket.length}
+          badgeContent={foodsInBask?.length}
           // badgeContent={1}
           color="error"
         >

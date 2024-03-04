@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import Radio from "@mui/material/Radio";
 
-export const Food = ({ baskets, sum }: any) => {
+export const Food = ({ foods, sum }: any) => {
+  console.log("FOoodsAtFo, foods");
   const router = useRouter();
 
   return (
@@ -24,8 +25,8 @@ export const Food = ({ baskets, sum }: any) => {
         </div>
       </Box>
 
-      <Stack my={5} boxShadow={3} gap={10} p={5} borderRadius={2}>
-        {baskets?.foods?.map((food: any) => (
+      <Stack my={6} boxShadow={3} gap={10} p={4} borderRadius={2}>
+        {foods?.map((food: any) => (
           <Box
             display={"flex"}
             gap={3}
@@ -39,7 +40,7 @@ export const Food = ({ baskets, sum }: any) => {
               width={200}
               height={170}
               style={{}}
-              src={food.food.image}
+              src={food?.food.image}
             />
 
             <div
@@ -50,7 +51,7 @@ export const Food = ({ baskets, sum }: any) => {
               }}
             >
               <Typography variant="h5" fontWeight={600} component="h2">
-                {food.food.name}
+                {food?.food.name}
               </Typography>
               <Typography
                 variant="h6"
@@ -58,11 +59,10 @@ export const Food = ({ baskets, sum }: any) => {
                 py={2}
                 sx={{ color: "#18BA51" }}
               >
-                {food.food.price}₮ * {food.count} ={" "}
-                {food.food.price * food.count}
+                {food?.food.price * food?.quantity}₮
               </Typography>
               <Typography sx={{ display: "flex", textAlign: "left" }}>
-                {food.food.description}
+                {food?.food.description}
               </Typography>
             </div>
           </Box>

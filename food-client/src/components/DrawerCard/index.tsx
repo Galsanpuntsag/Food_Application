@@ -5,14 +5,26 @@ import { Card } from "@/components/DrawerCard/Card";
 import { Button } from "..";
 import { relative } from "path";
 import Order from "../pages/Order";
+import { toast } from "react-toastify";
 
-export const DrawerCard = ({ basket }: any) => {
+export const DrawerCard = ({ foodsInBask, closeDrawer }: any) => {
+  console.log("!!!!!!!", foodsInBask);
   const router = useRouter();
+
+  const goToOrder = () => {
+    if (!foodsInBask?.length) {
+      toast.error("Сагсанд хоол байхгүй байна.");
+    } else {
+      closeDrawer();
+      router.replace("/order");
+    }
+  };
+
   return (
     <Grid container justifyContent={"space-between"}>
       <Grid container justifyContent={"center"}>
-        {basket?.map((food: any) => (
-          <Card key={food._id} selectedFood={food} />
+        {foodsInBask?.map((foods: any) => (
+          <Card key={foods._id} foods={foods} />
         ))}
       </Grid>
       <Divider />
@@ -45,7 +57,7 @@ export const DrawerCard = ({ basket }: any) => {
           <Button
             label={"Захиалах"}
             onClick={() => {
-              router.replace("/order");
+              goToOrder();
             }}
           />
         </Grid>

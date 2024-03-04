@@ -12,6 +12,7 @@ const foodBasketSchema = new Schema({
         type: Schema.ObjectId,
         ref: "Food",
         unique: true,
+        price: Number,
       },
       quantity: {
         type: Number,

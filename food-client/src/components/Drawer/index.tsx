@@ -23,8 +23,8 @@ interface IDrawerProps {
 }
 
 const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
-  const { basket }: any = useContext(BasketContext);
-  console.log("basketsssMYDARWAER", basket);
+  const { foodsInBask }: any = useContext(BasketContext);
+  console.log("basketsssMYDARWAER", foodsInBask);
 
   return (
     <>
@@ -42,7 +42,7 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
               <Typography></Typography>
             </Box>
             <Divider />
-            {!basket.length ? (
+            {!foodsInBask?.length ? (
               <Stack justifyContent={"center"} alignItems={"center"}>
                 <Box
                   width={200}
@@ -56,7 +56,7 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
                 </Typography>
               </Stack>
             ) : (
-              <DrawerCard basket={basket} />
+              <DrawerCard foodsInBask={foodsInBask} closeDrawer={closeDrawer} />
             )}
           </Box>
         </Drawer>

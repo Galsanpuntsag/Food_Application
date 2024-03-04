@@ -10,12 +10,8 @@ export const AddBasket = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("REQ11 :", req.body.foods.quantity);
-  console.log("REQ22 :", req.body.foods.food);
-  console.log("REQUSER", req.user);
   try {
     const findBasket = await Basket.findOne({ user: req.user._id });
-    console.log("REQUSER", req.user);
     if (!findBasket) {
       const basket = await (
         await Basket.create({
@@ -29,41 +25,70 @@ export const AddBasket = async (
         basket,
       });
     } else {
-      console.log("findBAsket", findBasket);
       const findIndex = findBasket.foods.findIndex(
         (el) => el?.food?.toString() === req.body.foods.food
       );
-      console.log("FindIndex___:", findIndex);
-      console.log("Foods", findBasket.foods);
 
       if (findIndex !== -1) {
         findBasket.foods[findIndex].quantity = Number(req.body.foods.quantity);
-        console.log("Qauannnr", req.body.foods.quantity),
-          (findBasket.totalPrice = Number(req.body.totalPrice));
+        findBasket.totalPrice = Number(req.body.totalPrice);
       } else {
         findBasket.foods.push(req.body.foods);
         findBasket.totalPrice = Number(req.body.totalPrice);
       }
 
-      console.log("ChangeFood", findBasket.foods);
-
-      // await findBasket.save();
       const savedBasket = await (
         await findBasket.save()
       ).populate("foods.food");
-      console.log("SAVEDBASKET__", savedBasket);
-
-      // const savedBasket = await (
-      //   await findBasket.save()
-      // ).populate("foods.food");
-
-      console.log("ChangedFoods", savedBasket);
       res.status(200).json({
         message: "successful food added at basket second time",
         basket: { foods: savedBasket.foods, totalPrice: findBasket.totalPrice },
       });
     }
   } catch (error: any) {
+    next(error);
+  }
+};
+
+export const updateBasket = async (
+  req: IReq,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { foodId, count, price, totalPrice } = req.body;
+    console.log("DD", foodId, count, price, totalPrice);
+    const findBasket = await Basket.findOne({ user: req.user._id });
+    console.log("Find", findBasket);
+    if (!findBasket) {
+      throw new MyError(`User doesn't have a basket`, 400);
+    } else {
+      console.log("ID2", foodId);
+      const findIndex = findBasket.foods.findIndex(
+        (el) => el?.food?.toString() === foodId.toString()
+      );
+      console.log("FoodType", typeof foodId);
+
+      console.log("INNIN", findIndex);
+      if (findIndex === -1) {
+        // Food not found in basket
+        throw new MyError(`Food not found in basket`, 400);
+      } else {
+        // Update food quantity and total price
+        findBasket.foods[findIndex].quantity = count;
+        findBasket.totalPrice = totalPrice;
+        await findBasket.updateOne(
+          { user: req.user._id },
+          { $set: { foods: findBasket.foods, totalPrice: totalPrice } }
+        );
+        console.log("updat", findBasket);
+        const updateFood = await findBasket.save();
+        res
+          .status(200)
+          .json({ message: "Successfully updated basket", updateFood });
+      }
+    }
+  } catch (error) {
     next(error);
   }
 };
@@ -76,11 +101,9 @@ export const getBasketFood = async (
   next: NextFunction
 ) => {
   try {
-    console.log("Ireq", req.user);
     const basket = await Basket.findOne({
       user: req.user._id,
     }).populate("foods.food");
-    console.log("basket", basket);
     if (!basket) {
       throw new MyError("Сагсны мэдээлэл олдсонгүй", 400);
     }
@@ -94,54 +117,30 @@ export const getBasketFood = async (
   }
 };
 
-export const updateBasket = async (
+export const deleteFoodInBasket = async (
   req: IReq,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { foodId, count } = req.body;
-    const basket = await Basket.findOne({ user: req.user._id });
-    if (!basket) {
-      throw new MyError(`User doesn't have a basket`, 400);
-    } else {
-      const findIndex = basket.foods.findIndex(
-        (el) => el?.food?.toString() === foodId
-      );
-      if (findIndex === -1) {
-        basket.foods.push({ food: foodId, count: count });
-      } else {
-        basket.foods[findIndex].quantity = count;
-      }
-      await Basket.updateOne(
-        { user: req.user._id },
-        { $set: { foods: basket.foods } }
-      );
+    const { foodId } = req.params;
+    console.log("food.ID ====>", foodId);
+    const basket = await Basket.findOne({ user: req.user._id }).populate(
+      "foods.food"
+    );
+
+    const findIndex = basket?.foods.findIndex((el) => el.food?.equals(foodId));
+    console.log("FINDINDEX", findIndex);
+
+    if (findIndex !== undefined) {
+      basket?.foods.splice(findIndex, 1);
     }
-    res.status(200).json({ message: "Successfully updated basket", basket });
+    await basket?.save();
+    // console.log("LAST basket", basket);
+    res
+      .status(200)
+      .json({ message: `Deleted this ${foodId}-id food on basket`, basket });
   } catch (error) {
     next(error);
   }
 };
-
-// sdfghjkl____
-
-// export const CreateFoodBasketed = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const newFoodBasketed = { ...req.body };
-//     console.log("NEW BASKET", newFoodBasketed);
-//     if (req.file) {
-//       const { secure_url } = await cloudinary.uploader.upload(req.file.path);
-//       newFoodBasketed.image = secure_url;
-//     }
-
-//     await Basket.create(newFoodBasketed);
-//     res.status(200).json({ message: "successful Food basketed" });
-//   } catch (error) {
-//     next(error);
-//   }
-// };

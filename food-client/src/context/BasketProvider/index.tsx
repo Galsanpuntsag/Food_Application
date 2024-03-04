@@ -14,7 +14,7 @@ import { userAgent } from "next/server";
 import { toast } from "react-toastify";
 
 interface IBasket {
-  basket: [
+  foodsInBask: [
     foods: {
       _id: string;
       name: string;
@@ -27,7 +27,9 @@ interface IBasket {
 
 interface IBasketContext {
   loading: boolean;
-  basket: any;
+  foodsInBask: any;
+  updateByFoodId: any;
+  deleteFoodInBask: any;
   addBasket: (food: any, count: number) => Promise<void>;
   // deleteBasket: (food: any) => Promise<void>;
 }
@@ -40,7 +42,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   const { user, token } = useContext(UserContext);
   console.log("USePROOruserDWAWER", user, token);
 
-  const [basket, setBaskets] = useState([]);
+  const [foodsInBask, setFoodsInBask] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -59,8 +61,6 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("AdddBasket", basket);
-
-      console.log("AdddBasketBASKETBYRSLaa", basket);
       getFoodBasket();
       setLoading(false);
     } catch (error: any) {
@@ -68,15 +68,46 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  //updateBasketfood
+  const updateByFoodId = async (food: any, totalPrice: any) => {
+    console.log("TOTAL", totalPrice);
+    console.log("FOODID___--", food);
+
+    try {
+      const {
+        data: { updateFood },
+      } = await axios.put(
+        "http://localhost:8080/basket",
+        {
+          foodId: food.foodId,
+          count: food.count,
+          totalPrice,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log("UpdateBasketFoodirlle", updateFood);
+      setFoodsInBask(updateFood);
+      getFoodBasket();
+
+      toast.success("Successful  Food updateByFoodId");
+    } catch (error) {
+      toast.error("Failed Food updateByFoodId");
+    }
+  };
+
   const getFoodBasket = async () => {
     console.log("GETBASKEt");
     try {
-      const { data } = await axios.get("http://localhost:8080/basket", {
+      const {
+        data: { basket },
+      } = await axios.get("http://localhost:8080/basket", {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("TOKENN", token);
-      console.log("RES", data.basket.foods);
-      setBaskets(data.basket.foods);
+      console.log("RESSSSS", basket);
+      setFoodsInBask(basket.foods);
       // toast.success(data.message);
     } catch (error: any) {
       toast.error(error.response.data.message);
@@ -88,34 +119,30 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     }
   }, [!refresh, token]);
 
-  console.log("TOOKENUSERATTT__Basket", token);
-
-  // const getBasket = async () => {
-  //   console.log("GetBasketGEt");
-
-  //   try {
-  //     // console.log("TOOKENUSERATTT__Basket", token);
-  //     const {
-  //       data: { basket },
-  //     } = await axios.get("http://localhost:8080/basket", {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     console.log("getgetBASSKETTTTTTT", basket);
-  //     setBaskets(basket.foods);
-  //   } catch (error: any) {
-  //     console.log("AddBasket Error" + error.message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (token) {
-  //     getBasket();
-  //     console.log("UseEFfect");
-  //   }
-  // }, [token, !refresh]);
-
+  const deleteFoodInBask = async (foodId: number) => {
+    try {
+      const {
+        data: { basket },
+      } = await axios.delete("http://localhost:8080/basket/" + foodId, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setFoodsInBask(basket);
+      toast.success("Food deleted in bask");
+      getFoodBasket();
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
+  };
   return (
-    <BasketContext.Provider value={{ basket, addBasket, loading }}>
+    <BasketContext.Provider
+      value={{
+        foodsInBask,
+        addBasket,
+        loading,
+        updateByFoodId,
+        deleteFoodInBask,
+      }}
+    >
       {children}
     </BasketContext.Provider>
   );
