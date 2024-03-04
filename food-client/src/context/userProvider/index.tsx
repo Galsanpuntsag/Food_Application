@@ -1,10 +1,16 @@
 "use client";
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, {
+  PropsWithChildren,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { BasketContext } from "../BasketProvider";
 
 interface IUser {
   name: string;
@@ -22,6 +28,13 @@ interface IUserContext {
     password: string,
     address: string
   ) => void;
+  order: (
+    duureg: string,
+    khoroo: string,
+    street: string,
+    info: string,
+    phone: string
+  ) => void;
   user: any;
   token: any;
 }
@@ -29,6 +42,7 @@ interface IUserContext {
 export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
+  const { foodsInBask } = useContext(BasketContext);
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState<string | null>(null);
@@ -104,9 +118,26 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     setToken(loggedToken!);
   }, []);
 
+  const order = async (
+    duureg: string,
+    khoroo: string,
+    street: string,
+    info: string,
+    phone: string
+  ) => {
+    try {
+      const data = await axios.post("http://localhost:8080/order", {
+        basket: foodsInBask,
+        address: { duureg, khoroo, street, info, phone },
+      });
+      toast.success("Хоол амжилттай захиалсан.");
+    } catch (error) {}
+  };
   return (
     <>
-      <UserContext.Provider value={{ userForm, login, signup, user, token }}>
+      <UserContext.Provider
+        value={{ userForm, login, signup, user, token, order }}
+      >
         {children}
       </UserContext.Provider>
     </>

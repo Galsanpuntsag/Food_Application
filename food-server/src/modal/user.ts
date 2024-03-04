@@ -47,6 +47,19 @@ const userSchema = new Schema(
     phone: String,
     orders: [
       {
+        foods: [
+          {
+            food: {
+              type: Schema.ObjectId,
+              ref: "Food",
+              unique: true,
+              price: Number,
+            },
+            quantity: {
+              type: Number,
+            },
+          },
+        ],
         orderNo: String,
         payment: {
           paymentAmount: {
@@ -82,6 +95,9 @@ const userSchema = new Schema(
           deliveredAt: {
             type: Date,
             default: Date.now,
+          },
+          phoneNumber: {
+            type: String,
           },
         },
       },

@@ -56,8 +56,8 @@ export const updateBasket = async (
   next: NextFunction
 ) => {
   try {
-    const { foodId, count, price, totalPrice } = req.body;
-    console.log("DD", foodId, count, price, totalPrice);
+    const { foodId, count, totalPrice } = req.body;
+    console.log("DD", foodId, count, totalPrice);
     const findBasket = await Basket.findOne({ user: req.user._id });
     console.log("Find", findBasket);
     if (!findBasket) {

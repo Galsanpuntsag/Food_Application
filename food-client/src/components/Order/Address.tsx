@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import { Input } from "@/components";
 import Radio from "@mui/material/Radio";
-
 import {
   Box,
   Checkbox,
@@ -13,7 +12,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 
 const khoroos = [
   "1-р хороо",
@@ -25,10 +23,14 @@ const khoroos = [
   "7-р хороо",
 ];
 const duurguud = [
-  "Баянзүрх дүүрэг",
-  "Хан-Уул дүүрэг",
+  "Багануур дүүрэг",
+  "Багахангай дүүрэг",
   "Баянгол дүүрэг",
+  "Баянзүрх дүүрэг",
+  "Налайх дүүрэг",
   "Сонгинохайрхан дүүрэг",
+  "Сүхбаатар дүүрэг",
+  "Хан-Уул дүүрэг",
   "Чингэлтэй дүүрэг",
 ];
 const buildings = [
@@ -39,7 +41,7 @@ const buildings = [
   "Зайсан хотхон ",
 ];
 
-const confirmAddress = () => {
+const confirmAddress = (formik: any) => {
   //   const { userForm } = useContext(UserContext);
   return (
     <Box>
@@ -58,7 +60,13 @@ const confirmAddress = () => {
       <Stack my={10} boxShadow={3} gap={10} p={5} borderRadius={2}>
         <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
           <Typography>Хаяг аа сонгоно уу</Typography>
-          <Select sx={{ bgcolor: "#ECEDF0" }}>
+          <Select
+            value={formik.values?.duureg}
+            label="asfasdfadsdfd"
+            name="duureg"
+            onChange={formik.handleChange}
+            sx={{ bgcolor: "#ECEDF0" }}
+          >
             <MenuItem disabled value="">
               <em>Дүүрэг сонгоно уу</em>
             </MenuItem>
@@ -68,7 +76,12 @@ const confirmAddress = () => {
               </MenuItem>
             ))}
           </Select>
-          <Select sx={{ bgcolor: "#ECEDF0" }}>
+          <Select
+            name="khoroo"
+            value={formik.values?.khoroo}
+            onChange={formik.handleChange}
+            sx={{ bgcolor: "#ECEDF0" }}
+          >
             <MenuItem disabled value="">
               <em>Хороо сонгоно уу</em>
             </MenuItem>
@@ -78,7 +91,11 @@ const confirmAddress = () => {
               </MenuItem>
             ))}
           </Select>
-          <Select sx={{ bgcolor: "#ECEDF0" }}>
+          <Select
+            name="street"
+            value={formik.values?.street}
+            sx={{ bgcolor: "#ECEDF0" }}
+          >
             <MenuItem disabled value="">
               <em>Байр гудамж сонгоно уу</em>
             </MenuItem>
@@ -90,8 +107,17 @@ const confirmAddress = () => {
           </Select>
         </div>
 
-        <Input label="Нэмэлт мэдээлэл" />
-        <Input label="Утасны дугаар*" />
+        <Input
+          label="Нэмэлт мэдээлэл"
+          name="info"
+          value={formik.values?.info}
+          onChange={formik.handleChange}
+        />
+        <Input
+          label="Утасны дугаар*"
+          name="phone"
+          onChange={formik.handleChange}
+        />
         <div>
           <Typography>Төлбөр төлөх</Typography>
           <FormGroup
@@ -101,19 +127,9 @@ const confirmAddress = () => {
               justifyContent: "space-around",
             }}
           >
-            <FormControlLabel
-              sx={{}}
-              control={<Checkbox defaultChecked />}
-              label="Бэлнээр"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Картаар"
-            />
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="QPay"
-            />
+            <FormControlLabel sx={{}} control={<Checkbox />} label="Бэлнээр" />
+            <FormControlLabel control={<Checkbox />} label="Картаар" />
+            <FormControlLabel control={<Checkbox />} label="QPay" />
           </FormGroup>
         </div>
       </Stack>

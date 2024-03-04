@@ -13,13 +13,13 @@ export const Card = ({ foods }: any) => {
   const { updateByFoodId, deleteFoodInBask } = useContext(BasketContext);
   console.log("selectedFood", typeof foods);
   const [count, setCount] = useState(foods.quantity);
-  // const [price, setPrice] = useState(foods.food.price);
+  const [price, setPrice] = useState(foods.food.price);
 
   // console.log("Price_______", typeof price);
 
-  // // const totalPrice = () => {
-  // //   return Object.values(price).reduce((acc: any, cur: any) => acc + cur, 0);
-  // // };
+  const totalPrice = () => {
+    return Object.values(price).reduce((acc: any, cur: any) => acc + cur, 0);
+  };
 
   // console.log("TOTALPRICEreduce__map", totalPrice());
   const handleDelete = () => {
@@ -31,19 +31,19 @@ export const Card = ({ foods }: any) => {
     if (operation === "PLUS") {
       if (count < 20) {
         setCount(count + 1);
-        // setPrice(price * 2);
+        setPrice(count * price);
       }
     } else {
       if (count !== 1) {
         setCount(count - 1);
-        // setPrice(price / 2);
+        setPrice(price * count);
       }
     }
     updateByFoodId({
       foodId: foods.food._id,
-      // foodPrice: price,
       count: operation === "PLUS" ? count + 1 : count - 1,
-      totalPrice: 45678,
+      totalPrice:
+        operation === "PLUS" ? price * (count + 1) : price * (count - 1),
     });
   };
 

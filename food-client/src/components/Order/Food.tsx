@@ -3,12 +3,13 @@ import { Button, Input } from "@/components";
 import { Box, FormControlLabel, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import Radio from "@mui/material/Radio";
 
-export const Food = ({ foods, sum }: any) => {
+export const Food = ({ foods, formik }: any) => {
   console.log("FOoodsAtFo, foods");
   const router = useRouter();
+  const [initial, setInitial] = useState(0);
 
   return (
     <Box>
@@ -79,11 +80,17 @@ export const Food = ({ foods, sum }: any) => {
               Нийт төлөх дүн
             </Typography>
             <Typography variant="body1" fontWeight={600} component="h6">
-              {sum}₮
+              {foods
+                ?.map((food: any) => food.food.price * food.quantity)
+                ?.reduce((sum: any, une: any) => sum + une, initial)}
+              ₮
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button onClick={() => router.push("/")} label={"Захиалах"} />
+            <Button
+              onClick={() => (formik.onSubmit, router.push("/"))}
+              label={"Захиалах"}
+            />
           </Grid>
         </Grid>
       </Stack>
