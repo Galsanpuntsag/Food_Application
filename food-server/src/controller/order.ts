@@ -10,23 +10,22 @@ export const createOrder = async (
 ) => {
   try {
     const newOrder = {
-      foods: req.body.basket.foods,
-      orderNo: Math.floor(Math.random() * 1000000),
+      basket: req.body.basket.foodsInBask,
+      orderNo: "#" + Math.floor(Math.random() * 1000000),
       payment: { paymentAmount: req.body.basket.totalPrice },
       address: req.body.address,
-      phoneNumber: req.body.address.phoneNumber,
+      phoneNumber: req.body.address.phone,
     };
-    console.log("ORDER", newOrder);
+    console.log("ORDER___", newOrder);
 
-    // const findUser = await User.findById(req.user._id);
-    // if (!findUser) {
-    //   throw new MyError(`Бүртгэлгүй хэрэглэгч байна.`, 400);
-    // } else {
-    //   const order = findUser.orders.push(newOrder);
-    //   const
-    //   await findUser.save();
-    //   res.status(200).json({ message: "Захиалга амжилттай үүслээ.", order });
-    // }
+    const findUser = await User.findById(req.user._id);
+    if (!findUser) {
+      throw new MyError(`Бүртгэлгүй хэрэглэгч байна.`, 400);
+    } else {
+      const order = findUser.orders.push(newOrder);
+      await findUser.save();
+      res.status(200).json({ message: "Захиалга амжилттай үүслээ.", order });
+    }
   } catch (error) {
     next(error);
   }

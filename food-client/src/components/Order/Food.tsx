@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Radio from "@mui/material/Radio";
 
-export const Food = ({ foods, formik }: any) => {
+export const Food = ({ foods, formik, totalPrice }: any) => {
   console.log("FOoodsAtFo, foods");
   const router = useRouter();
-  const [initial, setInitial] = useState(0);
 
   return (
     <Box>
@@ -80,17 +79,11 @@ export const Food = ({ foods, formik }: any) => {
               Нийт төлөх дүн
             </Typography>
             <Typography variant="body1" fontWeight={600} component="h6">
-              {foods
-                ?.map((food: any) => food.food.price * food.quantity)
-                ?.reduce((sum: any, une: any) => sum + une, initial)}
-              ₮
+              {totalPrice}₮
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button
-              onClick={() => (formik.onSubmit, router.push("/"))}
-              label={"Захиалах"}
-            />
+            <Button onClick={formik.handleSubmit} label={"Захиалах"} />
           </Grid>
         </Grid>
       </Stack>

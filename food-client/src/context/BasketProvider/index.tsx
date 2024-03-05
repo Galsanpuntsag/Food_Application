@@ -27,7 +27,14 @@ interface IBasket {
 
 interface IBasketContext {
   loading: boolean;
-  foodsInBask: any;
+  foodsInBask: [
+    foods: {
+      food: {
+        price: number;
+      };
+      quantity: number;
+    }
+  ];
   updateByFoodId: any;
   deleteFoodInBask: any;
   addBasket: (food: any, count: number) => Promise<void>;
@@ -90,8 +97,6 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       console.log("UpdateBasketFoodirlle", updateFood);
       setFoodsInBask(updateFood);
       getFoodBasket();
-
-      toast.success("Successful  Food updateByFoodId");
     } catch (error) {
       toast.error("Failed Food updateByFoodId");
     }

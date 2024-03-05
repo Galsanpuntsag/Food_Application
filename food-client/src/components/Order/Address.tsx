@@ -7,6 +7,7 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  FormHelperText,
   MenuItem,
   Select,
   Stack,
@@ -41,7 +42,7 @@ const buildings = [
   "Зайсан хотхон ",
 ];
 
-const confirmAddress = (formik: any) => {
+const Address = ({ values, errors, handleChange }: any) => {
   //   const { userForm } = useContext(UserContext);
   return (
     <Box>
@@ -61,10 +62,10 @@ const confirmAddress = (formik: any) => {
         <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
           <Typography>Хаяг аа сонгоно уу</Typography>
           <Select
-            value={formik.values?.duureg}
+            value={values?.duureg}
             label="asfasdfadsdfd"
             name="duureg"
-            onChange={formik.handleChange}
+            onChange={handleChange}
             sx={{ bgcolor: "#ECEDF0" }}
           >
             <MenuItem disabled value="">
@@ -76,10 +77,13 @@ const confirmAddress = (formik: any) => {
               </MenuItem>
             ))}
           </Select>
+          <FormHelperText sx={{ color: "error" }}>
+            {errors?.duureg}
+          </FormHelperText>
           <Select
             name="khoroo"
-            value={formik.values?.khoroo}
-            onChange={formik.handleChange}
+            value={values?.khoroo}
+            onChange={handleChange}
             sx={{ bgcolor: "#ECEDF0" }}
           >
             <MenuItem disabled value="">
@@ -93,7 +97,8 @@ const confirmAddress = (formik: any) => {
           </Select>
           <Select
             name="street"
-            value={formik.values?.street}
+            onChange={handleChange}
+            value={values?.street}
             sx={{ bgcolor: "#ECEDF0" }}
           >
             <MenuItem disabled value="">
@@ -110,14 +115,10 @@ const confirmAddress = (formik: any) => {
         <Input
           label="Нэмэлт мэдээлэл"
           name="info"
-          value={formik.values?.info}
-          onChange={formik.handleChange}
+          value={values?.info}
+          onChange={handleChange}
         />
-        <Input
-          label="Утасны дугаар*"
-          name="phone"
-          onChange={formik.handleChange}
-        />
+        <Input label="Утасны дугаар*" name="phone" onChange={handleChange} />
         <div>
           <Typography>Төлбөр төлөх</Typography>
           <FormGroup
@@ -137,4 +138,4 @@ const confirmAddress = (formik: any) => {
   );
 };
 
-export default confirmAddress;
+export default Address;
