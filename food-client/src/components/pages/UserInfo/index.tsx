@@ -20,10 +20,21 @@ const VisuallyHiddenInput = styled("input")({
 
 const UserInfo = () => {
   const formik = useFormik({
-    onSubmit: {
+    onSubmit:( {
       image,
-      khoroo,
-    },
+      name,
+      email,
+      phone,
+    }: { 
+      image: string
+      name: string
+      email: string
+      phone: string}) => {},
+      initialValues: { 
+         image: "",
+        name: "",
+        email: "",
+        phone: "",}
   });
   return (
     <Container>
