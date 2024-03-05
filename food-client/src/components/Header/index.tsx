@@ -19,6 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../../public/images";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
+import { useRouter } from "next/navigation";
 
 import { UserContext } from "@/context/userProvider";
 
@@ -69,19 +70,19 @@ const pages = [
   { text: "Хоолны цэс", link: "menu" },
   { text: "Хүргэлтийн бүс", link: "area" },
 ];
-const settings = ["Бүртгэл", "Захиалга", "Хаяг", "Гарах"];
 
 export const Header = () => {
+  const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
   const { user } = useContext(UserContext);
 
-  const handleOpenNavMenu = () => {
-    // setAnchorElNav(event.currentTarget);
+  const handleOpenNavMenu = (event: any) => {
+    setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = () => {
-    // setAnchorElUser(event.currentTarget);
+  const handleOpenUserMenu = (event: any) => {
+    setAnchorElUser(event.currentTarget);
   };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -153,14 +154,15 @@ export const Header = () => {
               />
             </Search>
             <HeaderAtDrawer />
-            <Tooltip title="Open settings">
+            <Tooltip
+              title="Open settings"
+              onClick={() => router.replace("/user")}
+            >
               <IconButton
-                onClick={handleOpenUserMenu}
                 sx={{
                   p: 0,
                   color: "white",
                   display: { xs: "none", md: "flex" },
-                  gap: "10px",
                 }}
               >
                 <Avatar
@@ -180,28 +182,6 @@ export const Header = () => {
               <Typography color={"black"}>Нэвтрэх</Typography>
             )}
 
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
             <IconButton
               size="large"
               aria-label="account of current user"
