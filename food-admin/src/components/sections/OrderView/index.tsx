@@ -16,16 +16,18 @@
 // import Iconify from "@/components/iconify";
 // import Scrollbar from "@/components/scrollbar";
 
-// import TableNoData from "./table-no-data";
-// import UserTableRow from "./user-table-row";
-// import UserTableHead from "./user-table-head";
-// import TableEmptyRows from "./table-empty-rows";
-// import UserTableToolbar from "./user-table-toolbar";
-// import { emptyRows, applyFilter, getComparator } from "./functions";
+// import TableNoData from "../userView/table-no-data";
+// import OrderTableHead from "./order-table-head";
+// import OrderTableRow from "./order-table-row";
+// import TableEmptyRows from "../userView/table-empty-rows";
+// import UserTableToolbar from "../userView/user-table-toolbar";
+// import { emptyRows, applyFilter, getComparator } from "../userView/functions";
 // import { OrderContext } from "@/context/userProvider";
 
-// export default function UserView() {
-//   const { users } = useContext(OrderContext);
+// import axios from "axios";
+
+// export default function OrderView() {
+//   const { orders } = useContext(OrderContext);
 
 //   const [page, setPage] = useState(0);
 
@@ -89,7 +91,7 @@
 //   };
 
 //   const dataFiltered = applyFilter({
-//     inputData: users,
+//     inputData: orders,
 //     comparator: getComparator(order, orderBy),
 //     filterName,
 //   });
@@ -125,7 +127,7 @@
 //         <Scrollbar>
 //           <TableContainer sx={{ overflow: "unset" }}>
 //             <Table sx={{ minWidth: 800 }}>
-//               <UserTableHead
+//               <OrderTableHead
 //                 order={order}
 //                 orderBy={orderBy}
 //                 rowCount={users.length}
@@ -133,20 +135,19 @@
 //                 onRequestSort={handleSort}
 //                 onSelectAllClick={handleSelectAllClick}
 //                 headLabel={[
-//                   { id: "name", label: "Нэр" },
-//                   { id: "company", label: "Имэйл" },
-//                   { id: "role", label: "Эрх" },
-//                   { id: "isVerified", label: "Баталгаажсан", align: "center" },
-//                   { id: "status", label: "Төлөв" },
+//                   { id: "name", label: "OrderNo" },
+//                   { id: "company", label: "Buyer info" },
+//                   { id: "role", label: "Payment" },
+//                   { id: "isVerified", label: "Address", align: "center" },
+//                   { id: "status", label: "Delivery state" },
 //                   { id: "" },
 //                 ]}
 //               />
 //               <TableBody>
-//                 {console.log("Data", dataFiltered)}
 //                 {dataFiltered
 //                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 //                   .map((row: any) => (
-//                     <UserTableRow
+//                     <OrderTableRow
 //                       key={row.id}
 //                       name={row.name}
 //                       role={row.role}

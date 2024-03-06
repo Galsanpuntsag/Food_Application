@@ -28,13 +28,8 @@ interface IUserContext {
     password: string,
     address: string
   ) => void;
-  // order: (
-  //   duureg: string,
-  //   khoroo: string,
-  //   street: string,
-  //   info: string,
-  //   phone: string
-  // ) => void;
+
+  logout: () => void;
   user: any;
   token: any;
 }
@@ -47,6 +42,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState<string | null>(null);
+  const [reFetch, setReFetch] = useState(false);
   const [userForm, setUserForm] = useState<IUser>({
     name: "",
     email: "",
@@ -76,6 +72,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         icon: "success",
       });
       router.push("/");
+      setReFetch(true);
     } catch (error) {
       console.log("ErrorROOROROROR", error);
       toast.error("failed to enter", { autoClose: 3000 });
@@ -113,7 +110,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     const loggedUser = JSON.parse(localStorage.getItem("user") as string);
     const loggedToken = localStorage.getItem("token");
     if (!loggedUser || !loggedToken) {
-      alert("newterne uu");
     }
     setUser(loggedUser);
     setToken(loggedToken!);
@@ -121,11 +117,20 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
 
   console.log("OrderluuyvuullaaData", foodsInBask);
 
-  
+  const logout = () => {
+    console.log("logout");
+    return (
+      localStorage.removeItem("user"),
+      localStorage.removeItem("token"),
+      setUser(null),
+      setToken(null)
+    );
+  };
+
   return (
     <>
       <UserContext.Provider
-        value={{ userForm, login, signup, user, token }}
+        value={{ userForm, login, signup, user, token, logout }}
       >
         {children}
       </UserContext.Provider>

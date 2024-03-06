@@ -71,7 +71,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       getFoodBasket();
       setLoading(false);
     } catch (error: any) {
-      alert("AddBasketErr" + error.message);
+      console.log("ErrorAddBask", error);
     }
   };
 

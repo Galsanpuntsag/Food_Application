@@ -74,21 +74,15 @@ const pages = [
 export const Header = () => {
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(0);
   const { user } = useContext(UserContext);
 
   const handleOpenNavMenu = (event: any) => {
+    console.log("OnClick");
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: any) => {
-    setAnchorElUser(event.currentTarget);
   };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   const containerStyle = {
@@ -162,7 +156,7 @@ export const Header = () => {
                 sx={{
                   p: 0,
                   color: "white",
-                  display: { xs: "none", md: "flex" },
+                  display: { xs: "flex", md: "flex" },
                 }}
               >
                 <Avatar
@@ -170,6 +164,7 @@ export const Header = () => {
                     width: "30px",
                     height: "30px",
                     backgroundColor: "black",
+                    display: { xs: "flex", md: "flex" },
                   }}
                   alt={user?.name}
                   src="/static/images/avatar/2.jpg"
@@ -177,7 +172,12 @@ export const Header = () => {
               </IconButton>
             </Tooltip>
             {user ? (
-              <Typography color={"black"}>{user?.name}</Typography>
+              <Typography
+                color={"black"}
+                sx={{ display: { xs: "none ", md: "flex" } }}
+              >
+                {user?.name}
+              </Typography>
             ) : (
               <Typography color={"black"}>Нэвтрэх</Typography>
             )}

@@ -16,6 +16,8 @@ import {
 
 import { Add, Remove } from "@mui/icons-material";
 import { BasketContext } from "@/context/BasketProvider";
+import { UserContext } from "@/context/userProvider";
+import Swal from "sweetalert2";
 
 const style = {
   position: "absolute",
@@ -32,9 +34,20 @@ const style = {
 
 export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
   const { addBasket, loading } = useContext(BasketContext);
+  const { token } = useContext(UserContext);
+
   const [count, setCount] = React.useState(0);
 
   const sendFoodBasket = () => {
+    if (!token) {
+      open;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Энэ үйлдлийг хийхйин тулд нэвтэрнэ үү?",
+        footer: '<a href="login">Нэвтрэх</a>',
+      });
+    }
     addBasket(food, count);
     console.log("SGSG");
   };

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import {
   Avatar,
   Box,
@@ -20,6 +20,8 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import RestoreIcon from "@mui/icons-material/Restore";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+import { UserContext } from "@/context/userProvider";
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -33,6 +35,8 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const UserInfo = () => {
+  const { logout } = useContext(UserContext);
+
   const formik = useFormik({
     onSubmit: ({
       image,
@@ -216,17 +220,13 @@ const UserInfo = () => {
             sx={{ backgroundColor: "whitesmoke" }}
             borderRadius={5}
           >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
-              <LogoutIcon sx={{ width: 50 }} />
+            <Button onClick={logout}>
+              <LogoutIcon sx={{ width: 50, color: "black" }} />
 
-              <Typography mt={1} fontSize={"12px"}>
+              <Typography mt={1} color={"black"} fontSize={"12px"}>
                 Гарах
               </Typography>
-            </Box>
+            </Button>
           </Box>
         </Box>
       </Grid>
