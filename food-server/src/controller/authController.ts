@@ -10,11 +10,11 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("Signup");
+  console.log("Signup ===> ");
   try {
     const newUser = req.body;
-    console.log("USERNEW", newUser);
-    const user = await User.create({ ...newUser });
+    console.log("USERNEW===>", newUser);
+    const user = await User.create(newUser);
     console.log("CONTROLLER_user");
     if (!user) {
       throw new MyError("Invalid user email address", 400);

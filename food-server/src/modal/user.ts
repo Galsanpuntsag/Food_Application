@@ -1,11 +1,11 @@
 import mongoose, { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
-const OrderSchema = new Schema({
+const orderSchema = new Schema({
   orderNo: String,
-  foods: [],
+  product: [],
   payment: {
-    paymentAmount: Number,
+    amount: Number,
     status: {
       type: String,
       enum: ["paid", "unpaid"],
@@ -81,16 +81,17 @@ const userSchema = new Schema(
       default: new Date(),
     },
     phone: String,
-    orders: [OrderSchema],
+    orders: [orderSchema],
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", async function async() {
+userSchema.pre("save", async function async(next) {
   if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
+  next();
 });
 
 const User = model("User", userSchema);
