@@ -16,14 +16,25 @@ import React, {
 interface IUser {
   users: {
     name: string;
-    selected: string;
-    length: string;
-    avatarUrl: string;
-    company: string;
     role: string;
-    isVerified: boolean;
-    status: string;
-    handleClick: () => void;
+    length: string;
+    orders: {
+      address: {
+        duureg: string;
+        khoroo: string;
+        info: string;
+      };
+      delivery: {
+        status: string;
+        deliveredAt: string;
+      };
+      orderNo: string;
+      payment: {
+        paymentAmount: number;
+        status: string;
+        paidDate: string;
+      };
+    };
   };
 }
 

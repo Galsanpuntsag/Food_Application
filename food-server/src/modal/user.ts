@@ -1,6 +1,47 @@
 import mongoose, { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
+const OrderSchema = new Schema({
+  orderNo: String,
+  foods: [],
+  payment: {
+    paymentAmount: Number,
+    status: {
+      type: String,
+      enum: ["paid", "unpaid"],
+      default: "unpaid",
+    },
+    paidDate: {
+      type: Date,
+      default: Date.now,
+    },
+    createAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  address: {
+    duureg: { type: String },
+    khoroo: { type: String },
+    buildingNo: { type: String },
+    info: String,
+  },
+  delivery: {
+    status: {
+      type: String,
+      enum: ["Pending", "Progressing", "Delivered"],
+      default: "Pending",
+    },
+    deliveredAt: {
+      type: Date,
+      default: Date.now,
+    },
+    phoneNumber: {
+      type: String,
+    },
+  },
+});
+
 const userSchema = new Schema(
   {
     name: {
@@ -22,11 +63,6 @@ const userSchema = new Schema(
     avatarUrl: {
       type: String,
     },
-    address: {
-      khoroo: { type: String },
-      duureg: { type: String },
-      buildingNo: { type: Number },
-    },
     role: {
       type: String,
       enum: ["Admin", "User", "Moderator"],
@@ -45,66 +81,11 @@ const userSchema = new Schema(
       default: new Date(),
     },
     phone: String,
-    orders: [
-      {
-        foods: [
-          {
-            food: {
-              type: Schema.ObjectId,
-              ref: "Food",
-              unique: true,
-              price: Number,
-            },
-            quantity: {
-              type: Number,
-            },
-          },
-        ],
-        orderNo: String,
-        payment: {
-          paymentAmount: {
-            type: Number,
-            default: 0,
-          },
-          status: {
-            type: String,
-            enum: ["paid", "unpaid"],
-            default: "unpaid",
-          },
-          paidDate: {
-            type: Date,
-            default: Date.now,
-          },
-          createAt: {
-            type: Date,
-            default: Date.now,
-          },
-        },
-        address: {
-          duureg: { type: String },
-          khoroo: { type: String },
-          buildingNo: { type: String },
-          info: String,
-        },
-        delivery: {
-          status: {
-            type: String,
-            enum: ["Pending", "Progressing", "Delivered"],
-            default: "Pending",
-          },
-          deliveredAt: {
-            type: Date,
-            default: Date.now,
-          },
-          phoneNumber: {
-            type: String,
-          },
-        },
-      },
-    ],
+    orders: [OrderSchema],
   },
   { timestamps: true }
 );
+
 userSchema.pre("save", async function async() {
   if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(10);

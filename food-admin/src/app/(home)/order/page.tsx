@@ -1,8 +1,8 @@
-// import React from "react";
-// import OrderView from "@/components/sections/OrderView";
+import React from "react";
+import OrderView from "@/components/sections/orderView";
 
-// const OrderPage = () => {
-//   return <OrderView />;
-// };
+const OrderPage = () => {
+  return <OrderView />;
+};
 
-// export default OrderPage;
+export default OrderPage;

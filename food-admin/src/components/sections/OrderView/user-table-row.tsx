@@ -16,7 +16,7 @@ import Iconify from "@/components/iconify";
 
 // ----------------------------------------------------------------------
 
-export default function OrderTableRow({
+export default function UserTableRow({
   selected,
   name,
   avatarUrl,

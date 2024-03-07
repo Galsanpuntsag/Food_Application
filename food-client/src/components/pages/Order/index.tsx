@@ -43,7 +43,7 @@ const Order = () => {
   const [initial, setInitial] = useState(0);
 
   const totalPrice = foodsInBask
-    ?.map((foods) => foods.food.price * foods.quantity)
+    ?.map((foods: any) => foods.food.price * foods.quantity)
     ?.reduce((sum: any, une: any) => sum + une, initial);
   console.log("TOTOTO", totalPrice);
 

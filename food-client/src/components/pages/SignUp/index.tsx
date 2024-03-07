@@ -43,22 +43,18 @@ const SignUpPage = () => {
       name,
       email,
       password,
-      address,
-      rePassword,
     }: {
       name: string;
       email: string;
       password: string;
-      address: string;
       rePassword: string;
     }) => {
-      signup(name, email, address, password);
+      signup(name, email, password);
     },
 
     initialValues: {
       name: "",
       email: "",
-      address: "",
       password: "",
       rePassword: "",
     },
@@ -103,14 +99,7 @@ const SignUpPage = () => {
             onChange={formik.handleChange}
             errorText={formik.errors.email}
           />
-          <Typography>Хаяг</Typography>
-          <Input
-            label="Хаягаа оруулна уу"
-            name="address"
-            value={formik.values.address}
-            onChange={formik.handleChange}
-            errorText={formik.errors.address}
-          />
+
           <Typography>Нууц үг</Typography>
           <Input
             label="Нууц үгээ оруулна уу"

@@ -6,7 +6,9 @@ import { Button, Input } from "@/components";
 import { Box, Container, Stack, Typography, Link } from "@mui/material";
 import { UserContext } from "@/context/userProvider";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import * as yup from "yup";
+import { Router } from "next/router";
 
 const validationSchema = yup.object({
   email: yup
@@ -22,6 +24,7 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
+  const router = useRouter();
   const { login } = useContext(UserContext);
 
   const formik = useFormik({
@@ -101,7 +104,11 @@ const LoginPage = () => {
           <Typography>Эсвэл</Typography>
         </Stack>
         <Stack flex="row" width="100%" justifyContent="flex-end">
-          <Button label="Бүртгүүлэх" btnType="outlined" />
+          <Button
+            label="Бүртгүүлэх"
+            onClick={() => router.replace("signup")}
+            btnType="outlined"
+          />
         </Stack>
       </Box>
     </Container>

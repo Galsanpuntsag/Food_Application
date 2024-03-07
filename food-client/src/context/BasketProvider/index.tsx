@@ -27,14 +27,8 @@ interface IBasket {
 
 interface IBasketContext {
   loading: boolean;
-  foodsInBask: [
-    foods: {
-      food: {
-        price: number;
-      };
-      quantity: number;
-    }
-  ];
+  foodsInBask: any;
+  setFoodsInBask: any;
   updateByFoodId: any;
   deleteFoodInBask: any;
   addBasket: (food: any, count: number) => Promise<void>;
@@ -142,6 +136,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     <BasketContext.Provider
       value={{
         foodsInBask,
+        setFoodsInBask,
         addBasket,
         loading,
         updateByFoodId,

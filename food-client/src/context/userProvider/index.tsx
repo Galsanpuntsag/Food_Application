@@ -15,19 +15,13 @@ import { BasketContext } from "../BasketProvider";
 interface IUser {
   name: string;
   email: string;
-  address: string;
   password?: string;
 }
 
 interface IUserContext {
   userForm: IUser;
   login: (email: string, password: string) => void;
-  signup: (
-    name: string,
-    email: string,
-    password: string,
-    address: string
-  ) => void;
+  signup: (name: string, email: string, password: string) => void;
 
   logout: () => void;
   user: any;
@@ -37,7 +31,7 @@ interface IUserContext {
 export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const { foodsInBask } = useContext(BasketContext);
+  const { foodsInBask, setFoodsInBask } = useContext(BasketContext);
   console.log("foodsIn", foodsInBask);
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -46,7 +40,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   const [userForm, setUserForm] = useState<IUser>({
     name: "",
     email: "",
-    address: "",
     password: "",
   });
 
@@ -82,7 +75,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   const signup = async (
     name: string,
     email: string,
-    address: string,
+
     password: string
   ) => {
     console.log("signupWorking");
@@ -90,7 +83,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     try {
       const data: IUser = await axios.post(
         "http://localhost:8080/auth/signup",
-        { name, email, address, password }
+        { name, email, password }
       );
       setUserForm(data);
       await Swal.fire({
@@ -123,7 +116,8 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       localStorage.removeItem("user"),
       localStorage.removeItem("token"),
       setUser(null),
-      setToken(null)
+      setToken(null),
+      setFoodsInBask(null)
     );
   };
 

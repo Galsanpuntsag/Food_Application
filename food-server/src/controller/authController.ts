@@ -14,8 +14,6 @@ export const createUser = async (
   try {
     const newUser = req.body;
     console.log("USERNEW", newUser);
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPass = await bcrypt.hash(newUser.password, salt);
     const user = await User.create({ ...newUser });
     console.log("CONTROLLER_user");
     if (!user) {
@@ -25,7 +23,7 @@ export const createUser = async (
       { email: user.email },
       process.env.JWT_PRIVATE_KEY as string,
       {
-        expiresIn: "5m",
+        expiresIn: "10m",
       }
     );
     sendEmail({ email: user.email as string, token: verifyToken });

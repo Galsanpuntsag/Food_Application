@@ -5,11 +5,11 @@ import TableHead from "@mui/material/TableHead";
 import TableCell from "@mui/material/TableCell";
 import TableSortLabel from "@mui/material/TableSortLabel";
 
-import { visuallyHidden } from "../userView/functions";
+import { visuallyHidden } from "./functions";
 
 // ----------------------------------------------------------------------
 
-export default function OrderTableHead({
+export default function UserTableHead({
   order,
   orderBy,
   rowCount,

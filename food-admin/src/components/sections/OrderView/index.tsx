@@ -1,186 +1,191 @@
-// "use client";
+"use client";
 
-// import { ChangeEvent, useContext, useEffect, useState } from "react";
-// import { sample } from "lodash";
-// import { faker } from "@faker-js/faker";
-// import Card from "@mui/material/Card";
-// import Stack from "@mui/material/Stack";
-// import Table from "@mui/material/Table";
-// import Button from "@mui/material/Button";
-// import Container from "@mui/material/Container";
-// import TableBody from "@mui/material/TableBody";
-// import Typography from "@mui/material/Typography";
-// import TableContainer from "@mui/material/TableContainer";
-// import TablePagination from "@mui/material/TablePagination";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { sample } from "lodash";
+import { faker } from "@faker-js/faker";
+import Card from "@mui/material/Card";
+import Stack from "@mui/material/Stack";
+import Table from "@mui/material/Table";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import TableBody from "@mui/material/TableBody";
+import Typography from "@mui/material/Typography";
+import TableContainer from "@mui/material/TableContainer";
+import TablePagination from "@mui/material/TablePagination";
 
-// import Iconify from "@/components/iconify";
-// import Scrollbar from "@/components/scrollbar";
+import Iconify from "@/components/iconify";
+import Scrollbar from "@/components/scrollbar";
 
-// import TableNoData from "../userView/table-no-data";
-// import OrderTableHead from "./order-table-head";
-// import OrderTableRow from "./order-table-row";
-// import TableEmptyRows from "../userView/table-empty-rows";
-// import UserTableToolbar from "../userView/user-table-toolbar";
-// import { emptyRows, applyFilter, getComparator } from "../userView/functions";
-// import { OrderContext } from "@/context/userProvider";
+import TableNoData from "./table-no-data";
+import UserTableRow from "./user-table-row";
+import UserTableHead from "./user-table-head";
+import TableEmptyRows from "./table-empty-rows";
+import UserTableToolbar from "./user-table-toolbar";
+import { emptyRows, applyFilter, getComparator } from "./functions";
+import { OrderContext } from "@/context/userProvider";
 
-// import axios from "axios";
+export default function OrderView() {
+  const { users } = useContext(OrderContext);
 
-// export default function OrderView() {
-//   const { orders } = useContext(OrderContext);
+  const orderData = users.map((user: any) => user.orders);
 
-//   const [page, setPage] = useState(0);
+  console.log("ORDERRR", orderData);
 
-//   const [order, setOrder] = useState("asc");
+  console.log("UserView", users);
 
-//   const [selected, setSelected] = useState<string[]>([]);
+  const [page, setPage] = useState(0);
 
-//   const [orderBy, setOrderBy] = useState("name");
+  const [order, setOrder] = useState("asc");
 
-//   const [filterName, setFilterName] = useState("");
+  const [selected, setSelected] = useState<string[]>([]);
 
-//   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [orderBy, setOrderBy] = useState("name");
 
-//   const handleSort = (event: any, id: any) => {
-//     const isAsc = orderBy === id && order === "asc";
-//     if (id !== "") {
-//       setOrder(isAsc ? "desc" : "asc");
-//       setOrderBy(id);
-//     }
-//   };
+  const [filterName, setFilterName] = useState("");
 
-//   const handleSelectAllClick = (event: any) => {
-//     if (event.target.checked) {
-//       const newSelecteds = users.map((n) => n.name);
-//       setSelected(newSelecteds);
-//       return;
-//     }
-//     setSelected([]);
-//   };
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-//   const handleClick = (event: any, name: string) => {
-//     const selectedIndex = selected.indexOf(name);
-//     let newSelected: string[] = [];
-//     if (selectedIndex === -1) {
-//       newSelected = newSelected.concat(selected, name);
-//     } else if (selectedIndex === 0) {
-//       newSelected = newSelected.concat(selected.slice(1));
-//     } else if (selectedIndex === selected.length - 1) {
-//       newSelected = newSelected.concat(selected.slice(0, -1));
-//     } else if (selectedIndex > 0) {
-//       newSelected = newSelected.concat(
-//         selected.slice(0, selectedIndex),
-//         selected.slice(selectedIndex + 1)
-//       );
-//     }
-//     setSelected(newSelected);
-//   };
+  const handleSort = (event: any, id: any) => {
+    const isAsc = orderBy === id && order === "asc";
+    if (id !== "") {
+      setOrder(isAsc ? "desc" : "asc");
+      setOrderBy(id);
+    }
+  };
 
-//   const handleChangePage = (_: unknown, newPage: any) => {
-//     setPage(newPage);
-//   };
+  const handleSelectAllClick = (event: any) => {
+    if (event.target.checked) {
+      const newSelecteds = users.map((n) => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
 
-//   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-//     setPage(0);
-//     setRowsPerPage(parseInt(event.target.value, 10));
-//   };
+  const handleClick = (event: any, name: string) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected: string[] = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+    setSelected(newSelected);
+  };
 
-//   const handleFilterByName = (event: any) => {
-//     setPage(0);
-//     setFilterName(event.target.value);
-//   };
+  const handleChangePage = (_: unknown, newPage: any) => {
+    setPage(newPage);
+  };
 
-//   const dataFiltered = applyFilter({
-//     inputData: orders,
-//     comparator: getComparator(order, orderBy),
-//     filterName,
-//   });
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    setPage(0);
+    setRowsPerPage(parseInt(event.target.value, 10));
+  };
 
-//   const notFound = !dataFiltered.length && !!filterName;
+  const handleFilterByName = (event: any) => {
+    setPage(0);
+    setFilterName(event.target.value);
+  };
 
-//   return (
-//     <Container>
-//       <Stack
-//         direction="row"
-//         alignItems="center"
-//         justifyContent="space-between"
-//         mb={5}
-//       >
-//         <Typography variant="h4">Хэрэглэгчид</Typography>
+  const dataFiltered = applyFilter({
+    inputData: users,
+    comparator: getComparator(order, orderBy),
+    filterName,
+  });
 
-//         <Button
-//           variant="contained"
-//           color="inherit"
-//           startIcon={<Iconify icon="eva:plus-fill" />}
-//         >
-//           Шинэ хэрэглэгч
-//         </Button>
-//       </Stack>
+  const notFound = !dataFiltered.length && !!filterName;
 
-//       <Card sx={{}}>
-//         <UserTableToolbar
-//           numSelected={selected.length}
-//           filterName={filterName}
-//           onFilterName={handleFilterByName}
-//         />
+  return (
+    <Container>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={5}
+      >
+        <Typography variant="h4">Хэрэглэгчид</Typography>
 
-//         <Scrollbar>
-//           <TableContainer sx={{ overflow: "unset" }}>
-//             <Table sx={{ minWidth: 800 }}>
-//               <OrderTableHead
-//                 order={order}
-//                 orderBy={orderBy}
-//                 rowCount={users.length}
-//                 numSelected={selected.length}
-//                 onRequestSort={handleSort}
-//                 onSelectAllClick={handleSelectAllClick}
-//                 headLabel={[
-//                   { id: "name", label: "OrderNo" },
-//                   { id: "company", label: "Buyer info" },
-//                   { id: "role", label: "Payment" },
-//                   { id: "isVerified", label: "Address", align: "center" },
-//                   { id: "status", label: "Delivery state" },
-//                   { id: "" },
-//                 ]}
-//               />
-//               <TableBody>
-//                 {dataFiltered
-//                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-//                   .map((row: any) => (
-//                     <OrderTableRow
-//                       key={row.id}
-//                       name={row.name}
-//                       role={row.role}
-//                       status={row.status}
-//                       company={row.email}
-//                       avatarUrl={row.avatarUrl}
-//                       isVerified={row.isVerified}
-//                       selected={selected.indexOf(row.name) !== -1}
-//                       handleClick={(event: any) => handleClick(event, row.name)}
-//                     />
-//                   ))}
+        <Button
+          variant="contained"
+          color="inherit"
+          startIcon={<Iconify icon="eva:plus-fill" />}
+        >
+          Шинэ хэрэглэгч
+        </Button>
+      </Stack>
 
-//                 <TableEmptyRows
-//                   height={77}
-//                   emptyRows={emptyRows(page, rowsPerPage, users.length)}
-//                 />
+      <Card sx={{}}>
+        <UserTableToolbar
+          numSelected={selected.length}
+          filterName={filterName}
+          onFilterName={handleFilterByName}
+        />
 
-//                 {notFound && <TableNoData query={filterName} />}
-//               </TableBody>
-//             </Table>
-//           </TableContainer>
-//         </Scrollbar>
+        <Scrollbar>
+          <TableContainer sx={{ overflow: "unset" }}>
+            <Table sx={{ minWidth: 800 }}>
+              <UserTableHead
+                order={order}
+                orderBy={orderBy}
+                rowCount={users.length}
+                numSelected={selected.length}
+                onRequestSort={handleSort}
+                onSelectAllClick={handleSelectAllClick}
+                headLabel={[
+                  { id: "name", label: "Order Name" },
+                  { id: "company", label: "Buyer info" },
+                  { id: "role", label: "Payment" },
+                  { id: "isVerified", label: "Address", align: "center" },
+                  { id: "status", label: "Delivery Status" },
+                  { id: "" },
+                ]}
+              />
+              <TableBody>
+                {console.log("Data", dataFiltered)}
+                {dataFiltered
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any) => (
+                    <UserTableRow
+                      key={row.id}
+                      name={row.name}
+                      role={row.role}
+                      status={row.status}
+                      company={row.email}
+                      avatarUrl={row.avatarUrl}
+                      isVerified={row.isVerified}
+                      selected={selected.indexOf(row.name) !== -1}
+                      handleClick={(event: any) => handleClick(event, row.name)}
+                    />
+                  ))}
 
-//         <TablePagination
-//           page={page}
-//           component="div"
-//           count={users.length}
-//           rowsPerPage={rowsPerPage}
-//           onPageChange={handleChangePage}
-//           rowsPerPageOptions={[5, 10, 25]}
-//           onRowsPerPageChange={handleChangeRowsPerPage}
-//         />
-//       </Card>
-//     </Container>
-//   );
-// }
+                <TableEmptyRows
+                  height={77}
+                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
+                />
+
+                {notFound && <TableNoData query={filterName} />}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Scrollbar>
+
+        <TablePagination
+          page={page}
+          component="div"
+          count={users.length}
+          rowsPerPage={rowsPerPage}
+          onPageChange={handleChangePage}
+          rowsPerPageOptions={[5, 10, 25]}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Card>
+    </Container>
+  );
+}
