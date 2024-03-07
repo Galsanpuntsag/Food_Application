@@ -9,12 +9,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Address from "@/components/Order/Address";
 import { Food } from "@/components/Order/Food";
+import { useRouter } from "next/navigation";
 
 const validationSchema = yup.object({
   duureg: yup.string().required("Zaaval buglunu"),
 });
 
 const Order = () => {
+  const router = useRouter();
   const { token } = useContext(UserContext);
   const { foodsInBask } = useContext(BasketContext);
 
@@ -24,19 +26,19 @@ const Order = () => {
     onSubmit: ({
       duureg,
       khoroo,
-      street,
+      buildingNo,
       info,
       phone,
     }: {
       duureg: string;
       khoroo: string;
-      street: string;
+      buildingNo: string;
       info: string;
       phone: string;
     }) => {
-      order(duureg, khoroo, street, info, phone);
+      order(duureg, khoroo, buildingNo, info, phone);
     },
-    initialValues: { duureg: "", khoroo: "", street: "", info: "", phone: "" },
+    initialValues: { duureg: "", khoroo: "", buildingNo: "", info: "", phone: "" },
     validationSchema,
   });
 
@@ -50,7 +52,7 @@ const Order = () => {
   const order = async (
     duureg: string,
     khoroo: string,
-    street: string,
+    buildingNo: string,
     info: string,
     phone: string
   ) => {
@@ -61,11 +63,12 @@ const Order = () => {
         "http://localhost:8080/order",
         {
           basket: { foodsInBask, totalPrice },
-          address: { duureg, khoroo, street, info, phone },
+          address: { duureg, khoroo, buildingNo, info, phone },
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("Хоол амжилттай захиалсан.");
+     router.replace("/home")
     } catch (error) {}
   };
 

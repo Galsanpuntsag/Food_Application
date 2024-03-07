@@ -16,20 +16,21 @@ import TablePagination from "@mui/material/TablePagination";
 import Iconify from "@/components/iconify";
 import Scrollbar from "@/components/scrollbar";
 
-import TableNoData from "./table-no-data";
-import UserTableRow from "./user-table-row";
-import UserTableHead from "./user-table-head";
-import TableEmptyRows from "./table-empty-rows";
-import UserTableToolbar from "./user-table-toolbar";
+import TableNoData from "./order-no-data";
+import UserTableRow from "./order-table-row";
+import UserTableHead from "./order-table-head";
+import TableEmptyRows from "./order-empty-rows";
+import UserTableToolbar from "./order-table-toolbar";
 import { emptyRows, applyFilter, getComparator } from "./functions";
 import { OrderContext } from "@/context/userProvider";
 
 export default function OrderView() {
   const { users } = useContext(OrderContext);
 
-  const orderData = users.map((user: any) => user.orders);
+  const orderData = users?.map((user: any) => user.orders);
 
   console.log("ORDERRR", orderData);
+  console.log("ORDERRR", typeof orderData);
 
   console.log("UserView", users);
 
@@ -55,7 +56,8 @@ export default function OrderView() {
 
   const handleSelectAllClick = (event: any) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = users?.map((n) => n.name);
+
       setSelected(newSelecteds);
       return;
     }
@@ -95,7 +97,7 @@ export default function OrderView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: users,
+    inputData: orderData,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -148,21 +150,17 @@ export default function OrderView() {
                 ]}
               />
               <TableBody>
-                {console.log("Data", dataFiltered)}
+                {/* {console.log("Data", dataFiltered)} */}
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row: any) => (
-                    <UserTableRow
-                      key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.email}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
-                      selected={selected.indexOf(row.name) !== -1}
-                      handleClick={(event: any) => handleClick(event, row.name)}
-                    />
+                  .map((row: any) => (row.map((order:any)=><>
+                  <UserTableRow
+                    key={row.id}
+                    data={order}
+                    selected={selected.indexOf(row.name) !== -1}
+                    handleClick={(event: any) => handleClick(event, row.name)}
+                  /></>)
+                    
                   ))}
 
                 <TableEmptyRows

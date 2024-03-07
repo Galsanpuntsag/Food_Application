@@ -65,7 +65,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         icon: "success",
       });
       router.push("/");
-      setReFetch(true);
+      setReFetch(!reFetch)
     } catch (error) {
       console.log("ErrorROOROROROR", error);
       toast.error("failed to enter", { autoClose: 3000 });
@@ -75,10 +75,9 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   const signup = async (
     name: string,
     email: string,
-
     password: string
   ) => {
-    console.log("signupWorking");
+    console.log("signupWorking", name, email, password);
     console.log("UUU", userForm);
     try {
       const data: IUser = await axios.post(
@@ -118,7 +117,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       setUser(null),
       setToken(null),
       setFoodsInBask(null)
-    );
+    )
   };
 
   return (

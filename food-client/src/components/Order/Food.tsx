@@ -83,7 +83,7 @@ export const Food = ({ foods, formik, totalPrice }: any) => {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button onClick={formik.handleSubmit} label={"Захиалах"} />
+            <Button onClick={formik.handleSubmit } label={"Захиалах"} />
           </Grid>
         </Grid>
       </Stack>

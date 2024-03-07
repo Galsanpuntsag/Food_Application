@@ -14,7 +14,6 @@ import React, {
 // }
 
 interface IUser {
-  users: {
     name: string;
     role: string;
     length: string;
@@ -35,18 +34,17 @@ interface IUser {
         paidDate: string;
       };
     };
-  };
 }
 
 interface IUserContext {
   //   orders: IOrder;
-  users: IUser;
+  users: [IUser] | null;
 }
 
 export const OrderContext = createContext<IUserContext>({} as IUserContext);
 
 const UserProvider = ({ children }: PropsWithChildren) => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<[IUser] |null>([]);
   const [orders, setOrders] = useState([]);
   const GetUser = async () => {
     console.log("aaaa");

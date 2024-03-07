@@ -96,9 +96,9 @@ const Address = ({ values, errors, handleChange }: any) => {
             ))}
           </Select>
           <Select
-            name="street"
+            name="buildingNo"
             onChange={handleChange}
-            value={values?.street}
+            value={values?.buildingNo}
             sx={{ bgcolor: "#ECEDF0" }}
           >
             <MenuItem disabled value="">

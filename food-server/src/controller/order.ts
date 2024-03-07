@@ -10,9 +10,9 @@ export const createOrder = async (
 ) => {
   try {
     const newOrder = {
-      basket: req.body.basket.foodsInBask,
+      products: req.body.basket.foodsInBask,
       orderNo: "#" + Math.floor(Math.random() * 1000000),
-      payment: { paymentAmount: req.body.basket.totalPrice },
+      payment: { amount: req.body.basket.totalPrice },
       address: req.body.address,
       phoneNumber: req.body.address.phone,
     };

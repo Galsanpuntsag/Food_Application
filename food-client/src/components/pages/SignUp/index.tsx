@@ -23,7 +23,6 @@ const SignUpPage = () => {
       .max(100, "Таний и-мэйл 100-аас бага үсэгтэй байна.")
       .required("Та и-мэйл хаягаа оруулна уу")
       .email("Хүчинтэй и-мэйл хаяг байх ёстой."),
-    address: yup.string().required("Хаягийг заавал бөглөнө үү."),
     password: yup
       .string()
       .required("Та пасвортаа бөглөнө үү")
@@ -49,7 +48,9 @@ const SignUpPage = () => {
       password: string;
       rePassword: string;
     }) => {
+      console.log("signup")
       signup(name, email, password);
+      console.log("signup")
     },
 
     initialValues: {

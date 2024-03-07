@@ -16,18 +16,20 @@ import Iconify from "@/components/iconify";
 
 // ----------------------------------------------------------------------
 
+type UserTableRowProps = {
+  data: { address: { duureg: string, khoroo: string }, orderNo: number },
+  selected: any,
+  handleClick: any
+}
+
 export default function UserTableRow({
   selected,
-  name,
-  avatarUrl,
-  company,
-  role,
-  isVerified,
-  status,
+  data,
   handleClick,
-}: any) {
+}: UserTableRowProps) {
   const [open, setOpen] = useState(null);
-
+  // console.log("DDDDDD+>", data);
+  // console.log("DDDDDD+===>", data[0].address);
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
   };
@@ -35,6 +37,7 @@ export default function UserTableRow({
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
 
   return (
     <>
@@ -45,18 +48,17 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {data.orderNo}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{data.address?.duureg}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell>{data.address?.khoroo} || aahha</TableCell>
 
-        <TableCell align="center">{isVerified ? "Yes" : "No"}</TableCell>
+        <TableCell align="center">iiiii</TableCell>
 
         <TableCell>
           <Label color={(status === "banned" && "error") || "success"}>

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const orderSchema = new Schema({
   orderNo: String,
-  product: [],
+  products: [],
   payment: {
     amount: Number,
     status: {
