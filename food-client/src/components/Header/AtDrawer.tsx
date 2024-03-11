@@ -5,7 +5,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { BasketContext } from "@/context/BasketProvider";
 import Drawer from "@/components/Drawer/index";
 
-const HeaderAtDrawer = () => {
+const AtDrawer = () => {
   const { foodsInBask } = useContext(BasketContext);
   const [openDrawer, setOpenDrawer] = useState(false);
   // console.log("aaaaa", basket.foods.food);
@@ -39,4 +39,4 @@ const HeaderAtDrawer = () => {
   );
 };
 
-export default HeaderAtDrawer;
+export default AtDrawer;

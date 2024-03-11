@@ -2,10 +2,6 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-// import { faEllipsisV } from "@fortawesome/free-solid-svg-icons/faEllipsisV";
-// import { faInfo } from "@fortawesome/free-solid-svg-icons/faInfo";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
@@ -13,16 +9,10 @@ import SendIcon from "@mui/icons-material/Send";
 import { fCurrency } from "@/utils/format-number";
 
 import Label from "@/components/label";
-import {
-  Button,
-  Grid,
-  IconButton,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Grid, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 // ----------------------------------------------------------------------
 
@@ -53,26 +43,43 @@ export default function FoodCard({ food, getFood }: any) {
     />
   );
 
-  const renderPrice = (
-    <Typography variant="subtitle1">
-      <Typography
-        component="span"
-        variant="body1"
-        sx={{
-          color: "text.disabled",
-          textDecoration: "line-through",
-        }}
-      >
-        {food.priceSale && fCurrency(food.priceSale)}
-      </Typography>
-      &nbsp;
-      {fCurrency(food.price)}
-    </Typography>
-  );
   //deleteFood
   const [refresh, setRefresh] = useState(false);
 
   const deleteFood = async () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error",
+          });
+        }
+      });
     try {
       const {
         data: { food },
@@ -93,13 +100,11 @@ export default function FoodCard({ food, getFood }: any) {
         ":hover": {
           cursor: "pointer",
         },
+
+        width: 240,
       }}
     >
-      <Box sx={{ pt: "100%", position: "relative" }}>
-        {/* {product.status && renderStatus} */}
-
-        {renderImg}
-      </Box>
+      <Box sx={{ pt: "100%", position: "relative" }}>{renderImg}</Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Grid display={"flex"} justifyContent={"space-between"}>
@@ -128,22 +133,19 @@ export default function FoodCard({ food, getFood }: any) {
         <Stack
           direction="row"
           alignItems="center"
+          fontSize={"20px"}
+          fontWeight={700}
           justifyContent="space-between"
         >
-          {renderPrice}
+          {food.price}₮
         </Stack>
         <Stack
           direction="row"
           alignItems="center"
+          height={30}
           justifyContent="space-between"
         >
-          <TextField
-            id="outlined-multiline-static"
-            label="Орц"
-            multiline
-            rows={4}
-            defaultValue={description}
-          />
+          {description}
         </Stack>
       </Stack>
     </Card>

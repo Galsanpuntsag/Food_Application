@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 
 import { UserContext } from "@/context/userProvider";
 
-import HeaderAtDrawer from "../HeaderAtDrawer";
+import AtDrawer from "./AtDrawer";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -147,7 +147,7 @@ export const Header = () => {
                 }}
               />
             </Search>
-            <HeaderAtDrawer />
+            <AtDrawer />
             <Tooltip
               title="Open settings"
               onClick={() => router.replace("/user")}
@@ -171,6 +171,7 @@ export const Header = () => {
                 />
               </IconButton>
             </Tooltip>
+
             {user ? (
               <Typography
                 color={"black"}
@@ -179,7 +180,12 @@ export const Header = () => {
                 {user?.name}
               </Typography>
             ) : (
-              <Typography color={"black"}>Нэвтрэх</Typography>
+              <Button
+                onClick={() => router.replace("/login")}
+                sx={{ color: "black" }}
+              >
+                Нэвтрэх
+              </Button>
             )}
 
             <IconButton

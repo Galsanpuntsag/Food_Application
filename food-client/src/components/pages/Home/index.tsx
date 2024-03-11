@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { Grid, Button, Typography, Container } from "@mui/material";
-import CategoryFoodCard from "@/components/CategoryFoodCard";
-import FoodState from "@/components/FoodState";
-import ModalChooseFood from "@/components/ModalChooseFood";
-import HomeBackground from "@/components/HomeBackground";
+import Foods from "@/components/Home/Foods";
+import FourState from "@/components/Home/FourState";
+import ModalChooseFood from "@/components/Modal";
+import BackgroundImg from "@/components/Home/BackgroundImg";
 
 export const Home = () => {
   return (
@@ -13,11 +13,10 @@ export const Home = () => {
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
-      direction={"column"}
     >
-      <HomeBackground />
-      <FoodState />
-      <CategoryFoodCard />
+      <BackgroundImg />
+      <FourState />
+      <Foods />
       <ModalChooseFood />
 
       {/*  <div className="wrapper">HELLO SASS</div> */}

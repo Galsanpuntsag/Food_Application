@@ -5,6 +5,7 @@ import {
   Typography,
   Grid,
   CardMedia,
+  Box,
 } from "@mui/material";
 import { Remove, Add, Close } from "@mui/icons-material";
 import { BasketContext } from "@/context/BasketProvider";
@@ -34,7 +35,9 @@ export const Card = ({ foods }: any) => {
         setPrice(count * price);
       }
     } else {
-      if (count !== 1) {
+      if (count == 1) {
+        setCount(count);
+      } else {
         setCount(count - 1);
         setPrice(price * count);
       }
@@ -50,7 +53,7 @@ export const Card = ({ foods }: any) => {
   return (
     <>
       <Grid container justifyContent={"space-evenly"} direction={"row"} my={3}>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <CardMedia
             sx={{ height: 150 }}
             image={foods?.food?.image}
@@ -81,13 +84,14 @@ export const Card = ({ foods }: any) => {
               {foods?.food?.description}
             </Typography>
 
-            <div>
+            <Box display={"flex"}>
               <MuiButton onClick={() => handleCount("MINUS", foods?.food?._id)}>
                 <Remove
                   sx={{
                     bgcolor: "#18BA51",
                     color: "white",
-                    width: "70%",
+                    maxWidth: "70%",
+                    minWidth: "20px",
                     height: "30px",
                     borderRadius: 2,
                   }}
@@ -97,7 +101,8 @@ export const Card = ({ foods }: any) => {
                 type="text"
                 value={count}
                 style={{
-                  width: "60px",
+                  maxWidth: "60px",
+                  minWidth: "40px",
                   border: "none",
                   textAlign: "center",
                   paddingTop: 4,
@@ -111,23 +116,23 @@ export const Card = ({ foods }: any) => {
                   sx={{
                     bgcolor: "#18BA51",
                     color: "white",
-                    width: "70%",
+                    maxWidth: "70%",
+                    minWidth: "20px",
                     height: "30px",
                     borderRadius: 2,
                   }}
                 />
               </MuiButton>
-            </div>
+            </Box>
           </Grid>
-          <Grid item xs={1}>
-            <MuiButton
-              onClick={() => {
-                handleDelete();
-              }}
-            >
-              <Close />
-            </MuiButton>
-          </Grid>
+          <MuiButton
+            sx={{ fullWidth: 2, height: 2 }}
+            onClick={() => {
+              handleDelete();
+            }}
+          >
+            <Close />
+          </MuiButton>
         </Grid>
       </Grid>
     </>

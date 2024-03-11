@@ -15,7 +15,7 @@ import Lottie from "lottie-react";
 import emptyBasketData from "@/../../public/images/AnimationEmpty.json";
 
 import React, { useContext } from "react";
-import { DrawerCard } from "../DrawerCard";
+import { DrawerCard } from "./DrawerCard";
 
 interface IDrawerProps {
   open: boolean;
@@ -30,14 +30,17 @@ const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
     <>
       <React.Fragment>
         <Drawer open={open} onClose={closeDrawer} anchor="right">
-          <Box width={584} p={5}>
+          <Box maxWidth={900} minWidth={400} overflow={"hidden"} p={5}>
             <Box
               pb={5}
               display={"flex"}
               alignItems={"center"}
               justifyContent={"space-between"}
+              overflow={"hidden"}
             >
-              <FaChevronLeft />
+              <Button onClick={closeDrawer}>
+                <FaChevronLeft />
+              </Button>
               <Typography fontWeight={600}>Таны сагс</Typography>
               <Typography></Typography>
             </Box>

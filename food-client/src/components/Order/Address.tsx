@@ -77,7 +77,7 @@ const Address = ({ values, errors, handleChange }: any) => {
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText sx={{ color: "error" }}>
+          <FormHelperText sx={{ color: "red" }}>
             {errors?.duureg}
           </FormHelperText>
           <Select
@@ -95,6 +95,9 @@ const Address = ({ values, errors, handleChange }: any) => {
               </MenuItem>
             ))}
           </Select>
+          <FormHelperText sx={{ color: "red" }}>
+            {errors?.khoroo}
+          </FormHelperText>
           <Select
             name="buildingNo"
             onChange={handleChange}
@@ -110,6 +113,9 @@ const Address = ({ values, errors, handleChange }: any) => {
               </MenuItem>
             ))}
           </Select>
+          <FormHelperText sx={{ color: "red" }}>
+            {errors?.buildingNo}
+          </FormHelperText>
         </div>
 
         <Input
@@ -117,8 +123,15 @@ const Address = ({ values, errors, handleChange }: any) => {
           name="info"
           value={values?.info}
           onChange={handleChange}
+          errorText={errors.info}
         />
-        <Input label="Утасны дугаар*" name="phone" onChange={handleChange} />
+        <Input
+          label="Утасны дугаар*"
+          name="phone"
+          onChange={handleChange}
+          errorText={errors.phone}
+        />
+
         <div>
           <Typography>Төлбөр төлөх</Typography>
           <FormGroup

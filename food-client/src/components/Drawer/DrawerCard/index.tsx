@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
-import { Card } from "@/components/DrawerCard/Card";
-import { Button } from "..";
+import { Card } from "@/components/Drawer/DrawerCard/Card";
+import { Button } from "../..";
 import { relative } from "path";
-import Order from "../pages/Order";
+import Order from "../../pages/Order";
 import { toast } from "react-toastify";
 
 export const DrawerCard = ({ foodsInBask, closeDrawer }: any) => {

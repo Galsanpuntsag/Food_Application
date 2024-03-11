@@ -4,7 +4,7 @@ import { Grid, Button as MuiButton } from "@mui/material";
 import { UserContext } from "@/context/userProvider";
 import { CategoryContext } from "@/context/categoryProvider";
 import { FoodContext } from "@/context/foodProvider";
-import FoodCard from "@/components/CategoryFoodCard/FoodCard";
+import FoodCard from "@/components/HomeFoods/FoodCard";
 
 interface IFood {
   name: string;

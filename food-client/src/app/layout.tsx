@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Grid>
+        <Grid overflow={"hidden"}>
           <ThemeProvider>
             <UserProvider>
               <CategoryProvider>

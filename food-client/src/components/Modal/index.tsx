@@ -18,6 +18,7 @@ import { Add, Remove } from "@mui/icons-material";
 import { BasketContext } from "@/context/BasketProvider";
 import { UserContext } from "@/context/userProvider";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -36,7 +37,7 @@ export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
   const { addBasket, loading } = useContext(BasketContext);
   const { token } = useContext(UserContext);
 
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = React.useState(1);
 
   const sendFoodBasket = () => {
     if (!token) {
@@ -45,16 +46,19 @@ export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
         icon: "error",
         title: "Oops...",
         text: "Энэ үйлдлийг хийхйин тулд нэвтэрнэ үү?",
-        footer: '<a href="login">Нэвтрэх</a>',
+        footer: '<a href="/login">Нэвтрэх</a>',
       });
     }
     addBasket(food, count);
+    toast.success("Таны хоол амжилттай сагслагдсан.");
+    handleCloseModal;
+
     console.log("SGSG");
   };
 
   const min = () => {
-    if (count === 0) {
-      setCount(0);
+    if (count === 1) {
+      setCount(1);
     } else {
       setCount(count - 1);
     }

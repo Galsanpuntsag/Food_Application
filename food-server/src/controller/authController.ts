@@ -42,7 +42,7 @@ export const getUser = async (
   try {
     const { userId } = req.params;
     console.log("_ID___", userId);
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("orders.products.food");
     if (!user) {
       throw new MyError(`${userId}-тай хэрэглэгч олдсонгүй`, 400);
     }

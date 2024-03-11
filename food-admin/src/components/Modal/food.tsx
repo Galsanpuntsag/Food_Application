@@ -50,9 +50,9 @@ export default function FoodModal({
   handleChange,
   handleFileChange,
   createFood,
-  selectedCategory,
   categories,
 }: any) {
+  console.log("CTCT", categories);
   return (
     <div>
       <Modal
@@ -82,12 +82,7 @@ export default function FoodModal({
             desc="Write food price"
             onChange={handleChange}
           />
-          <Input
-            name="discountPrice"
-            label="discountPrice"
-            desc="Write food discount price"
-            onChange={handleChange}
-          />
+
           <Input
             name="description"
             label="Description"
@@ -99,7 +94,7 @@ export default function FoodModal({
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={selectedCategory}
+              value={categories.name}
               label="Category"
               name="category"
               onChange={handleChange}
@@ -110,6 +105,12 @@ export default function FoodModal({
             </Select>
           </FormControl>
           <FormControlLabel control={<Checkbox />} label="Sale" />
+          <Input
+            name="discountPrice"
+            label="discountPrice"
+            desc="Write food discount price"
+            onChange={handleChange}
+          />
           <MuiButton
             component="label"
             variant="contained"

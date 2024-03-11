@@ -14,26 +14,26 @@ import React, {
 // }
 
 interface IUser {
-    name: string;
-    role: string;
-    length: string;
-    orders: {
-      address: {
-        duureg: string;
-        khoroo: string;
-        info: string;
-      };
-      delivery: {
-        status: string;
-        deliveredAt: string;
-      };
-      orderNo: string;
-      payment: {
-        paymentAmount: number;
-        status: string;
-        paidDate: string;
-      };
+  name: string;
+  role: string;
+  orders: {
+    address: {
+      duureg: string;
+      khoroo: string;
+      info: string;
     };
+    delivery: {
+      status: string;
+      deliveredAt: string;
+    };
+    orderNo: string;
+    payment: {
+      paymentAmount: number;
+      status: string;
+      paidDate: string;
+    };
+  
+  };
 }
 
 interface IUserContext {
@@ -44,7 +44,7 @@ interface IUserContext {
 export const OrderContext = createContext<IUserContext>({} as IUserContext);
 
 const UserProvider = ({ children }: PropsWithChildren) => {
-  const [users, setUsers] = useState<[IUser] |null>([]);
+  const [users, setUsers] = useState<[IUser] | null>([] as any);
   const [orders, setOrders] = useState([]);
   const GetUser = async () => {
     console.log("aaaa");

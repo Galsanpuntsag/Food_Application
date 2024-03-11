@@ -28,7 +28,7 @@ interface IBasket {
 interface IBasketContext {
   loading: boolean;
   foodsInBask: any;
-  setFoodsInBask: any;
+  setFoodsInBask: Function;
   updateByFoodId: any;
   deleteFoodInBask: any;
   addBasket: (food: any, count: number) => Promise<void>;
@@ -44,6 +44,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   console.log("USePROOruserDWAWER", user, token);
 
   const [foodsInBask, setFoodsInBask] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -62,7 +63,9 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("AdddBasket", basket);
+
       getFoodBasket();
+
       setLoading(false);
     } catch (error: any) {
       console.log("ErrorAddBask", error);
@@ -113,10 +116,10 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     }
   };
   useEffect(() => {
-    if (token) {
+    if (user) {
       getFoodBasket();
     }
-  }, [!refresh, token]);
+  }, [!refresh, user]);
 
   const deleteFoodInBask = async (foodId: number) => {
     try {

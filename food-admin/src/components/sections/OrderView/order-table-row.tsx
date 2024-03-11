@@ -13,14 +13,24 @@ import IconButton from "@mui/material/IconButton";
 
 import Label from "@/components/label";
 import Iconify from "@/components/iconify";
+import { CardMedia, Grid } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 type UserTableRowProps = {
-  data: { address: { duureg: string, khoroo: string }, orderNo: number },
-  selected: any,
-  handleClick: any
-}
+  data: {
+    address: { duureg: string; khoroo: string };
+    orderNo: number;
+    products: [
+      food: {
+        name: string;
+        image: string;
+      }
+    ];
+  };
+  selected: any;
+  handleClick: any;
+};
 
 export default function UserTableRow({
   selected,
@@ -28,8 +38,8 @@ export default function UserTableRow({
   handleClick,
 }: UserTableRowProps) {
   const [open, setOpen] = useState(null);
-  // console.log("DDDDDD+>", data);
-  // console.log("DDDDDD+===>", data[0].address);
+  console.log("DDDDDD+>", data);
+
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
   };
@@ -38,7 +48,6 @@ export default function UserTableRow({
     setOpen(null);
   };
 
-
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -46,12 +55,22 @@ export default function UserTableRow({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
-        <TableCell component="th" scope="row" padding="none">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Typography variant="subtitle2" noWrap>
-              {data.orderNo}
-            </Typography>
-          </Stack>
+        <TableCell sx={{ display: "flex", gap: 3 }}>
+          <CardMedia
+            sx={{ height: 50, width: 50 }}
+            image={data.products[0].food?.image}
+            title="green iguana"
+          />
+          <TableCell component="th" scope="row" padding="none">
+            <Stack direction="column" alignItems="center" spacing={0}>
+              <Typography variant="subtitle2" noWrap>
+                {data.orderNo}
+              </Typography>
+              <Typography fontSize={14} maxWidth={90}>
+                {data.products[0].food?.name}
+              </Typography>
+            </Stack>
+          </TableCell>
         </TableCell>
 
         <TableCell>{data.address?.duureg}</TableCell>

@@ -136,7 +136,7 @@ export default function OrderView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={users.length}
+                rowCount={orderData.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -152,20 +152,25 @@ export default function OrderView() {
               <TableBody>
                 {/* {console.log("Data", dataFiltered)} */}
                 {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row: any) => (row.map((order:any)=><>
-                  <UserTableRow
-                    key={row.id}
-                    data={order}
-                    selected={selected.indexOf(row.name) !== -1}
-                    handleClick={(event: any) => handleClick(event, row.name)}
-                  /></>)
-                    
-                  ))}
+                  // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any) =>
+                    row.map((order: any) => (
+                      <>
+                        <UserTableRow
+                          key={row.id}
+                          data={order}
+                          selected={selected.indexOf(row.name) !== -1}
+                          handleClick={(event: any) =>
+                            handleClick(event, row.name)
+                          }
+                        />
+                      </>
+                    ))
+                  )}
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, orderData.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}

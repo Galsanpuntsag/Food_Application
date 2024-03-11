@@ -9,11 +9,12 @@ import {
   Card,
   Container,
 } from "@mui/material";
-import ModalChooseFood from "../ModalChooseFood";
+import ModalChooseFood from "@/components/Modal";
 import { BasketContext } from "@/context/BasketProvider";
 import { IoBasketSharp } from "react-icons/io5";
+import { UserContext } from "@/context/userProvider";
 
-const FoodCard = ({ food }: any) => {
+const Food = ({ food }: any) => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -29,7 +30,7 @@ const FoodCard = ({ food }: any) => {
         }}
       >
         <CardMedia
-          sx={{ height: 150, borderRadius: "10px" }}
+          sx={{ height: 180, width: 300, borderRadius: "10px" }}
           image={food.image}
           title="green iguana"
         >
@@ -66,6 +67,9 @@ const FoodCard = ({ food }: any) => {
         >
           {food.discountPrice}₮
         </Button>
+        <Typography>
+          {Math.floor(100 - (food.price * 100) / food.discountPrice)}%
+        </Typography>
       </CardContent>
       <ModalChooseFood
         food={food}
@@ -76,7 +80,7 @@ const FoodCard = ({ food }: any) => {
   );
 };
 
-export default FoodCard;
+export default Food;
 
 // name: string;
 // price: string;

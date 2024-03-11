@@ -29,11 +29,20 @@ import { CategoryContext } from "@/context/categoryProvider";
 //   "#FFC107",
 // ];
 
+interface IFood {
+  _id: string;
+  name: string;
+  category: { name: string };
+  description: string;
+  price: string;
+}
+
 export default function FoodView() {
   const { categories } = useContext(CategoryContext);
+  console.log("Cate", categories);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const [foods, setFoods] = useState([]);
+  const [foods, setFoods] = useState<IFood[]>([]);
   const [newFood, setNewFood] = useState({
     name: "",
     price: "",
@@ -52,12 +61,10 @@ export default function FoodView() {
   const handleOpen = () => {
     setOpen(true);
   };
-  const [options, setOptions] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewFood({ ...newFood, [name]: value });
-    setOptions(name);
     console.log("newFood", newFood);
     console.log("newName", name);
     console.log("newValue", value);
@@ -125,38 +132,41 @@ export default function FoodView() {
         </Button>
       </Stack>
 
-      <Stack
-        direction="row"
-        alignItems="center"
-        flexWrap="wrap-reverse"
-        justifyContent="flex-end"
-        sx={{ mb: 2 }}
-      >
-        <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-          {/* <ProductFilters
-            openFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-          /> */}
-
-          <FoodSort />
-        </Stack>
+      <Stack sx={{ mb: 2 }}>
+        <>
+          {categories.map((cate) => {
+            return (
+              <Container>
+                <Grid
+                  container
+                  alignItems="center"
+                  justifyContent="space-between"
+                  my={3}
+                >
+                  <Typography variant="h5">{cate.name}</Typography>
+                  <FoodSort />
+                </Grid>
+                <Grid container spacing={1} justifyContent={"space-around"}>
+                  {foods
+                    .filter((el) => el.category.name === cate.name)
+                    .map((food) => (
+                      <Grid container xs={12} sm={6} md={3} key={food._id}>
+                        <FoodCard getFood={getFood} food={food} />
+                      </Grid>
+                    ))}
+                </Grid>
+              </Container>
+            );
+          })}
+        </>
       </Stack>
 
-      <Grid container spacing={3}>
-        {foods.map((food: any) => (
-          <Grid xs={12} sm={6} md={3}>
-            <FoodCard getFood={getFood} key={food._id} food={food} />
-          </Grid>
-        ))}
-      </Grid>
       <FoodModal
         open={open}
         handleClose={handleClose}
         createFood={createFood}
         handleChange={handleChange}
         handleFileChange={handleFileChange}
-        selectedCategory={setOptions}
         categories={categories}
       />
       {/* <ProductCartWidget /> */}

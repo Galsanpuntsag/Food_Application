@@ -13,6 +13,10 @@ import { useRouter } from "next/navigation";
 
 const validationSchema = yup.object({
   duureg: yup.string().required("Zaaval buglunu"),
+  khoroo: yup.string().required("Zaaval buglunu"),
+  buildingNo: yup.string().required("Zaaval buglunu"),
+  info: yup.string().required("Zaaval buglunu"),
+  phone: yup.string().required("Zaaval buglunu"),
 });
 
 const Order = () => {
@@ -38,7 +42,13 @@ const Order = () => {
     }) => {
       order(duureg, khoroo, buildingNo, info, phone);
     },
-    initialValues: { duureg: "", khoroo: "", buildingNo: "", info: "", phone: "" },
+    initialValues: {
+      duureg: "",
+      khoroo: "",
+      buildingNo: "",
+      info: "",
+      phone: "",
+    },
     validationSchema,
   });
 
@@ -68,7 +78,7 @@ const Order = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("Хоол амжилттай захиалсан.");
-     router.replace("/home")
+      router.replace("/history");
     } catch (error) {}
   };
 

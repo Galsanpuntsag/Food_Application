@@ -39,58 +39,44 @@ const stateCards = [
   },
 ];
 
-export default function FoodState() {
+export default function FourState() {
   return (
-    <Container
-      maxWidth="xl"
-      sx={{
-        marginY: 10,
-        display: "flex",
-        justifyContent: "space-around",
-      }}
-    >
-      <Grid
-        container
-        justifyContent={"space-center"}
-        width={"100%"}
-        rowSpacing={2}
-      >
-        {stateCards.map((stateCard, i) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            spacing={10}
+    <Grid container margin={3}>
+      {stateCards.map((cards) => (
+        <Grid
+          item
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent="center"
+          xs={12}
+          sm={6}
+          md={3}
+        >
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="self-start"
+            pl={5}
+            flexDirection={"column"}
+            width="83%"
+            height="100px"
             boxShadow={2}
             borderRadius={2}
-            p={2}
+            m={2} // add margin for spacing between boxes
           >
-            <Typography sx={{ color: "green" }}>{stateCard.icon}</Typography>
+            <Typography sx={{ color: "green" }}>{cards.icon}</Typography>
+
             <Box>
               <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
-                {stateCard.topic}
+                {cards.topic}
               </Typography>
               <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
-                {stateCard.introduce}
+                {cards.introduce}
               </Typography>
             </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+          </Box>
+        </Grid>
+      ))}
+    </Grid>
   );
 }
-
-// <Grid item xs={6}>
-//   <Item>1</Item>
-// </Grid>
-// <Grid item xs={6}>
-//   <Item>2</Item>
-// </Grid>
-// <Grid item xs={6}>
-//   <Item>3</Item>
-// </Grid>
-// <Grid item xs={6}>
-//   <Item>4</Item>
-// </Grid>
