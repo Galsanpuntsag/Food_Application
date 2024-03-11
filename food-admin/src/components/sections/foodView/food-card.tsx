@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 
 // ----------------------------------------------------------------------
 
-export default function FoodCard({ food, getFood }: any) {
+export default function FoodCard({ food, getFood, handleOpen }: any) {
   const {
     _id,
     name,
@@ -121,10 +121,10 @@ export default function FoodCard({ food, getFood }: any) {
             <MenuItem onClick={deleteFood}>
               <DeleteIcon color={"error"} />
             </MenuItem>
-            <MenuItem value={30}>
+            <MenuItem onClick={handleOpen}>
               <EditIcon />
             </MenuItem>
-            <MenuItem value={30} color={"success"}>
+            <MenuItem color={"success"}>
               <SendIcon />
             </MenuItem>
           </Select>

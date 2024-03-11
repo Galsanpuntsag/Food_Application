@@ -43,15 +43,16 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   const { user, token } = useContext(UserContext);
   console.log("USePROOruserDWAWER", user, token);
 
-  const [foodsInBask, setFoodsInBask] = useState([]);
+  const [foodsInBask, setFoodsInBask] = useState<{} | null>([]);
 
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
   const addBasket = async (food: any, count: number) => {
+    console.log("Addbasket");
     try {
       setLoading(true);
-      console.log("Addbasket");
+
       const {
         data: { basket },
       } = await axios.post(
@@ -118,6 +119,8 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (user) {
       getFoodBasket();
+    } else {
+      setFoodsInBask(null);
     }
   }, [!refresh, user]);
 

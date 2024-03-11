@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  AddBasket,
+  addBasket,
   updateBasket,
   getBasketFood,
   deleteFoodInBasket,
@@ -10,7 +10,7 @@ import { auth } from "../middleware/auth";
 
 const router = Router();
 
-router.route("/").post(auth, AddBasket);
+router.route("/").post(auth, addBasket);
 router.route("/").put(auth, updateBasket);
 router.route("/").get(auth, getBasketFood);
 router.route("/:foodId").delete(auth, deleteFoodInBasket);

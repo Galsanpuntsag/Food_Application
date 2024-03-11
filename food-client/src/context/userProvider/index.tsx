@@ -31,8 +31,6 @@ interface IUserContext {
 export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const { foodsInBask, setFoodsInBask } = useContext(BasketContext);
-  console.log("_____", foodsInBask, setFoodsInBask);
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState<string | null>(null);
@@ -105,8 +103,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     setToken(loggedToken!);
   }, []);
 
-  console.log("OrderluuyvuullaaData", foodsInBask);
-
   const logout = () => {
     console.log("logout");
 
@@ -114,8 +110,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       localStorage.removeItem("token"),
       setUser(null),
       setToken(null),
-      console.log("SBF", setFoodsInBask);
-    router.replace("/login");
+      router.replace("/login");
   };
 
   return (

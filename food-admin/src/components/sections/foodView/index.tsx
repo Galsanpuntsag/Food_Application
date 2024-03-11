@@ -151,7 +151,11 @@ export default function FoodView() {
                     .filter((el) => el.category.name === cate.name)
                     .map((food) => (
                       <Grid container xs={12} sm={6} md={3} key={food._id}>
-                        <FoodCard getFood={getFood} food={food} />
+                        <FoodCard
+                          getFood={getFood}
+                          handleOpen={handleOpen}
+                          food={food}
+                        />
                       </Grid>
                     ))}
                 </Grid>

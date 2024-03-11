@@ -25,7 +25,7 @@ export const auth = async (req: IReq, res: Response, next: NextFunction) => {
     };
     console.log("IDDD", id);
     const findUser = await User.findById(id);
-    console.log("FINDUSERR", findUser);
+
     req.user = findUser;
     next();
   } catch (error) {

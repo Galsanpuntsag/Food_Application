@@ -1,4 +1,5 @@
-import * as React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   Box,
   Button as MuiButton,
@@ -52,7 +53,7 @@ export default function FoodModal({
   createFood,
   categories,
 }: any) {
-  console.log("CTCT", categories);
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <div>
       <Modal
@@ -89,28 +90,46 @@ export default function FoodModal({
             desc="Write food Description"
             onChange={handleChange}
           />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={categories.name}
-              label="Category"
-              name="category"
+
+          <Box>
+            <label>
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={(e) => setIsChecked(e.target.checked)}
+              />
+            </label>
+            <Input
+              disabled={!isChecked}
+              name="discountPrice"
+              label="discountPrice"
+              desc="Write food discount price"
               onChange={handleChange}
-            >
-              {categories.map((e: any) => (
-                <MenuItem value={e._id}>{e.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControlLabel control={<Checkbox />} label="Sale" />
-          <Input
-            name="discountPrice"
-            label="discountPrice"
-            desc="Write food discount price"
-            onChange={handleChange}
-          />
+            />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={categories.name}
+                label="Category"
+                name="category"
+                onChange={handleChange}
+              >
+                {isChecked ? (
+                  <MenuItem key={categories[0]?._id} value={categories[0]?._id}>
+                    {categories[0]?.name}
+                  </MenuItem>
+                ) : (
+                  categories.map((e: any) => (
+                    <MenuItem key={e._id} value={e._id}>
+                      {e.name}
+                    </MenuItem>
+                  ))
+                )}
+              </Select>
+            </FormControl>
+          </Box>
           <MuiButton
             component="label"
             variant="contained"

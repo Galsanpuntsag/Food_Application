@@ -4,27 +4,36 @@ import User from "../modal/user";
 import { IReq } from "../utils/interface";
 import cloudinary from "../utils/cloudinary";
 import MyError from "../utils/myError";
+import { SchemaType } from "mongoose";
 
-export const AddBasket = async (
+export const addBasket = async (
   req: IReq,
   res: Response,
   next: NextFunction
 ) => {
   try {
+    console.log("FINDUSERR", req.user);
     const findBasket = await Basket.findOne({ user: req.user._id });
+    console.log("fb", findBasket);
     if (!findBasket) {
-      const basket = await (
-        await Basket.create({
-          user: req.user._id,
-          foods: { ...req.body.foods },
-          totalPrice: req.body.totalPrice,
-        })
-      ).populate("foods.food");
-      res.status(200).json({
+      console.log("baihgui", req.body.foods.food);
+      const basket = await Basket.create({
+        user: req.user._id,
+        foods: [
+          {
+            food: req.body.foods.food,
+            quantity: req.body.foods.quantity,
+          },
+        ],
+        totalPrice: 1000,
+      });
+      console.log(basket);
+      return res.status(200).json({
         message: "successful food added at basket first time",
         basket,
       });
     } else {
+      console.log("baina");
       const findIndex = findBasket.foods.findIndex(
         (el) => el?.food?.toString() === req.body.foods.food
       );
@@ -33,7 +42,7 @@ export const AddBasket = async (
         findBasket.foods[findIndex].quantity = Number(req.body.foods.quantity);
         findBasket.totalPrice = Number(req.body.totalPrice);
       } else {
-        findBasket.foods.push(req.body.foods);
+        // findBasket.foods.push(req.body.foods);
         findBasket.totalPrice = Number(req.body.totalPrice);
       }
 
@@ -46,6 +55,7 @@ export const AddBasket = async (
       });
     }
   } catch (error: any) {
+    console.log("SS", error);
     next(error);
   }
 };

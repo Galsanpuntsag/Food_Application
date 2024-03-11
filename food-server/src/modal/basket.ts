@@ -9,10 +9,9 @@ const foodBasketSchema = new Schema({
   foods: [
     {
       food: {
-        type: Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Food",
-        unique: true,
-        price: Number,
+        required: true,
       },
       quantity: {
         type: Number,
