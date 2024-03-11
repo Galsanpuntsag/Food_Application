@@ -13,14 +13,21 @@ import IconButton from "@mui/material/IconButton";
 
 import Label from "@/components/label";
 import Iconify from "@/components/iconify";
-import { CardMedia, Grid } from "@mui/material";
+import { Box, CardMedia, Grid } from "@mui/material";
+import moment from 'moment';
 
 // ----------------------------------------------------------------------
 
 type UserTableRowProps = {
   data: {
-    address: { duureg: string; khoroo: string };
+    address: { duureg: string; khoroo: string, buildingNo: string, phone: string };
     orderNo: number;
+    payment: {amount: string, createAt: string,
+      paidDate: string,
+      status: string}
+      delivery: {
+        status: string
+      }
     products: [
       food: {
         name: string;
@@ -55,33 +62,63 @@ export default function UserTableRow({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
-        <TableCell sx={{ display: "flex", gap: 3 }}>
+        <TableCell sx={{ display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <CardMedia
             sx={{ height: 50, width: 50 }}
             image={data.products[0].food?.image}
             title="green iguana"
           />
-          <TableCell component="th" scope="row" padding="none">
-            <Stack direction="column" alignItems="center" spacing={0}>
+          <Box component="th" width={"80%"} scope="row" padding="none">
+            <Stack direction="column" spacing={0}>
               <Typography variant="subtitle2" noWrap>
                 {data.orderNo}
               </Typography>
-              <Typography fontSize={14} maxWidth={90}>
+              <Typography fontSize={14} maxWidth={"100%"}>
                 {data.products[0].food?.name}
               </Typography>
             </Stack>
-          </TableCell>
+            
+          </Box>
         </TableCell>
 
-        <TableCell>{data.address?.duureg}</TableCell>
+        <TableCell>{data.address?.phone}</TableCell>
+   
 
-        <TableCell>{data.address?.khoroo} || aahha</TableCell>
+        <TableCell sx={{justifyContent: "space-center", alignItems:"center"}} >
+         
+        
+            <Stack display={"flex"}  spacing={1}>
+              <Box display={"flex"} justifyContent={"space-between"} > 
+                  <Typography variant="subtitle2" noWrap>
+                  {data.payment.amount}₮
+                  </Typography>
+                  <Label color={(data.payment.status === "banned" && "error") || "success"}>
+                {data.payment.status}
+                </Label>
+              
+              </Box>
+           
+          
+            </Stack>
+             <Typography fontSize={11} width={130}>
+              {   moment(data.payment.createAt).format('LLL') }
+           
+              </Typography>
+            
+    
+        
+        </TableCell>
+      
 
-        <TableCell align="center">iiiii</TableCell>
+        <TableCell align="center">
+          <Typography fontSize={11}>{data.address.duureg}</Typography>
+          <Typography fontSize={11}>{data.address.khoroo}</Typography>
+          <Typography fontSize={11}>{data.address.buildingNo}</Typography>
+        </TableCell>
 
         <TableCell>
-          <Label color={(status === "banned" && "error") || "success"}>
-            {status}
+          <Label color={(data.delivery.status === "banned" && "error") || "success"}>
+            {data.delivery.status}
           </Label>
         </TableCell>
 

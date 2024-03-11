@@ -14,7 +14,7 @@ export const createOrder = async (
       orderNo: "#" + Math.floor(Math.random() * 1000000),
       payment: { amount: req.body.basket.totalPrice },
       address: req.body.address,
-      phoneNumber: req.body.address.phone,
+     
     };
     console.log("ORDER___", newOrder);
 

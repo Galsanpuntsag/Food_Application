@@ -70,7 +70,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       setReFetch(!reFetch);
     } catch (error) {
       console.log("ErrorROOROROROR", error);
-      toast.error("failed to enter", { autoClose: 3000 });
+      // toast.error("failed to enter", { autoClose: 3000 });
     }
   };
 

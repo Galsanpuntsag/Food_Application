@@ -25,6 +25,7 @@ const orderSchema = new Schema({
     khoroo: { type: String },
     buildingNo: { type: String },
     info: String,
+    phone: Number
   },
   delivery: {
     status: {

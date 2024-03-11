@@ -112,14 +112,14 @@ export default function OrderView() {
         justifyContent="space-between"
         mb={5}
       >
-        <Typography variant="h4">Хэрэглэгчид</Typography>
+        <Typography variant="h4"> Захиалгууд</Typography>
 
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="eva:plus-fill" />}
         >
-          Шинэ хэрэглэгч
+          Захиалга шинэчилэх
         </Button>
       </Stack>
 
