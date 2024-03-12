@@ -58,7 +58,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       } = await axios.post(
         "http://localhost:8080/basket",
         {
-          foods: { foodId: food._id, quantity: count },
+          foods: { food: food._id, quantity: count },
           totalPrice: food.price,
         },
         { headers: { Authorization: `Bearer ${token}` } }

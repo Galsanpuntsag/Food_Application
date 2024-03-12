@@ -1,10 +1,10 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Grid, Button as MuiButton } from "@mui/material";
 import { UserContext } from "@/context/userProvider";
 import { CategoryContext } from "@/context/categoryProvider";
 import { FoodContext } from "@/context/foodProvider";
-import FoodCard from "@/components/HomeFoods/FoodCard";
+import Food from "@/components/Foods/Food";
 
 interface IFood {
   name: string;
@@ -21,17 +21,17 @@ const Menu = () => {
   const { categories } = useContext(CategoryContext);
   const { foods, setFilteredFoods, filteredFoods } = useContext(FoodContext);
   const [refresh, setRefresh] = useState<any>(false);
+  const [category, setCategory] = useState<string>("Хаямдралтай");
 
-  const getFilteredFoods = (cate: any) => {
-    console.log("CATEGGEGE", cate);
-    setFilteredFoods(
-      foods.filter((food) => {
-        return food.category.name === cate;
-      })
-    );
+  const getFilteredFoods = () => {
+    const filtered = foods.filter((food) => food.category.name === category);
+    setFilteredFoods(filtered);
   };
 
-  console.log("Cate", categories);
+  useEffect(() => {
+    getFilteredFoods();
+  }, [category, foods]); // Run the effect when category or foods change
+
   return (
     <>
       <Grid
@@ -57,11 +57,8 @@ const Menu = () => {
               <MuiButton
                 variant="outlined"
                 sx={{ borderColor: "#18ba51", color: "#18ba51" }}
-                onClick={() => {
-                  getFilteredFoods(cate.name);
-                }}
+                onClick={() => (setCategory(cate.name), getFilteredFoods())}
               >
-                {" "}
                 {cate.name}
               </MuiButton>
             </Grid>
@@ -72,7 +69,7 @@ const Menu = () => {
         {filteredFoods.map((filteredFood: any) => {
           return (
             <Grid xs={12} sm={6} md={3}>
-              <FoodCard food={filteredFood} />
+              <Food food={filteredFood} />
             </Grid>
           );
         })}

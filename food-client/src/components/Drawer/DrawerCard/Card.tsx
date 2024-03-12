@@ -13,8 +13,8 @@ import { BasketContext } from "@/context/BasketProvider";
 export const Card = ({ foods }: any) => {
   const { updateByFoodId, deleteFoodInBask } = useContext(BasketContext);
   console.log("selectedFood", typeof foods);
-  const [count, setCount] = useState(foods.quantity);
-  const [price, setPrice] = useState(foods.food.price);
+  const [count, setCount] = useState(foods?.quantity);
+  const [price, setPrice] = useState(foods.food?.price);
 
   // console.log("Price_______", typeof price);
 

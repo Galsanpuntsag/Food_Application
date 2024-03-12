@@ -53,7 +53,7 @@ export const DrawerCard = ({ foodsInBask, closeDrawer }: any) => {
           <Typography variant="h6" fontWeight={600}>
             {/* {basket?.totalPrice.toLocaleString()}₮ */}
             {foodsInBask
-              ?.map((food: any) => food.food.price * food.quantity)
+              ?.map((food: any) => food.food?.price * food?.quantity)
               ?.reduce((sum: any, une: any) => sum + une, initial)}
             ₮
           </Typography>

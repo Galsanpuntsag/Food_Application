@@ -14,12 +14,12 @@ export const addBasket = async (
   try {
     const findBasket = await Basket.findOne({ user: req.user._id });
     if (!findBasket) {
-      console.log("baihgui", req.body.foods.foodId);
+      console.log("baihgui", req.body.foods.food);
       const basket = await Basket.create({
         user: req.user._id,
         foods: [
           {
-            food: req.body.foods.foodId,
+            food: req.body.foods.food,
             quantity: req.body.foods.quantity,
           },
         ],
@@ -35,12 +35,23 @@ export const addBasket = async (
       const findIndex = findBasket.foods.findIndex(
         (el) => el?.food?.toString() === req.body.foods.food
       );
-
+      console.log("FINDINDEx", findIndex);
+      console.log("REQ :,", req.body.foods);
       if (findIndex !== -1) {
+        console.log("-1");
         findBasket.foods[findIndex].quantity = Number(req.body.foods.quantity);
         findBasket.totalPrice = Number(req.body.totalPrice);
       } else {
-        // findBasket.foods.push(req.body.foods);
+        console.log("+1", findBasket);
+
+        // findBasket.foods.push({
+        //   foodId: req.body.foods.food,
+        //   quantity: req.body.foods.quantity,
+        // });
+        findBasket.foods.push({
+          food: req.body.foods.food,
+          quantity: req.body.foods.quantity,
+        });
         findBasket.totalPrice = Number(req.body.totalPrice);
       }
 
@@ -64,18 +75,18 @@ export const updateBasket = async (
   next: NextFunction
 ) => {
   try {
-    const { foodId, count, totalPrice } = req.body;
-    console.log("DD", foodId, count, totalPrice);
+    const { food, count, totalPrice } = req.body;
+    console.log("DD", food, count, totalPrice);
     const findBasket = await Basket.findOne({ user: req.user._id });
     console.log("Find", findBasket);
     if (!findBasket) {
       throw new MyError(`User doesn't have a basket`, 400);
     } else {
-      console.log("ID2", foodId);
+      console.log("ID2", food);
       const findIndex = findBasket.foods.findIndex(
-        (el) => el?.food?.toString() === foodId.toString()
+        (el) => el?.food?.toString() === food.toString()
       );
-      console.log("FoodType", typeof foodId);
+      console.log("FoodType", typeof food);
 
       console.log("INNIN", findIndex);
       if (findIndex === -1) {

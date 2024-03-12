@@ -17,18 +17,15 @@ export const auth = async (req: IReq, res: Response, next: NextFunction) => {
     if (!token) {
       throw new MyError("Энэ үйлдлийг хийхийн тулд нэвтэрх ёстой", 400);
     }
-    const { _id } = (await jwt.verify(
-      token!,
-      process.env.JWT_PRIVATE_KEY!
-    )) as {
-      _id: string;
+    const { id } = jwt.verify(token!, process.env.JWT_PRIVATE_KEY!) as {
+      id: string;
     };
 
-    const findUser = await User.findById(_id);
-
+    const findUser = await User.findById(id);
     req.user = findUser;
     next();
   } catch (error) {
+    console.log("error", error);
     next(error);
   }
 };

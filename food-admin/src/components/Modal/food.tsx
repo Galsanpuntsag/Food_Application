@@ -47,13 +47,16 @@ const VisuallyHiddenInput = styled("input")({
 
 export default function FoodModal({
   handleClose,
+  setIsChecked,
   open,
   handleChange,
   handleFileChange,
   createFood,
   categories,
+  isChecked,
 }: any) {
-  const [isChecked, setIsChecked] = useState(false);
+  console.log("LL", categories);
+
   return (
     <div>
       <Modal
@@ -96,9 +99,7 @@ export default function FoodModal({
               <input
                 type="checkbox"
                 checked={isChecked}
-                onChange={() => {
-                  setIsChecked((prev) => !prev);
-                }}
+                onChange={() => setIsChecked(() => !isChecked)}
               />
             </label>
             <Input

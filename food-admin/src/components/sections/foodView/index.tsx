@@ -18,17 +18,6 @@ import axios from "axios";
 
 import { CategoryContext } from "@/context/categoryProvider";
 
-// const FOOD_COLOR = [
-//   "#00AB55",
-//   "#000000",
-//   "#FFFFFF",
-//   "#FFC0CB",
-//   "#FF4842",
-//   "#1890FF",
-//   "#94D82D",
-//   "#FFC107",
-// ];
-
 interface IFood {
   _id: string;
   name: string;
@@ -51,6 +40,7 @@ export default function FoodView() {
   const [refresh, setRefresh] = useState(false);
 
   const [file, setFile] = useState<File | null>(null);
+
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -67,6 +57,13 @@ export default function FoodView() {
     console.log("newFood", newFood);
     console.log("newName", name);
     console.log("newValue", value);
+  };
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setIsChecked({ ...isChecked, [name]: checked });
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +94,7 @@ export default function FoodView() {
       const formData = new FormData();
       console.log("CreateWorking");
       formData.set("image", file!);
+      formData.set("isSale", isChecked!);
       formData.set("name", newFood.name);
       formData.set("price", newFood.price);
       formData.set("discountPrice", newFood.discountPrice);
@@ -166,6 +164,8 @@ export default function FoodView() {
 
       <FoodModal
         open={open}
+        setIsChecked={setIsChecked}
+        isChecked={isChecked}
         handleClose={handleClose}
         createFood={createFood}
         handleChange={handleChange}
