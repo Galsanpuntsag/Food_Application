@@ -38,6 +38,19 @@ export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
   const { token } = useContext(UserContext);
 
   const [count, setCount] = React.useState(1);
+  console.log("alal", food, count);
+
+  const min = () => {
+    if (count === 1) {
+      setCount(1);
+    } else {
+      setCount(count - 1);
+    }
+  };
+
+  const add = () => {
+    setCount(count + 1);
+  };
 
   const sendFoodBasket = () => {
     if (!token) {
@@ -50,22 +63,8 @@ export default function ModalChooseFood({ open, handleCloseModal, food }: any) {
       });
     }
     addBasket(food, count);
-    toast.success("Таны хоол амжилттай сагслагдсан.");
+    console.log("Foodssss", food, count);
     handleCloseModal;
-
-    console.log("SGSG");
-  };
-
-  const min = () => {
-    if (count === 1) {
-      setCount(1);
-    } else {
-      setCount(count - 1);
-    }
-  };
-
-  const add = () => {
-    setCount(count + 1);
   };
 
   return (

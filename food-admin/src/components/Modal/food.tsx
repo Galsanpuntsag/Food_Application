@@ -96,7 +96,9 @@ export default function FoodModal({
               <input
                 type="checkbox"
                 checked={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
+                onChange={() => {
+                  setIsChecked((prev) => !prev);
+                }}
               />
             </label>
             <Input

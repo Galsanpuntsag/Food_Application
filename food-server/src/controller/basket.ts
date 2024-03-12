@@ -12,16 +12,14 @@ export const addBasket = async (
   next: NextFunction
 ) => {
   try {
-    console.log("FINDUSERR", req.user);
     const findBasket = await Basket.findOne({ user: req.user._id });
-    console.log("fb", findBasket);
     if (!findBasket) {
-      console.log("baihgui", req.body.foods.food);
+      console.log("baihgui", req.body.foods.foodId);
       const basket = await Basket.create({
         user: req.user._id,
         foods: [
           {
-            food: req.body.foods.food,
+            food: req.body.foods.foodId,
             quantity: req.body.foods.quantity,
           },
         ],

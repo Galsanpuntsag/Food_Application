@@ -1,7 +1,5 @@
 "use client";
 import React, { useContext } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
 import { Button, Input } from "@/components";
 import { Box, Container, Stack, Typography, Link } from "@mui/material";
 import { UserContext } from "@/context/userProvider";
@@ -30,8 +28,6 @@ const LoginPage = () => {
   const formik = useFormik({
     onSubmit: ({ email, password }: { email: string; password: string }) => {
       login(email, password);
-      console.log("EmailLLLLLL", password);
-      console.log("EmailLLLLLLemail", email);
     },
     initialValues: {
       email: "",

@@ -17,16 +17,7 @@ import Swal from "sweetalert2";
 // ----------------------------------------------------------------------
 
 export default function FoodCard({ food, getFood, handleOpen }: any) {
-  const {
-    _id,
-    name,
-    price,
-    discountPrice,
-    description,
-    image,
-    category,
-    createdAt,
-  } = food;
+  const { _id, name, description, image } = food;
 
   const renderImg = (
     <Box

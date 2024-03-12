@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 
 import Stack from "@mui/material/Stack";
@@ -14,20 +14,30 @@ import IconButton from "@mui/material/IconButton";
 import Label from "@/components/label";
 import Iconify from "@/components/iconify";
 import { Box, CardMedia, Grid } from "@mui/material";
-import moment from 'moment';
+import moment from "moment";
+import { UserContext, UserProvider } from "@/context/userProvider";
+import { OrderModal } from "@/components/Modal/order";
 
 // ----------------------------------------------------------------------
 
 type UserTableRowProps = {
   data: {
-    address: { duureg: string; khoroo: string, buildingNo: string, phone: string };
+    address: {
+      duureg: string;
+      khoroo: string;
+      buildingNo: string;
+      phone: string;
+    };
     orderNo: number;
-    payment: {amount: string, createAt: string,
-      paidDate: string,
-      status: string}
-      delivery: {
-        status: string
-      }
+    payment: {
+      amount: string;
+      createAt: string;
+      paidDate: string;
+      status: string;
+    };
+    delivery: {
+      status: string;
+    };
     products: [
       food: {
         name: string;
@@ -44,8 +54,17 @@ export default function UserTableRow({
   data,
   handleClick,
 }: UserTableRowProps) {
+  const [openOrder, setOpenOrder] = useState(false);
+
+  const handleOpenOrder = () => {
+    setOpenOrder(true);
+  };
+
+  const handleCloseOrder = () => {
+    setOpenOrder(false);
+  };
+
   const [open, setOpen] = useState(null);
-  console.log("DDDDDD+>", data);
 
   const handleOpenMenu = (event: any) => {
     setOpen(event.currentTarget);
@@ -55,6 +74,8 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+  const { updateOrder } = useContext(UserContext);
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -62,7 +83,7 @@ export default function UserTableRow({
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
-        <TableCell sx={{ display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+        <TableCell sx={{ display: "flex", gap: 2 }}>
           <CardMedia
             sx={{ height: 50, width: 50 }}
             image={data.products[0].food?.image}
@@ -77,38 +98,32 @@ export default function UserTableRow({
                 {data.products[0].food?.name}
               </Typography>
             </Stack>
-            
           </Box>
         </TableCell>
 
         <TableCell>{data.address?.phone}</TableCell>
-   
 
-        <TableCell sx={{justifyContent: "space-center", alignItems:"center"}} >
-         
-        
-            <Stack display={"flex"}  spacing={1}>
-              <Box display={"flex"} justifyContent={"space-between"} > 
-                  <Typography variant="subtitle2" noWrap>
-                  {data.payment.amount}₮
-                  </Typography>
-                  <Label color={(data.payment.status === "banned" && "error") || "success"}>
-                {data.payment.status}
-                </Label>
-              
-              </Box>
-           
-          
-            </Stack>
-             <Typography fontSize={11} width={130}>
-              {   moment(data.payment.createAt).format('LLL') }
-           
+        <TableCell
+          sx={{ justifyContent: "space-center", alignItems: "center" }}
+        >
+          <Stack display={"flex"} spacing={1}>
+            <Box display={"flex"} justifyContent={"space-between"}>
+              <Typography variant="subtitle2" noWrap>
+                {data.payment.amount}₮
               </Typography>
-            
-    
-        
+              <Label
+                color={
+                  (data.payment.status === "banned" && "error") || "success"
+                }
+              >
+                {data.payment.status}
+              </Label>
+            </Box>
+          </Stack>
+          <Typography fontSize={11} width={130}>
+            {moment(data.payment.createAt).format("LLL")}
+          </Typography>
         </TableCell>
-      
 
         <TableCell align="center">
           <Typography fontSize={11}>{data.address.duureg}</Typography>
@@ -117,7 +132,9 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell>
-          <Label color={(data.delivery.status === "banned" && "error") || "success"}>
+          <Label
+            color={(data.delivery.status === "banned" && "error") || "success"}
+          >
             {data.delivery.status}
           </Label>
         </TableCell>
@@ -139,16 +156,21 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleOpenOrder}>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: "error.main" }}>
+        <MenuItem onClick={() => {}} sx={{ color: "error.main" }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>
       </Popover>
+      <OrderModal
+        open={openOrder}
+        handleClose={handleCloseOrder}
+        order={data}
+      />
     </>
   );
 }

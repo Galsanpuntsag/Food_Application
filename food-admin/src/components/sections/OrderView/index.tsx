@@ -22,10 +22,10 @@ import UserTableHead from "./order-table-head";
 import TableEmptyRows from "./order-empty-rows";
 import UserTableToolbar from "./order-table-toolbar";
 import { emptyRows, applyFilter, getComparator } from "./functions";
-import { OrderContext } from "@/context/userProvider";
+import { UserContext } from "@/context/userProvider";
 
 export default function OrderView() {
-  const { users } = useContext(OrderContext);
+  const { users } = useContext(UserContext);
 
   const orderData = users?.map((user: any) => user.orders);
 

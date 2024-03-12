@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
+
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -15,15 +13,34 @@ import { alpha, useTheme } from "@mui/material/styles";
 import InputAdornment from "@mui/material/InputAdornment";
 
 import { useRouter } from "next/navigation";
+import * as yup from "yup";
 
 import { bgGradient } from "@/theme/css";
 
 import Logo from "@/components/logo";
 import Iconify from "@/components/iconify";
+import { useFormik } from "formik";
+import { AuthContext } from "@/context/authProvider";
+import { Button, Divider } from "@mui/material";
+import { Input } from "@/components/core";
 
 // ----------------------------------------------------------------------
 
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .max(100, "your email address has too many character")
+    .required("you must enter your email")
+    .email("your email address must to be valid")
+    .matches(/^[^@\s]+@[^@\s,]*/, "you only enter your email"),
+  password: yup
+    .string()
+    .required("you must enter your password")
+    .min(6, "your password must have at least 6 character!"),
+});
+
 export default function LoginView() {
+  const { login } = useContext(AuthContext);
   const theme = useTheme();
 
   const router = useRouter();
@@ -34,29 +51,38 @@ export default function LoginView() {
     router.push("/dashboard");
   };
 
+  const formik = useFormik({
+    onSubmit: ({ email, password }: { email: string; password: string }) => {
+      login(email, password);
+      console.log("Email", email, password);
+    },
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validateOnChange: false,
+    validateOnBlur: false,
+    validationSchema,
+  });
+
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <Input
+          name="email"
+          value={formik.values.email}
+          label="Email address"
+          errorText={formik.errors.email}
+          onChange={formik.handleChange}
+        />
 
-        <TextField
+        <Input
           name="password"
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                >
-                  <Iconify
-                    icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
-                  />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          errorText={formik.errors.password}
+          label="Нууц үг"
+          showPassword
         />
       </Stack>
 
@@ -77,7 +103,7 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleClick}
+        onClick={() => formik.handleSubmit}
       >
         Login
       </LoadingButton>

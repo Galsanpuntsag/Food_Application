@@ -3,15 +3,14 @@ import axios from "axios";
 import React, {
   PropsWithChildren,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
 
-// interface IOrder {
-//   orders: {
-//     orderNo: string;
-//   };
-// }
+import { toast } from "react-toastify";
+import { AuthContext } from "./authProvider";
+import { AlertContext } from "./alertProvider";
 
 interface IUser {
   name: string;
@@ -32,20 +31,49 @@ interface IUser {
       status: string;
       paidDate: string;
     };
-  
   };
 }
 
 interface IUserContext {
-  //   orders: IOrder;
   users: [IUser] | null;
+  updateOrder: (
+    orderId: string,
+    dStatus: string,
+    pStatus: string
+  ) => Promise<void>;
+  loading: boolean;
 }
 
-export const OrderContext = createContext<IUserContext>({} as IUserContext);
+export const UserContext = createContext<IUserContext>({} as IUserContext);
 
-const UserProvider = ({ children }: PropsWithChildren) => {
+export const UserProvider = ({ children }: PropsWithChildren) => {
   const [users, setUsers] = useState<[IUser] | null>([] as any);
+  const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
+
+  const { token, user } = useContext(AuthContext);
+  const { alert } = useContext(AlertContext);
+
+  const updateOrder = async (
+    orderId: string,
+    pStatus: string,
+    dStatus: string
+  ) => {
+    console.log("workUpdate");
+    try {
+      setLoading(true);
+      const data = await axios.put(
+        `http://localhost:8080/order/${orderId}`,
+        { pStatus, dStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert("Хэрэглэгчдийн мэдээллийг амжилттай заслаа", "success");
+    } catch (error) {
+      console.log("ERR", error);
+      alert("Хэрэглэгчдийн мэдээллийг засахад алдаа гарлаа.", "error");
+    }
+  };
+
   const GetUser = async () => {
     console.log("aaaa");
     try {
@@ -55,7 +83,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
       console.log("GEtALluser", users);
       setUsers(users);
     } catch (error: any) {
-      alert("error" + error.message);
+      alert("Хэрэглэгчдийн мэдээллийг авахад алдаа гарлаа", "error");
     }
   };
 
@@ -63,8 +91,8 @@ const UserProvider = ({ children }: PropsWithChildren) => {
     GetUser();
   }, []);
   return (
-    <OrderContext.Provider value={{ users }}>{children}</OrderContext.Provider>
+    <UserContext.Provider value={{ users, updateOrder, loading }}>
+      {children}
+    </UserContext.Provider>
   );
 };
-
-export default UserProvider;

@@ -2,8 +2,6 @@
 
 import React, { ChangeEvent, useState } from "react";
 import {
-  TextField,
-  Stack,
   FormLabel,
   OutlinedInput,
   InputAdornment,
@@ -17,7 +15,8 @@ interface IInputProps {
   name?: string;
   label: string;
   value?: string;
-  desc: string;
+  desc?: string;
+  readOnly?: boolean;
   disabled?: boolean;
   errorText?: string | undefined;
   showPassword?: boolean;
@@ -29,8 +28,9 @@ export const Input = ({
   showPassword = false,
   onChange,
   name,
-  value,
   desc,
+  readOnly,
+  value,
   errorText,
   disabled,
 }: IInputProps) => {
@@ -43,9 +43,10 @@ export const Input = ({
           sx={{ background: "#ECEDf0" }}
           name={name}
           value={value}
+          readOnly={readOnly}
           disabled={disabled}
           onChange={onChange}
-          placeholder={label}
+          placeholder={desc}
           type={isShowPassword ? "password" : "text"}
           endAdornment={
             showPassword && (

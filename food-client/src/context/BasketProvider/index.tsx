@@ -49,7 +49,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   const [refresh, setRefresh] = useState(false);
 
   const addBasket = async (food: any, count: number) => {
-    console.log("Addbasket");
+    console.log("Addbasket", food, count);
     try {
       setLoading(true);
 
@@ -58,15 +58,16 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       } = await axios.post(
         "http://localhost:8080/basket",
         {
-          foods: { food: food._id, quantity: count },
+          foods: { foodId: food._id, quantity: count },
           totalPrice: food.price,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("AdddBasket", basket);
+
+      setFoodsInBask(basket);
 
       getFoodBasket();
-
+      toast.success("Таны хоол амжилттай сагслагдсан.");
       setLoading(false);
     } catch (error: any) {
       console.log("ErrorAddBask", error);

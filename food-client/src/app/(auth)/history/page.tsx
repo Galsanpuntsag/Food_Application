@@ -1,5 +1,5 @@
 import React from "react";
-import History from "@/components/pages/History";
+import { History } from "@/components/pages/History";
 
 const Page = () => {
   return <History />;

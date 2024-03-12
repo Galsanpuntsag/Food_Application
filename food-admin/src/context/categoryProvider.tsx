@@ -13,6 +13,7 @@ interface ICategory {
   name: string;
   description: string;
   image: string;
+  isSale: boolean;
 }
 
 interface ICategoryContext {

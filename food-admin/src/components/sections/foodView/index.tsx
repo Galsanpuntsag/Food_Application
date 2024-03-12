@@ -39,8 +39,6 @@ interface IFood {
 
 export default function FoodView() {
   const { categories } = useContext(CategoryContext);
-  console.log("Cate", categories);
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [foods, setFoods] = useState<IFood[]>([]);
   const [newFood, setNewFood] = useState({
@@ -54,6 +52,7 @@ export default function FoodView() {
 
   const [file, setFile] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
+
   const handleClose = () => {
     setOpen(false);
   };
