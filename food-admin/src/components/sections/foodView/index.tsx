@@ -17,6 +17,7 @@ import axios from "axios";
 // ----------------------------------------------------------------------
 
 import { CategoryContext } from "@/context/categoryProvider";
+import { toast } from "react-toastify";
 
 interface IFood {
   _id: string;
@@ -44,6 +45,7 @@ export default function FoodView() {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
+    console.log("ss");
     setOpen(false);
   };
 
@@ -60,11 +62,6 @@ export default function FoodView() {
   };
 
   const [isChecked, setIsChecked] = useState(false);
-
-  const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setIsChecked({ ...isChecked, [name]: checked });
-  };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.currentTarget.files![0]);
@@ -94,19 +91,19 @@ export default function FoodView() {
       const formData = new FormData();
       console.log("CreateWorking");
       formData.set("image", file!);
-      formData.set("isSale", isChecked!);
       formData.set("name", newFood.name);
       formData.set("price", newFood.price);
       formData.set("discountPrice", newFood.discountPrice);
       formData.set("description", newFood.description);
       formData.set("category", newFood.category);
-      console.log("FSWorking", newFood);
+      console.log("FSWorking", formData);
 
       const {
         data: { foods },
       } = await axios.post("http://localhost:8080/foods", formData);
       console.log("FOoods", foods);
       handleClose();
+      toast("Таны хоол амжилттай нэмэгдсэн.");
       getFood();
     } catch (error) {
       alert(error);

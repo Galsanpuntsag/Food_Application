@@ -41,25 +41,23 @@ const stateCards = [
 
 export default function FourState() {
   return (
- <Container>
-     <Grid container margin={3}>
+    <Grid
+      container
+      margin={3}
+      ml={5}
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent="space-between"
+    >
       {stateCards.map((cards) => (
-        <Grid
-          item
-          // display={"flex"}
-          // alignItems={"center"}
-          // justifyContent="space-between"
-          xs={12}
-          sm={6}
-          md={3}
-        >
+        <Grid item xs={12} sm={6} md={3}>
           <Box
             display="flex"
             justifyContent="center"
             alignItems="self-start"
             pl={5}
             flexDirection={"column"}
-            width="83%"
+            width="87%"
             height="100px"
             boxShadow={2}
             borderRadius={2}
@@ -79,6 +77,5 @@ export default function FourState() {
         </Grid>
       ))}
     </Grid>
- </Container>
   );
 }

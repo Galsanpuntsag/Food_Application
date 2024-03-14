@@ -40,18 +40,16 @@ export const updateOrder = async (
 
     console.log("pstatus", req.body.pStatus, "dstatus", req.body.dStatus);
     const findIndex = findUser?.orders.findIndex((item) => {
-      item._id?.toString() === req.params.orderId.toString();
       console.log("Iten1", item._id?.toString());
       console.log("Iten2", req.params.orderId);
+      return item._id?.toString() === req.params.orderId.toString();
     });
     console.log("orderID req", req.params.orderId);
     console.log("first findindex", findIndex);
     if (findIndex !== undefined && findIndex !== -1) {
       const updateOrder = findUser!.orders[findIndex];
-      if (updateOrder) {
-        updateOrder.payment!.status = req.body.pStatus;
-        updateOrder.delivery!.status = req.body.dStatus;
-      }
+      updateOrder.payment!.status = req.body.pStatus;
+      updateOrder.delivery!.status = req.body.dStatus;
     } else {
       throw new MyError(`index oldsongu.`, 400);
     }

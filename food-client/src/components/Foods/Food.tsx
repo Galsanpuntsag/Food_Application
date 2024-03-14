@@ -10,9 +10,7 @@ import {
   Container,
 } from "@mui/material";
 import ModalChooseFood from "@/components/Modal";
-import { BasketContext } from "@/context/BasketProvider";
-import { IoBasketSharp } from "react-icons/io5";
-import { UserContext } from "@/context/userProvider";
+import { relative } from "path";
 
 const Food = ({ food }: any) => {
   const [openModal, setOpenModal] = useState(false);
@@ -20,7 +18,7 @@ const Food = ({ food }: any) => {
   const handleCloseModal = () => setOpenModal(false);
 
   return (
-    <Card onClick={handleOpenModal} sx={{ mb: 3 }}>
+    <Card onClick={handleOpenModal} sx={{ mb: 3, position: "relative" }}>
       <Grid
         position={"relative"}
         sx={{
@@ -58,18 +56,38 @@ const Food = ({ food }: any) => {
         >
           {food?.name}
         </Typography>
-        <Button size="large" sx={{ color: "#4caf50" }}>
-          {food.price}₮
-        </Button>
-        <Button
-          size="large"
-          sx={{ color: "black", textDecoration: "line-through" }}
-        >
-          {food.discountPrice}₮
-        </Button>
-        <Typography>
-          {Math.floor(100 - (food.price * 100) / food.discountPrice)}%
-        </Typography>
+        {food.isSale === true ? (
+          <>
+            <Typography
+              sx={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+                width: 40,
+                textAlign: "center",
+                height: 20,
+                borderRadius: 1,
+                backgroundColor: "#18ba51",
+                overflow: "hidden",
+              }}
+            >
+              {Math.floor(100 - (food.price * 100) / food.discountPrice)}%
+            </Typography>
+            <Button size="large" sx={{ color: "#4caf50" }}>
+              {food.price}₮
+            </Button>
+            <Button
+              size="large"
+              sx={{ color: "black", textDecoration: "line-through" }}
+            >
+              {food.discountPrice}₮
+            </Button>
+          </>
+        ) : (
+          <Button size="large" sx={{ color: "#4caf50" }}>
+            {food.price}₮
+          </Button>
+        )}
       </CardContent>
       <ModalChooseFood
         food={food}

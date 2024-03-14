@@ -16,12 +16,12 @@ import TablePagination from "@mui/material/TablePagination";
 import Iconify from "@/components/iconify";
 import Scrollbar from "@/components/scrollbar";
 
-import TableNoData from "./order-no-data";
-import UserTableRow from "./order-table-row";
-import UserTableHead from "./order-table-head";
-import TableEmptyRows from "./order-empty-rows";
-import UserTableToolbar from "./order-table-toolbar";
-import { emptyRows, applyFilter, getComparator } from "./functions";
+import TableNoData from "./orderNoData";
+import OrderTableRow from "./orderTableRow";
+import UserTableHead from "./orderTableHead";
+import TableEmptyRows from "./orderEmptyRows";
+import UserTableToolbar from "./orderTableToolbar";
+import { emptyRows, applyFilter, getComparator } from "./orderFunctions";
 import { UserContext } from "@/context/userProvider";
 
 export default function OrderView() {
@@ -58,7 +58,7 @@ export default function OrderView() {
     if (event.target.checked) {
       const newSelecteds = users?.map((n) => n.name);
 
-      setSelected(newSelecteds);
+      setSelected(newSelecteds!);
       return;
     }
     setSelected([]);
@@ -136,7 +136,7 @@ export default function OrderView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={orderData.length}
+                rowCount={orderData?.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -156,7 +156,7 @@ export default function OrderView() {
                   .map((row: any) =>
                     row.map((order: any) => (
                       <>
-                        <UserTableRow
+                        <OrderTableRow
                           key={row.id}
                           data={order}
                           selected={selected.indexOf(row.name) !== -1}
@@ -170,7 +170,7 @@ export default function OrderView() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, orderData.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, orderData?.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -182,7 +182,7 @@ export default function OrderView() {
         <TablePagination
           page={page}
           component="div"
-          count={users.length}
+          count={orderData!.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

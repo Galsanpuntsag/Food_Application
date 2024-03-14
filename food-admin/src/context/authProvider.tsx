@@ -22,6 +22,7 @@ interface IUserContext {
   logout: () => void;
   user: any;
   token: any;
+    
 }
 
 export const AuthContext = createContext<IUserContext>({} as IUserContext);

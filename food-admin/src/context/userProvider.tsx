@@ -52,12 +52,14 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   const [orders, setOrders] = useState([]);
 
   const { token, user } = useContext(AuthContext);
+  console.log("first", user);
   const { alert } = useContext(AlertContext);
 
   const updateOrder = async (
     orderId: string,
     pStatus: string,
-    dStatus: string
+    dStatus: string,
+    user: string
   ) => {
     console.log("workUpdate");
     try {
