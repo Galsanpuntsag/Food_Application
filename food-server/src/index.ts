@@ -21,7 +21,7 @@ const MONGO_URI = process.env.MONGO_URI as string;
 const port = process.env.PORT;
 
 connectDB(MONGO_URI);
-
+//apiv1
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoute);
@@ -32,6 +32,10 @@ app.use("/upload", uploadRoute);
 app.use("/basket", basketRoute);
 app.use("/order", order);
 app.use(errorHandler);
+
+app.get("/", (req: Request, res: Response) => {
+  res.send("<h1>Food Delivery</h1>");
+});
 
 app.listen(port, () =>
   console.log(color.rainbow(`Server is Listening ${port}`))
