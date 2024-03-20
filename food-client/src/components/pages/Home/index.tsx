@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Grid, Button, Typography, Container } from "@mui/material";
+import { Grid, Button, Typography, Container, Stack } from "@mui/material";
 import Foods from "@/components/Foods";
 import FourState from "@/components/Home/FourState";
 import ModalChooseFood from "@/components/Modal";
@@ -15,7 +15,9 @@ export const Home = () => {
       alignItems={"center"}
     >
       <BackgroundImg />
+
       <FourState />
+
       <Foods />
       <ModalChooseFood />
 

@@ -41,39 +41,35 @@ const stateCards = [
 
 export default function FourState() {
   return (
-    <Grid
-      container
-      margin={3}
-      ml={5}
-      display={"flex"}
-      alignItems={"center"}
-      justifyContent="space-between"
-    >
+    <Grid container display={"flex"}>
       {stateCards.map((cards) => (
-        <Grid item xs={12} sm={6} md={3}>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="self-start"
-            pl={5}
-            flexDirection={"column"}
-            width="87%"
-            height="100px"
-            boxShadow={2}
-            borderRadius={2}
-            m={2} // add margin for spacing between boxes
-          >
-            <Typography sx={{ color: "green" }}>{cards.icon}</Typography>
+        <Grid container spacing={2} color={"black"}>
+          <Grid container spacing={2} justifyContent={"center"}>
+            <Grid item direction={"row"} xs={12} sm={6} md={3}>
+              <Box
+                display="flex"
+                justifyContent="center"
+                pl={5}
+                flexDirection={"column"}
+                width="87%"
+                height="100px"
+                boxShadow={2}
+                borderRadius={2}
+                m={2} // add margin for spacing between boxes
+              >
+                <Typography sx={{ color: "green" }}>{cards.icon}</Typography>
 
-            <Box>
-              <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
-                {cards.topic}
-              </Typography>
-              <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
-                {cards.introduce}
-              </Typography>
-            </Box>
-          </Box>
+                <Box>
+                  <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
+                    {cards.topic}
+                  </Typography>
+                  <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
+                    {cards.introduce}
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
       ))}
     </Grid>
