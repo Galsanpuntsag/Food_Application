@@ -21,8 +21,6 @@ const app: Application = express();
 const MONGO_URI = process.env.MONGO_URI as string;
 const port = process.env.PORT;
 
-const upload = multer({ dest: "uploads/" });
-
 connectDB(MONGO_URI);
 //apiv1
 app.use(cors());
