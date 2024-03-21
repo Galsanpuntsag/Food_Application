@@ -20,7 +20,6 @@ const Food = ({ food }: any) => {
   return (
     <Card onClick={handleOpenModal} sx={{ mb: 3, position: "relative" }}>
       <Grid
-        position={"relative"}
         sx={{
           display: "block",
           justifyContent: "center",

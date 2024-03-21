@@ -41,35 +41,36 @@ const stateCards = [
 
 export default function FourState() {
   return (
-    <Grid container display={"flex"}>
+    <Grid
+      container
+      display={"flex"}
+      justifyContent={"center "}
+      alignItems={"center"}
+    >
       {stateCards.map((cards) => (
-        <Grid container spacing={2} color={"black"}>
-          <Grid container spacing={2} justifyContent={"center"}>
-            <Grid item direction={"row"} xs={12} sm={6} md={3}>
-              <Box
-                display="flex"
-                justifyContent="center"
-                pl={5}
-                flexDirection={"column"}
-                width="87%"
-                height="100px"
-                boxShadow={2}
-                borderRadius={2}
-                m={2} // add margin for spacing between boxes
-              >
-                <Typography sx={{ color: "green" }}>{cards.icon}</Typography>
+        <Grid item direction={"row"} xs={12} sm={6} md={3}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            pl={5}
+            flexDirection={"column"}
+            width="87%"
+            height="100px"
+            boxShadow={2}
+            borderRadius={2}
+            m={2} // add margin for spacing between boxes
+          >
+            <Typography sx={{ color: "green" }}>{cards.icon}</Typography>
 
-                <Box>
-                  <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
-                    {cards.topic}
-                  </Typography>
-                  <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
-                    {cards.introduce}
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+            <Box>
+              <Typography sx={{ fontWeight: 900, fontSize: 15 }}>
+                {cards.topic}
+              </Typography>
+              <Typography sx={{ fontWeight: 400, fontSize: 12 }}>
+                {cards.introduce}
+              </Typography>
+            </Box>
+          </Box>
         </Grid>
       ))}
     </Grid>
