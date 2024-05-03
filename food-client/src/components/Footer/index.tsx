@@ -5,9 +5,7 @@ import WhiteIcon from "../../../public/images/WhiteIcon";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
 
 const pages = [
   "Нүүр",
@@ -22,14 +20,6 @@ const apps = [
   <FaInstagram />,
   <FaSquareXTwitter />,
 ];
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const Footer = () => {
   const [value, setValue] = React.useState(0);
