@@ -92,8 +92,8 @@ const Footer = () => {
                 gap={10}
                 sx={{ display: { xs: 12, sm: 6, md: "flex" } }}
               >
-                {pages.map((page) => (
-                  <Link href="#" color="inherit">
+                {pages.map((page, i) => (
+                  <Link key={i} href="#" color="inherit">
                     <Typography
                       sx={{ display: "flex", justifyContent: "space-around" }}
                     >
@@ -113,8 +113,8 @@ const Footer = () => {
               }}
               // onClick={preventDefault}
             >
-              {apps.map((app) => (
-                <Link href="#" color="inherit">
+              {apps.map((app, i) => (
+                <Link key={i} href="#" color="inherit">
                   {app}
                 </Link>
               ))}
