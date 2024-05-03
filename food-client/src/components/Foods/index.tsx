@@ -15,8 +15,8 @@ export default function Foods() {
   return (
     <Container maxWidth={"xl"}>
       <>
-        {categories?.map((category) => (
-          <Grid container spacing={2} color={"black"}>
+        {categories?.map((category, i) => (
+          <Grid key={i} container spacing={2} color={"black"}>
             <Grid container spacing={2} justifyContent={"center"}>
               <Grid
                 item
@@ -26,7 +26,7 @@ export default function Foods() {
                 direction={"row"}
                 my={5}
               >
-                <img width={30} height={30} src="/images/Star.png" />
+                <img alt="star" width={30} height={30} src="/images/Star.png" />
 
                 <Typography variant="h6" ml={3} sx={{ fontWeight: 900 }}>
                   {category.name}
