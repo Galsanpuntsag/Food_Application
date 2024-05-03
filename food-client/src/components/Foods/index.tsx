@@ -48,8 +48,9 @@ export default function Foods() {
             <Grid container>
               {foods
                 ?.filter((el) => el.category.name === category.name)
-                .map((food) => (
+                .map((food, index) => (
                   <Grid
+                    key={index}
                     container
                     display={"flex"}
                     justifyContent={"center"}
