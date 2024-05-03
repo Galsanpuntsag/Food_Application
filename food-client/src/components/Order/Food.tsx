@@ -26,8 +26,9 @@ export const Food = ({ foods, formik, totalPrice }: any) => {
       </Box>
 
       <Stack my={6} boxShadow={3} gap={10} p={4} borderRadius={2}>
-        {foods?.map((food: any) => (
+        {foods?.map((food: any, i: any) => (
           <Box
+            key={i}
             display={"flex"}
             gap={3}
             borderTop={1}
@@ -83,7 +84,7 @@ export const Food = ({ foods, formik, totalPrice }: any) => {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button onClick={formik.handleSubmit }  label={"Захиалах"} />
+            <Button onClick={formik.handleSubmit} label={"Захиалах"} />
           </Grid>
         </Grid>
       </Stack>

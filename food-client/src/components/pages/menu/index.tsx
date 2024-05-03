@@ -42,9 +42,10 @@ const Menu = () => {
         spacing={3}
         my={5}
       >
-        {categories.map((cate) => {
+        {categories.map((cate, i) => {
           return (
             <Grid
+              key={i}
               item
               display={"flex"}
               justifyContent={"center"}
@@ -72,9 +73,10 @@ const Menu = () => {
         spacing={3}
         my={5}
       >
-        {filteredFoods.map((filteredFood: any) => {
+        {filteredFoods.map((filteredFood: any, i: any) => {
           return (
             <Grid
+              key={i}
               item
               display={"flex"}
               justifyContent={"center"}

@@ -47,8 +47,8 @@ export default function FourState() {
       justifyContent={"center "}
       alignItems={"center"}
     >
-      {stateCards.map((cards) => (
-        <Grid item direction={"row"} xs={12} sm={6} md={3}>
+      {stateCards.map((cards, i) => (
+        <Grid key={i} item direction={"row"} xs={12} sm={6} md={3}>
           <Box
             display="flex"
             justifyContent="center"
@@ -58,7 +58,7 @@ export default function FourState() {
             height="100px"
             boxShadow={2}
             borderRadius={2}
-            m={2} // add margin for spacing between boxes
+            m={2}
           >
             <Typography sx={{ color: "green" }}>{cards.icon}</Typography>
 
