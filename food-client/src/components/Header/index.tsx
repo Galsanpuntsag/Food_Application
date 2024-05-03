@@ -122,8 +122,13 @@ export const Header = () => {
               },
             }}
           >
-            {pages.map((page) => (
-              <Link href={"/" + page.link} color="black" underline="none">
+            {pages.map((page, i) => (
+              <Link
+                key={i}
+                href={"/" + page.link}
+                color="black"
+                underline="none"
+              >
                 {page.text}
               </Link>
             ))}

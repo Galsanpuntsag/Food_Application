@@ -2,9 +2,7 @@
 import React from "react";
 import { AppBar, Container, Grid, Typography, Box, Link } from "@mui/material";
 import WhiteIcon from "../../../public/images/WhiteIcon";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Stack from "@mui/material/Stack";
 
 const pages = [
@@ -16,13 +14,12 @@ const pages = [
   "Нууцлалын бодлого",
 ];
 const apps = [
-  <FaFacebook style={{ width: "30px" }} />,
-  <FaInstagram />,
-  <FaSquareXTwitter />,
+  <FaFacebook key="facebook" style={{ width: "30px" }} />,
+  <FaInstagram key="instagram" />,
+  <FaTwitter key="twitter" />,
 ];
 
 const Footer = () => {
-  const [value, setValue] = React.useState(0);
   return (
     <AppBar
       position="relative"
@@ -82,13 +79,9 @@ const Footer = () => {
                 gap={10}
                 sx={{ display: { xs: 12, sm: 6, md: "flex" } }}
               >
-                {pages.map((page, i) => (
-                  <Link key={i} href="#" color="inherit">
-                    <Typography
-                      sx={{ display: "flex", justifyContent: "space-around" }}
-                    >
-                      {page}
-                    </Typography>
+                {pages.map((page) => (
+                  <Link key={page} href="#" color="inherit">
+                    <Typography>{page}</Typography>
                   </Link>
                 ))}
               </Grid>
@@ -101,10 +94,9 @@ const Footer = () => {
                 alignItems: "center",
                 gap: "20px",
               }}
-              // onClick={preventDefault}
             >
-              {apps.map((app, i) => (
-                <Link key={i} href="#" color="inherit">
+              {apps.map((app) => (
+                <Link key={app.key} href="#" color="inherit">
                   {app}
                 </Link>
               ))}
