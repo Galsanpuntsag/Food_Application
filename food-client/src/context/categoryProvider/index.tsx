@@ -1,5 +1,6 @@
 "use client";
-import axios from "axios";
+import myAxios from "../../../utils/axios";
+
 import React, {
   createContext,
   PropsWithChildren,
@@ -27,7 +28,7 @@ export const CategoryProvider = ({ children }: PropsWithChildren) => {
     try {
       const {
         data: { categories },
-      } = await axios.get("http://localhost:8080/categories");
+      } = await myAxios.get("/categories");
       console.log("categoryIrlee", categories);
       setCategories(categories);
     } catch (error: any) {

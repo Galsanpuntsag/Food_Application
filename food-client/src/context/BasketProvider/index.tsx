@@ -1,5 +1,6 @@
 "use client";
-import axios from "axios";
+
+import myAxios from "../../../utils/axios";
 import React, {
   PropsWithChildren,
   createContext,
@@ -9,8 +10,6 @@ import React, {
 } from "react";
 
 import { UserContext } from "../userProvider";
-import { FaBullseye } from "react-icons/fa";
-import { userAgent } from "next/server";
 import { toast } from "react-toastify";
 
 interface IBasket {
@@ -32,7 +31,6 @@ interface IBasketContext {
   updateByFoodId: any;
   deleteFoodInBask: any;
   addBasket: (food: any, count: number) => Promise<void>;
-  // deleteBasket: (food: any) => Promise<void>;
 }
 
 export const BasketContext = createContext<IBasketContext>(
@@ -41,22 +39,19 @@ export const BasketContext = createContext<IBasketContext>(
 
 const BasketProvider = ({ children }: PropsWithChildren) => {
   const { user, token } = useContext(UserContext);
-  console.log("USePROOruserDWAWER", user, token);
-
   const [foodsInBask, setFoodsInBask] = useState<{} | null>([]);
 
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
   const addBasket = async (food: any, count: number) => {
-    console.log("Addbasket", food, count);
     try {
       setLoading(true);
 
       const {
         data: { basket },
-      } = await axios.post(
-        "http://localhost:8080/basket",
+      } = await myAxios.post(
+        "/basket",
         {
           foods: { food: food._id, quantity: count },
           totalPrice: food.price,
@@ -70,20 +65,17 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       toast.success("Таны хоол амжилттай сагслагдсан.");
       setLoading(false);
     } catch (error: any) {
-      console.log("ErrorAddBask", error);
+      toast.error("Failed Food added");
     }
   };
 
   //updateBasketfood
   const updateByFoodId = async (food: any, totalPrice: any) => {
-    console.log("TOTAL", totalPrice);
-    console.log("FOODID___--", food);
-
     try {
       const {
         data: { updateFood },
-      } = await axios.put(
-        "http://localhost:8080/basket",
+      } = await myAxios.put(
+        "/basket",
         {
           foodId: food.foodId,
           count: food.count,
@@ -93,7 +85,6 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("UpdateBasketFoodirlle", updateFood);
       setFoodsInBask(updateFood);
       getFoodBasket();
     } catch (error) {
@@ -102,17 +93,13 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
   };
 
   const getFoodBasket = async () => {
-    console.log("GETBASKEt");
     try {
       const {
         data: { basket },
-      } = await axios.get("http://localhost:8080/basket", {
+      } = await myAxios.get("/basket", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("TOKENN", token);
-      console.log("RESSSSS", basket);
       setFoodsInBask(basket.foods);
-      // toast.success(data.message);
     } catch (error: any) {
       toast.error(error.response.data.message);
     }
@@ -129,7 +116,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
     try {
       const {
         data: { basket },
-      } = await axios.delete("http://localhost:8080/basket/" + foodId, {
+      } = await myAxios.delete("/basket/" + foodId, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFoodsInBask(basket);

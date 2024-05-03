@@ -1,16 +1,12 @@
 "use client";
-import React, {
-  PropsWithChildren,
-  useEffect,
-  useState,
-  useContext,
-} from "react";
+
+import React, { PropsWithChildren, useEffect, useState } from "react";
+
 import { createContext } from "react";
-import axios from "axios";
+import myAxios from "../../../utils/axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { BasketContext } from "../BasketProvider";
 
 interface IUser {
   name: string;
@@ -42,44 +38,36 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   });
 
   const login = async (email: string, password: string) => {
-    console.log("loginWorking");
-    console.log("UUU", userForm);
     try {
       const {
         data: { token, user },
-      } = await axios.post("http://localhost:8080/auth/signin", {
+      } = await myAxios.post("/auth/signin", {
         userEmail: email,
         userPassword: password,
       });
-      console.log("loginSetUSerworking", token, user);
       localStorage.setItem("token", token);
-      console.log("TOKENATUSERprovider", token);
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
       setToken(token);
-
-      console.log("loginSetUSerworking");
       await Swal.fire({
-        title: "Таны нууц үг амжилттай солигдлоо",
-        text: "та шинэ нууц үгээ ашиглана нэвтэрнэ үү",
+        title: "Та амжилттай нэвтэрлээ.",
+        text: "Тавтай морилно уу",
         icon: "success",
       });
       router.push("/");
       setReFetch(!reFetch);
     } catch (error) {
-      console.log("ErrorROOROROROR", error);
-      // toast.error("failed to enter", { autoClose: 3000 });
+      toast.error("failed to enter", { autoClose: 3000 });
     }
   };
 
   const signup = async (name: string, email: string, password: string) => {
-    console.log("signupWorking", name, email, password);
-    console.log("UUU", userForm);
     try {
-      const data: IUser = await axios.post(
-        "http://localhost:8080/auth/signup",
-        { name, email, password }
-      );
+      const data: IUser = await myAxios.post("/auth/signup", {
+        name,
+        email,
+        password,
+      });
       setUserForm(data);
       await Swal.fire({
         title: "Та амжилттай бүргүүлсэн",
@@ -89,7 +77,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       });
       router.push("/login");
     } catch (error) {
-      console.log("ErrorROORORORORSignup", error);
       toast.error("failed to signup", { autoClose: 3000 });
     }
   };
@@ -104,8 +91,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const logout = () => {
-    console.log("logout");
-
     localStorage.removeItem("user"),
       localStorage.removeItem("token"),
       setUser(null),

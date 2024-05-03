@@ -8,7 +8,6 @@ import Drawer from "@/components/Drawer/index";
 const AtDrawer = () => {
   const { foodsInBask } = useContext(BasketContext);
   const [openDrawer, setOpenDrawer] = useState(false);
-  // console.log("aaaaa", basket.foods.food);
 
   const handleOpenDrawer = () => {
     return setOpenDrawer(true);
@@ -26,7 +25,6 @@ const AtDrawer = () => {
             horizontal: "left",
           }}
           badgeContent={foodsInBask?.length}
-          // badgeContent={1}
           color="error"
         >
           <AddShoppingCartIcon sx={{ color: "black" }} />

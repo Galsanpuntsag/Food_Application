@@ -5,8 +5,6 @@ import WhiteIcon from "../../../public/images/WhiteIcon";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import FooterImg from "../../../public/images/FooterIcon";
-import { bottom } from "@popperjs/core";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -24,7 +22,6 @@ const apps = [
   <FaInstagram />,
   <FaSquareXTwitter />,
 ];
-// const preventDefault = () => event.preventDefault();
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

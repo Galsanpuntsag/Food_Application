@@ -16,15 +16,11 @@ export const Card = ({ foods }: any) => {
   const [count, setCount] = useState(foods?.quantity);
   const [price, setPrice] = useState(foods.food?.price);
 
-  // console.log("Price_______", typeof price);
-
   const totalPrice = () => {
     return Object.values(price).reduce((acc: any, cur: any) => acc + cur, 0);
   };
 
-  // console.log("TOTALPRICEreduce__map", totalPrice());
   const handleDelete = () => {
-    console.log("WorkingDeletFood");
     return deleteFoodInBask({ foodId: foods?.food?._id });
   };
 

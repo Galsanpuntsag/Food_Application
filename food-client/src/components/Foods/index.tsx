@@ -2,10 +2,7 @@
 import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import { Button, Container, Grid, Stack } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
 import { FoodContext } from "@/context/foodProvider";
 import { CategoryContext } from "@/context/categoryProvider";
 import Food from "./Food";

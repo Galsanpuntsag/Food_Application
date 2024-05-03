@@ -24,7 +24,6 @@ interface IDrawerProps {
 
 const MyDrawer = ({ closeDrawer, open }: IDrawerProps) => {
   const { foodsInBask }: any = useContext(BasketContext);
-  console.log("basketsssMYDARWAER", foodsInBask);
 
   return (
     <>

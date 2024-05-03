@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import myAxios from "../../../utils/axios";
 
 interface IFood {
   name: string;
@@ -31,12 +32,10 @@ export const FoodProvider = ({ children }: PropsWithChildren) => {
   const [foods, setFoods] = useState<IFood[]>([]);
 
   const getFood = async () => {
-    console.log("Working");
     try {
       const {
         data: { foods },
-      } = await axios.get("http://localhost:8080/foods");
-      console.log("FoodIrle", foods);
+      } = await myAxios.get("/foods");
       setFoods(foods);
     } catch (error: any) {
       alert("Add Error" + error.message);

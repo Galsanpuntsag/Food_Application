@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   CardMedia,
   Grid,
@@ -7,10 +7,8 @@ import {
   CardContent,
   Typography,
   Card,
-  Container,
 } from "@mui/material";
 import ModalChooseFood from "@/components/Modal";
-import { relative } from "path";
 
 const Food = ({ food }: any) => {
   const [openModal, setOpenModal] = useState(false);
@@ -98,11 +96,3 @@ const Food = ({ food }: any) => {
 };
 
 export default Food;
-
-// name: string;
-// price: string;
-// disCountprice: string;
-// description: string;
-// image: string;
-// category: {
-//   name: String;

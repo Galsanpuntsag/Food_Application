@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { Grid, Container, Typography, Box } from "@mui/material";
-import FooterIcon from "../../../public/images/FooterIcon";
-import { relative } from "path";
+import { Grid, Typography } from "@mui/material";
 
 type Props = {};
 

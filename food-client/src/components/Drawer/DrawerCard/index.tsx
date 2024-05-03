@@ -8,7 +8,6 @@ import Order from "../../pages/Order";
 import { toast } from "react-toastify";
 
 export const DrawerCard = ({ foodsInBask, closeDrawer }: any) => {
-  console.log("!!!!!!!", foodsInBask);
   const router = useRouter();
   const [initial, setInitial] = React.useState(0);
   const goToOrder = () => {
@@ -17,7 +16,6 @@ export const DrawerCard = ({ foodsInBask, closeDrawer }: any) => {
     } else {
       closeDrawer();
       router.replace("/order");
-      console.log("hoolnuud", foodsInBask);
     }
   };
 
