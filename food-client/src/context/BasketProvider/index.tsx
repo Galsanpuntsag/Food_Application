@@ -123,7 +123,7 @@ const BasketProvider = ({ children }: PropsWithChildren) => {
       toast.success("Food deleted in bask");
       getFoodBasket();
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      console.log("err", error);
     }
   };
   return (
